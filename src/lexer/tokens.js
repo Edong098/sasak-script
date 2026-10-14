@@ -1,2 +1,10 @@
-// Kerangka definisi token; implementasi ditambahkan pada task berikutnya.
-export {};
+export const KEYWORDS = new Set([
+  'pengaq', 'gitaq', 'lamun', 'deq', 'gaweq', 'sempuleq', 'semasih',
+  'mengenteng', 'tetu', 'salaq', 'deq_araq', 'dan', 'atau', 'bukan',
+  'bale', 'sandiang', 'niki', 'jariang', 'tunang', 'lokaq', 'melengo',
+  'temang', 'sugulang', 'cobaq', 'bauang', 'pelewas', 'liwatin', 'anti',
+]);
+export const TOKEN = Object.freeze({
+  NUMBER: 'NUMBER', STRING: 'STRING', IDENTIFIER: 'IDENTIFIER',
+  NEWLINE: 'NEWLINE', INDENT: 'INDENT', DEDENT: 'DEDENT', EOF: 'EOF',
+});
