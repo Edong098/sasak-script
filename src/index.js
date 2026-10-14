@@ -28,6 +28,7 @@ export async function run(source, options = {}) {
   }
   try {
     const env = await interpreter.run(parse(source, options));
+    await interpreter.scheduler.finish();
     if (entry) interpreter.loader.cache.set(entry, { state: 'ready', exports: interpreter.exports });
     return env;
   } catch (error) {

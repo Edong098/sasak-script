@@ -6,7 +6,7 @@ import { SasakError } from '../errors/SasakError.js';
 
 /** Satu cache per eksekusi utama; hanya modul .lu relatif, tanpa akses host JS. */
 export class ModuleLoader {
-  constructor({ output } = {}) { this.output = output; this.cache = new Map(); }
+  constructor({ output, scheduler } = {}) { this.output = output; this.scheduler = scheduler; this.cache = new Map(); }
   async load(specifier, importer, location) {
     if (!specifier.startsWith('./') && !specifier.startsWith('../')) {
       throw new SasakError('Path modul harus relatif: ./ atau ../.', location, 'ModuleError');
@@ -21,7 +21,7 @@ export class ModuleLoader {
     this.cache.set(file, { state: 'loading' });
     try {
       source = await readFile(file, 'utf8');
-      const interpreter = new Interpreter({ output: this.output, loader: this, file });
+      const interpreter = new Interpreter({ output: this.output, loader: this, scheduler: this.scheduler, file });
       await interpreter.run(parse(source, { file }));
       this.cache.set(file, { state: 'ready', exports: interpreter.exports });
       return interpreter.exports;

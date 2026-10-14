@@ -4,7 +4,7 @@ import { SasakError } from '../errors/SasakError.js';
 
 const PRECEDENCE = { atau: 1, dan: 2, '==': 3, '!=': 3, '>': 4, '<': 4, '>=': 4, '<=': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6 };
 export class Parser {
-  constructor(tokens) { this.tokens = tokens; this.current = 0; this.loopDepth = 0; this.functionDepth = 0; this.blockDepth = 0; }
+  constructor(tokens) { this.tokens = tokens; this.current = 0; this.loopDepth = 0; this.functionDepth = 0; this.blockDepth = 0; this.asyncContext = false; }
   peek() { return this.tokens[this.current]; }
   at(type) { return this.peek().type === type; }
   take() { return this.tokens[this.current++]; }
@@ -45,6 +45,7 @@ export class Parser {
       return node('Throw', start, { value });
     }
     if (this.match('bale')) return this.classDefinition(start);
+    if (this.match('liwatin')) { this.expect('gaweq'); return this.functionDefinition(start, null, true); }
     if (this.match('gaweq')) return this.functionDefinition(start);
     if (this.match('sempuleq')) {
       if (!this.functionDepth) this.error('sempuleq hanya boleh digunakan di dalam fungsi.', start);
@@ -90,16 +91,17 @@ export class Parser {
     while (!this.at('DEDENT') && !this.at('EOF')) {
       const token = this.peek();
       const isStatic = Boolean(this.match('melengo'));
+      const isAsync = Boolean(this.match('liwatin'));
       let method;
-      if (!isStatic && this.match('sandiang')) method = this.functionDefinition(token, 'sandiang');
-      else { this.expect('gaweq'); method = this.functionDefinition(token); }
+      if (!isStatic && !isAsync && this.match('sandiang')) method = this.functionDefinition(token, 'sandiang');
+      else { this.expect('gaweq'); method = this.functionDefinition(token, null, isAsync); }
       if (methods.some(m => m.name === method.name && m.isStatic === isStatic)) this.error('Method tidak boleh duplikat.', token);
       methods.push({ ...method, isStatic });
     }
     this.expect('DEDENT');
     return node('Class', start, { name, parent, methods });
   }
-  functionDefinition(start, name = null) {
+  functionDefinition(start, name = null, isAsync = false) {
     name ??= this.expect('IDENTIFIER').value;
     this.expect('(');
     const params = [];
@@ -112,10 +114,11 @@ export class Parser {
     }
     this.expect(')');
     const previousLoop = this.loopDepth;
+    const previousAsync = this.asyncContext; this.asyncContext = isAsync;
     this.loopDepth = 0; this.functionDepth++;
     const body = this.block();
-    this.functionDepth--; this.loopDepth = previousLoop;
-    return node('Function', start, { name, params, body });
+    this.functionDepth--; this.loopDepth = previousLoop; this.asyncContext = previousAsync;
+    return node('Function', start, { name, params, body, isAsync });
   }
   block() {
     this.expect(':'); this.expect('NEWLINE'); this.expect('INDENT');
@@ -136,6 +139,11 @@ export class Parser {
     return left;
   }
   unary() {
+    if (this.at('anti')) {
+      const token = this.take();
+      if (!this.asyncContext) this.error('anti hanya boleh di dalam fungsi liwatin.', token);
+      return node('Await', token, { argument: this.unary() });
+    }
     if (['-', '+', 'bukan'].includes(this.peek().type)) {
       const op = this.take();
       return node('Unary', op, { operator: op.type, argument: this.unary() });

@@ -1,0 +1,6 @@
+liwatin gaweq tambah(a, b):
+    sempuleq a + b
+liwatin gaweq utama():
+    pengaq tugas = tambah(5, 3)
+    gitaq(anti tugas)
+utama()

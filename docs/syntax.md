@@ -85,3 +85,14 @@ sama), bukan live binding. Scope internal modul tidak bocor ke pengimpor.
 throw diterima apa adanya; runtime error menjadi string yang memuat lokasi.
 Return/break tidak ditangkap. Syntax error di file utama terjadi sebelum eksekusi,
 sehingga tidak bisa ditangkap oleh program yang sama.
+
+TASK 11: `liwatin gaweq nama():` menghasilkan promise runtime. `anti ekspresi`
+hanya legal di fungsi async dan membuka promise runtime (nilai biasa ditolak).
+Async method juga tersedia. Pemanggilan memulai tugas langsung; evaluator berjalan
+berurutan dan memberi kesempatan tugas lain saat menunggu operasi evaluator.
+Return promise dari fungsi async mengadopsi hasilnya. Error yang tertunda muncul
+ketika `anti`, sehingga dapat ditangkap melalui `cobaq`. Program menunggu semua
+tugas async sebelum selesai; rejection tanpa await menyebabkan program gagal.
+Belum ada builtin timer, jaringan, filesystem, atau Promise host yang dapat
+diakses oleh program Sasak. Tidak ada top-level await, cancellation, atau parallel
+CPU execution. Gunakan fungsi async `utama()` sebagai entry point.

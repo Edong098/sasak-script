@@ -1,3 +1,4 @@
+import { AsyncScheduler, SasakPromise } from './async.js';
 import { ModuleLoader } from './modules.js';
 import { SasakClass, SasakInstance } from './objects.js';
 import { Environment } from './environment.js';
@@ -5,14 +6,15 @@ import { BreakSignal, ReturnSignal, ThrowSignal } from './signals.js';
 import { SasakError } from '../errors/SasakError.js';
 
 export class Interpreter {
-  constructor({ output = console.log, loader, file = '<source>' } = {}) {
-    this.loader = loader ?? new ModuleLoader({ output });
+  constructor({ output = console.log, loader, scheduler, file = '<source>' } = {}) {
+    this.scheduler = scheduler ?? new AsyncScheduler();
+    this.loader = loader ?? new ModuleLoader({ output, scheduler: this.scheduler });
     this.file = file; this.exports = new Map();
     this.global = new Environment();
     this.global.define('gitaq', { kind: 'builtin', arity: 1, invoke: args => { output(this.display(args[0])); return null; } });
   }
   fail(message, n) { throw new SasakError(message, n.location, 'RuntimeError'); }
-  display(value) { return value === null ? 'deq_araq' : value === true ? 'tetu' : value === false ? 'salaq' : String(value); }
+  display(value) { if (value instanceof SasakPromise) this.fail('Gunakan anti untuk membaca hasil fungsi liwatin.', { location: {} }); return value === null ? 'deq_araq' : value === true ? 'tetu' : value === false ? 'salaq' : String(value); }
   boolean(value, n) { if (typeof value !== 'boolean') this.fail('Kondisi dan logika membutuhkan tetu atau salaq.', n); return value; }
   number(value, n) { if (typeof value !== 'number') this.fail('Operator ini membutuhkan angka.', n); return value; }
   async run(program) { await this.executeBody(program.body, this.global); return this.global; }
@@ -46,13 +48,13 @@ export class Interpreter {
         if (parent !== null && !(parent instanceof SasakClass)) this.fail('Induk bale harus class.', n);
         const klass = new SasakClass(n.name, parent);
         for (const method of n.methods) {
-          const value = { kind: 'function', params: method.params, body: method.body, closure: env, owner: klass, isStatic: method.isStatic };
+          const value = { kind: 'function', params: method.params, body: method.body, closure: env, owner: klass, isStatic: method.isStatic, isAsync: method.isAsync };
           if (method.name === 'sandiang') klass.constructorMethod = value;
           else (method.isStatic ? klass.staticMethods : klass.methods).set(method.name, value);
         }
         return env.define(n.name, klass, n.location);
       }
-      case 'Function': return env.define(n.name, { kind: 'function', params: n.params, body: n.body, closure: env }, n.location);
+      case 'Function': return env.define(n.name, { kind: 'function', params: n.params, body: n.body, closure: env, isAsync: n.isAsync }, n.location);
       case 'Return': throw new ReturnSignal(await this.evaluate(n.value, env));
       case 'Break': throw new BreakSignal();
       case 'While': {
@@ -80,6 +82,11 @@ export class Interpreter {
   }
   async evaluate(n, env) {
     switch (n.type) {
+      case 'Await': {
+        const value = await this.evaluate(n.argument, env);
+        if (!(value instanceof SasakPromise)) this.fail('anti membutuhkan hasil fungsi liwatin.', n);
+        return value.unwrap();
+      }
       case 'New': {
         const klass = await this.evaluate(n.klass, env);
         if (!(klass instanceof SasakClass)) this.fail('jariang membutuhkan class.', n);
@@ -186,6 +193,10 @@ export class Interpreter {
     const arity = callee.kind === 'builtin' ? callee.arity : callee.params.length;
     if (args.length !== arity) this.fail(`Fungsi membutuhkan ${arity} argumen.`, n);
     if (callee.kind === 'builtin') return callee.invoke(args);
+    if (callee.isAsync) return this.scheduler.start(this.invokeFunction(callee, args, n));
+    return this.invokeFunction(callee, args, n);
+  }
+  async invokeFunction(callee, args, n) {
     const local = new Environment(callee.closure);
     if (callee.receiver) {
       local.define('niki', callee.receiver, n.location);
@@ -193,7 +204,12 @@ export class Interpreter {
     }
     callee.params.forEach((param, i) => local.define(param, args[i], n.location));
     try { await this.executeBody(callee.body, local); }
-    catch (error) { if (error instanceof ReturnSignal) return error.value; throw error; }
+    catch (error) {
+      if (error instanceof ReturnSignal) {
+        return callee.isAsync && error.value instanceof SasakPromise ? error.value.unwrap() : error.value;
+      }
+      throw error;
+    }
     return null;
   }
 }
