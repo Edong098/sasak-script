@@ -3,7 +3,6 @@ export class SasakPromise {
   constructor(promise) {
     this.kind = "promise";
     this.observed = false;
-    this.promise = promise;
     // Simpan rejection sebagai hasil sampai anti atau batas akhir program.
     this.outcome = promise.then(
       (value) => ({ value }),

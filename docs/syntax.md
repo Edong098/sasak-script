@@ -54,7 +54,7 @@ semasih (angka <= 5):
 
 Kondisi hanya menerima boolean. Scope blok lokal; assignment mencari binding
 lexical terdekat. Setiap iterasi memperoleh scope baru. `mengenteng` keluar dari
-loop terdekat, dan ditolak di luar loop atau melintasi batas fungsi. 
+loop terdekat, dan ditolak di luar loop atau melintasi batas fungsi.
 
 ```text
 untuk (pengaq i = 0; i < 5; i = i + 1):

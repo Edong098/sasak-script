@@ -1,11 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { run } from "../src/index.js";
-const output = async (source) => {
-  const lines = [];
-  await run(source, { output: (x) => lines.push(x) });
-  return lines;
-};
+import { output } from "./helpers.js";
 
 test("async call menghasilkan promise runtime dan await unwrap", async () => {
   assert.deepEqual(

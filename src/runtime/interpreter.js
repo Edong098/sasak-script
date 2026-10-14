@@ -10,6 +10,21 @@ import {
 } from "./signals.js";
 import { SasakError } from "../errors/SasakError.js";
 
+// Tabel operator dibuat sekali, bukan di setiap evaluasi ekspresi.
+const ARITHMETIC = {
+  "+": (a, b) => a + b,
+  "-": (a, b) => a - b,
+  "*": (a, b) => a * b,
+  "/": (a, b) => a / b,
+  "%": (a, b) => a % b,
+};
+const COMPARISONS = {
+  ">": (a, b) => a > b,
+  "<": (a, b) => a < b,
+  ">=": (a, b) => a >= b,
+  "<=": (a, b) => a <= b,
+};
+
 export class Interpreter {
   constructor({
     output = console.log,
@@ -38,13 +53,26 @@ export class Interpreter {
   display(value, n = { location: {} }) {
     if (value instanceof SasakPromise)
       this.fail("Gunakan anti untuk membaca hasil fungsi liwatin.", n);
-    return value === null
-      ? "deq_araq"
-      : value === true
-        ? "tetu"
-        : value === false
-          ? "salaq"
-          : String(value);
+    if (value === null) return "deq_araq";
+    if (value === true) return "tetu";
+    if (value === false) return "salaq";
+    return String(value);
+  }
+  functionValue(definition, closure, extra = {}) {
+    return {
+      kind: "function",
+      params: definition.params,
+      body: definition.body,
+      isAsync: definition.isAsync,
+      closure,
+      ...extra,
+    };
+  }
+  async evaluateList(expressions, env) {
+    const values = [];
+    for (const expression of expressions)
+      values.push(await this.evaluate(expression, env));
+    return values;
   }
   boolean(value, n) {
     if (typeof value !== "boolean")
@@ -106,15 +134,7 @@ export class Interpreter {
           this.fail("Induk bale harus class.", n);
         const klass = new SasakClass(n.name, parent);
         for (const method of n.methods) {
-          const value = {
-            kind: "function",
-            params: method.params,
-            body: method.body,
-            closure: env,
-            owner: klass,
-            isStatic: method.isStatic,
-            isAsync: method.isAsync,
-          };
+          const value = this.functionValue(method, env, { owner: klass });
           if (method.name === "sandiang")
             klass.constructorMethod = { ...value, isConstructor: true };
           else
@@ -126,17 +146,7 @@ export class Interpreter {
         return env.define(n.name, klass, n.location);
       }
       case "Function":
-        return env.define(
-          n.name,
-          {
-            kind: "function",
-            params: n.params,
-            body: n.body,
-            closure: env,
-            isAsync: n.isAsync,
-          },
-          n.location,
-        );
+        return env.define(n.name, this.functionValue(n, env), n.location);
       case "Return":
         throw new ReturnSignal(await this.evaluate(n.value, env));
       case "Break":
@@ -215,8 +225,7 @@ export class Interpreter {
         const klass = await this.evaluate(n.klass, env);
         if (!(klass instanceof SasakClass))
           this.fail("jariang membutuhkan class.", n);
-        const args = [];
-        for (const arg of n.args) args.push(await this.evaluate(arg, env));
+        const args = await this.evaluateList(n.args, env);
         const instance = new SasakInstance(klass);
         const init = klass.initializer();
         if (init) await this.call({ ...init, receiver: instance }, args, n);
@@ -224,12 +233,8 @@ export class Interpreter {
           this.fail("Constructor default tidak menerima argumen.", n);
         return instance;
       }
-      case "Array": {
-        const values = [];
-        for (const element of n.elements)
-          values.push(await this.evaluate(element, env));
-        return values;
-      }
+      case "Array":
+        return this.evaluateList(n.elements, env);
       case "Object": {
         const object = new Map();
         for (const entry of n.entries)
@@ -263,18 +268,13 @@ export class Interpreter {
         const right = await this.evaluate(n.right, env);
         if (n.operator === "==") return left === right;
         if (n.operator === "!=") return left !== right;
-        if ([">", "<", ">=", "<="].includes(n.operator)) {
+        if (Object.hasOwn(COMPARISONS, n.operator)) {
           if (
             typeof left !== typeof right ||
             !["number", "string"].includes(typeof left)
           )
             this.fail("Perbandingan membutuhkan dua angka atau dua string.", n);
-          return {
-            ">": () => left > right,
-            "<": () => left < right,
-            ">=": () => left >= right,
-            "<=": () => left <= right,
-          }[n.operator]();
+          return COMPARISONS[n.operator](left, right);
         }
         if (
           n.operator === "+" &&
@@ -286,21 +286,14 @@ export class Interpreter {
         this.number(right, n);
         if (["/", "%"].includes(n.operator) && right === 0)
           this.fail("Pembagian dengan nol tidak diperbolehkan.", n);
-        const value = {
-          "+": () => left + right,
-          "-": () => left - right,
-          "*": () => left * right,
-          "/": () => left / right,
-          "%": () => left % right,
-        }[n.operator]();
+        const value = ARITHMETIC[n.operator](left, right);
         if (!Number.isFinite(value))
           this.fail("Hasil angka tidak berhingga.", n);
         return value;
       }
       case "Call": {
         const callee = await this.evaluate(n.callee, env);
-        const args = [];
-        for (const arg of n.args) args.push(await this.evaluate(arg, env));
+        const args = await this.evaluateList(n.args, env);
         return this.call(callee, args, n);
       }
       default:

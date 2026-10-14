@@ -275,13 +275,7 @@ export class Parser {
     let expr = this.primary();
     for (;;) {
       if (this.match("(")) {
-        const args = [];
-        if (!this.at(")")) {
-          do {
-            args.push(this.expression());
-          } while (this.match(","));
-        }
-        this.expect(")");
+        const args = this.expressionList(")");
         expr = node("Call", expr.location, { callee: expr, args });
       } else if (this.match("[")) {
         const property = this.expression();
@@ -296,6 +290,16 @@ export class Parser {
       } else break;
     }
     return expr;
+  }
+  expressionList(closing) {
+    const expressions = [];
+    if (!this.at(closing)) {
+      do {
+        expressions.push(this.expression());
+      } while (this.match(","));
+    }
+    this.expect(closing);
+    return expressions;
   }
   primary() {
     const token = this.take();
@@ -312,23 +316,11 @@ export class Parser {
         name: this.expect("IDENTIFIER").value,
       });
       this.expect("(");
-      const args = [];
-      if (!this.at(")")) {
-        do {
-          args.push(this.expression());
-        } while (this.match(","));
-      }
-      this.expect(")");
+      const args = this.expressionList(")");
       return node("New", token, { klass, args });
     }
     if (token.type === "[") {
-      const elements = [];
-      if (!this.at("]")) {
-        do {
-          elements.push(this.expression());
-        } while (this.match(","));
-      }
-      this.expect("]");
+      const elements = this.expressionList("]");
       return node("Array", token, { elements });
     }
     if (token.type === "{") {

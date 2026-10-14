@@ -1,12 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { run } from "../src/index.js";
+import { output } from "./helpers.js";
 
-export async function output(source, options = {}) {
-  const lines = [];
-  await run(source, { ...options, output: (x) => lines.push(x) });
-  return lines;
-}
 test("variabel, assignment, matematika, string dan builtin", async () => {
   assert.deepEqual(
     await output(

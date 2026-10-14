@@ -1,12 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { run, parse } from "../src/index.js";
+import { output } from "./helpers.js";
 
-async function output(source) {
-  const lines = [];
-  await run(source, { output: (value) => lines.push(value) });
-  return lines;
-}
 test("AST for memiliki initializer, condition, update dan continue", () => {
   const loop = parse("untuk (pengaq i = 0; i < 5; i = i + 1):\n    lanjutkan")
     .body[0];

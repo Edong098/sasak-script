@@ -1,23 +1,13 @@
 # Roadmap
 
-TASK 01–12 selesai sebagai prototipe pengembangan, bukan release publik.
+Prototipe sudah mendukung core interpreter, kondisi, while/for, fungsi,
+struktur data, OOP, modul, penanganan error, dan async/await. Test serta contoh
+berada di `tests/` dan `examples/`. Belum ada release publik atau package npm.
 
-| Tahap | Cakupan implementasi | Status |
-| --- | --- | --- |
-| v0.1 | Lexer, parser, AST, core runtime, variabel, output, matematika, CLI | Diuji |
-| v0.2 | Kondisi, logika, while, break | Diuji |
-| v0.3 | Fungsi, parameter, return, lexical scope, recursion | Diuji |
-| v0.4 | Array/object, index/property, assignment | Diuji |
-| v0.5 | Class, constructor, method, inheritance, static | Diuji |
-| v0.6 | Import/export, module scope, try/catch/throw | Diuji |
-| v0.7 | Async/await dan error propagation | Diuji |
-| v1.0 | Stabilitas spesifikasi/API, standard library, release | Belum dirilis |
+Prioritas berikutnya:
 
-TASK 12 menambahkan tutorial, CONTRIBUTING, CHANGELOG, regresi/integrasi,
-GitHub Actions Linux/Windows, dan konfigurasi paket. Package tetap private untuk
-mencegah publikasi tidak sengaja; publikasi memerlukan persetujuan pemilik.
+1. Jalankan CI Linux/Windows dan kumpulkan masukan penutur Lotura serta pemula.
+2. Stabilkan spesifikasi/API, diagnostik, standard library, dan batas resource.
+3. Siapkan rilis stabil setelah persetujuan pemilik proyek.
 
-Prioritas berikutnya: umpan balik penutur Lotura dan pemula, stabilisasi semantik,
-standard library dasar, kualitas diagnostik, dan batas resource untuk embedding.
-`untuk` (for) dan `lanjutkan` (continue) sudah diimplementasikan dan diuji. Framework web, playground, VS Code Extension,
-dan aksara Sasak menunggu fondasi serta spesifikasi stabil.
+Playground, VS Code Extension, framework web, dan aksara Sasak menunggu fondasi stabil.
