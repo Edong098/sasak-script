@@ -53,7 +53,7 @@ export class Parser {
     } else {
       const expression = this.expression();
       if (this.match('=')) {
-        if (expression.type !== 'Identifier') this.error('Target assignment harus variabel.', start);
+        if (!['Identifier', 'Member'].includes(expression.type)) this.error('Target assignment harus variabel, index, atau property.', start);
         result = node('Assignment', start, { target: expression, value: this.expression() });
       } else result = node('ExpressionStatement', start, { expression });
     }
@@ -103,13 +103,21 @@ export class Parser {
   }
   postfix() {
     let expr = this.primary();
-    while (this.match('(')) {
-      const args = [];
-      if (!this.at(')')) {
-        do { args.push(this.expression()); } while (this.match(','));
-      }
-      this.expect(')');
-      expr = node('Call', expr.location, { callee: expr, args });
+    for (;;) {
+      if (this.match('(')) {
+        const args = [];
+        if (!this.at(')')) {
+          do { args.push(this.expression()); } while (this.match(','));
+        }
+        this.expect(')');
+        expr = node('Call', expr.location, { callee: expr, args });
+      } else if (this.match('[')) {
+        const property = this.expression(); this.expect(']');
+        expr = node('Member', expr.location, { object: expr, property });
+      } else if (this.match('.')) {
+        const property = this.expect('IDENTIFIER');
+        expr = node('Member', expr.location, { object: expr, property: node('Literal', property, { value: property.value }) });
+      } else break;
     }
     return expr;
   }
@@ -118,6 +126,22 @@ export class Parser {
     if (['tetu', 'salaq', 'deq_araq'].includes(token.type)) return node('Literal', token, { value: { tetu: true, salaq: false, deq_araq: null }[token.type] });
     if (['NUMBER', 'STRING'].includes(token.type)) return node('Literal', token, { value: token.value });
     if (['IDENTIFIER', 'gitaq'].includes(token.type)) return node('Identifier', token, { name: token.value });
+    if (token.type === '[') {
+      const elements = [];
+      if (!this.at(']')) { do { elements.push(this.expression()); } while (this.match(',')); }
+      this.expect(']'); return node('Array', token, { elements });
+    }
+    if (token.type === '{') {
+      const entries = [];
+      if (!this.at('}')) {
+        do {
+          const key = this.expect('STRING'); this.expect(':');
+          if (entries.some(entry => entry.key === key.value)) this.error('Key object duplikat.', key);
+          entries.push({ key: key.value, value: this.expression() });
+        } while (this.match(','));
+      }
+      this.expect('}'); return node('Object', token, { entries });
+    }
     if (token.type === '(') { const expr = this.expression(); this.expect(')'); return expr; }
     this.error(`Ekspresi tidak valid: ${token.type}.`, token);
   }

@@ -1,0 +1,5 @@
+pengaq angka = [10, 20, 30]
+gitaq(angka[0])
+pengaq orang = {"aran": "Ahmad"}
+orang.aran = "Ali"
+gitaq(orang.aran)

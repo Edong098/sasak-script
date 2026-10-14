@@ -30,13 +30,30 @@ export class Interpreter {
         return this.executeBody(condition ? n.consequent : n.alternate, new Environment(env));
       }
       case 'Declaration': return env.define(n.name, await this.evaluate(n.value, env), n.location);
-      case 'Assignment': return env.assign(n.target.name, await this.evaluate(n.value, env), n.location);
+      case 'Assignment': {
+        if (n.target.type === 'Identifier') return env.assign(n.target.name, await this.evaluate(n.value, env), n.location);
+        const object = await this.evaluate(n.target.object, env);
+        const key = await this.evaluate(n.target.property, env);
+        const value = await this.evaluate(n.value, env);
+        return this.setMember(object, key, value, n);
+      }
       case 'ExpressionStatement': return this.evaluate(n.expression, env);
       default: this.fail(`Statement ${n.type} belum didukung.`, n);
     }
   }
   async evaluate(n, env) {
     switch (n.type) {
+      case 'Array': {
+        const values = [];
+        for (const element of n.elements) values.push(await this.evaluate(element, env));
+        return values;
+      }
+      case 'Object': {
+        const object = new Map();
+        for (const entry of n.entries) object.set(entry.key, await this.evaluate(entry.value, env));
+        return object;
+      }
+      case 'Member': return this.getMember(await this.evaluate(n.object, env), await this.evaluate(n.property, env), n);
       case 'Literal': return n.value;
       case 'Identifier': return env.get(n.name, n.location);
       case 'Unary': {
@@ -75,6 +92,25 @@ export class Interpreter {
       }
       default: this.fail(`Ekspresi ${n.type} belum didukung.`, n);
     }
+  }
+  validateKey(object, key, n) {
+    if (Array.isArray(object)) {
+      if (!Number.isInteger(key) || key < 0 || key >= object.length) this.fail('Index array harus bilangan bulat dalam batas array.', n);
+    } else if (object instanceof Map) {
+      if (typeof key !== 'string') this.fail('Key object harus string.', n);
+    } else this.fail('Nilai ini tidak memiliki index atau property.', n);
+  }
+  getMember(object, key, n) {
+    this.validateKey(object, key, n);
+    if (Array.isArray(object)) return object[key];
+    if (!object.has(key)) this.fail(`Property ${key} tidak ditemukan.`, n);
+    return object.get(key);
+  }
+  setMember(object, key, value, n) {
+    this.validateKey(object, key, n);
+    if (Array.isArray(object)) object[key] = value;
+    else object.set(key, value);
+    return value;
   }
   async call(callee, args, n) {
     if (!['builtin', 'function'].includes(callee?.kind)) this.fail('Nilai ini bukan fungsi.', n);

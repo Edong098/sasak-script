@@ -56,3 +56,10 @@ TASK 07: `gaweq nama(parameter):` membuat fungsi dengan lexical closure;
 jumlah argumen harus tepat. `sempuleq nilai` mengakhiri fungsi; return kosong
 atau mencapai akhir fungsi menghasilkan `deq_araq`. Return di luar fungsi
 serta break yang melintasi batas fungsi ditolak parser. Recursion didukung.
+
+TASK 08: array `[10, 20]` dan object `{"aran": "Ahmad"}` dapat dibaca dan
+ dimodifikasi lewat index/property. Key object adalah string; index array harus
+integer 0 sampai panjang-1. Assignment object dapat membuat property baru;
+assignment array hanya mengganti elemen yang sudah ada. Akses property hilang
+menimbulkan error. Struktur data memiliki semantik referensi; equality membandingkan
+identitas, bukan isi. Tidak mengekspos prototype atau API object JavaScript.
