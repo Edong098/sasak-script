@@ -154,8 +154,9 @@ Rincian perilaku dan batasan dijelaskan dalam [dokumentasi sintaks](docs/syntax.
 Penutur Lotura, pendidik, pemula, dan pengembang dapat membantu melalui diskusi
 kosakata, materi belajar, dokumentasi, atau kode. Ajukan ide melalui
 [Issues](https://github.com/Edong098/sasak-script/issues) dan perubahan melalui pull request.
-Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum berkontribusi; perubahan keyword resmi
-memerlukan persetujuan pemilik proyek.
+Jika menemukan masalah, langsung perbaiki dan ajukan pull request beserta hasil
+pengujian; tidak perlu meminta persetujuan terlebih dahulu. Ikuti keyword resmi dan
+panduan pada [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Lisensi
 
