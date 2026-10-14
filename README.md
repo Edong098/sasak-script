@@ -1,5 +1,9 @@
 # Sasak Script
 
+<p align="center">
+  <img src="assets/SASAK.png" alt="Sasak Script" width="400">
+</p>
+
 **Bahasa Lokal, Logika Global.**
 
 *Sebuah langkah kecil dari pemuda Lombok Utara untuk menjaga bahasa daerah melalui dunia pemrograman.*
