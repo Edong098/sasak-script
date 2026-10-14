@@ -36,8 +36,7 @@ menggunakan bahasa daerahnya.
 - **Ekstensi file:** `.lu`.
 - **CLI:** `sasak`.
 
-Fondasi proyek Node.js dan kerangka CLI tersedia. Lexer, parser, dan interpreter
-belum diimplementasikan. Proyek belum dipublikasikan ke npm.
+Fondasi proyek Node.js dan kerangka CLI tersedia. Lexer, parser, dan core interpreter tersedia. Proyek belum dipublikasikan ke npm.
 
 ## Menjalankan proyek
 
@@ -55,13 +54,12 @@ Alternatif langsung: `node src/cli/cli.js --help`.
 Untuk mengaktifkan perintah `sasak` secara lokal, jalankan `npm link` dari
 direktori repository, lalu `sasak --help` atau `sasak --version`. Pastikan
 direktori executable npm berada dalam `PATH` terminal Anda (termasuk di Windows).
-Perintah `npm start -- examples/hello.lu` saat ini keluar dengan status 1 karena
-interpreter belum tersedia, bukan mengeksekusi contoh tersebut.
+Jalankan `npm start -- examples/hello.lu` atau `sasak examples/persegi.lu`.
 
 ## Ilustrasi sintaks
 
 Kata kunci mengikuti [kamus yang ditetapkan](docs/keywords.md).
-**Interpreter masih dalam pengembangan; contoh ini belum dapat dieksekusi.**
+Contoh berikut sudah dapat dieksekusi dengan core interpreter.
 
 ```text
 # examples/hello.lu

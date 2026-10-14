@@ -14,7 +14,7 @@ for (const args of [[], ['--help'], ['-h']]) {
     assert.ifError(result.error);
     assert.equal(result.status, 0);
     assert.match(result.stdout, /Sasak Script/);
-    assert.match(result.stdout, /belum dapat dieksekusi/);
+    assert.match(result.stdout, /file.lu/);
     assert.equal(result.stderr, '');
   });
 }
@@ -27,12 +27,27 @@ for (const flag of ['--version', '-v']) {
     assert.equal(result.stderr, '');
   });
 }
-for (const args of [['examples/hello.lu'], ['--unknown'], ['--help', 'hello.lu']]) {
+for (const args of [['hello.txt'], ['--unknown'], ['--help', 'hello.lu']]) {
   test(`menolak argumen yang belum didukung: ${args.join(' ')}`, () => {
     const result = run(...args);
     assert.ifError(result.error);
     assert.equal(result.status, 1);
     assert.equal(result.stdout, '');
-    assert.match(result.stderr, /Interpreter belum tersedia/);
+    assert.match(result.stderr, /Gunakan satu file/);
   });
 }
+
+for (const [file, expected] of [['hello.lu', 'Halo, Sasak Script!\n'], ['persegi.lu', 'Luas persegi:\n25\n']]) {
+  test(`CLI mengeksekusi ${file}`, () => {
+    const result = run(fileURLToPath(new URL(`../examples/${file}`, import.meta.url)));
+    assert.ifError(result.error);
+    assert.equal(result.status, 0);
+    assert.equal(result.stdout, expected);
+    assert.equal(result.stderr, '');
+  });
+}
+test('CLI file hilang menghasilkan diagnostik tanpa stack trace', () => {
+  const result = run('tidak-ada.lu');
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /tidak-ada.lu:1:1 FileError/);
+});

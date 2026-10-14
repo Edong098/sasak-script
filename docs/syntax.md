@@ -36,3 +36,8 @@ gitaq(tambah(5, 3))
 
 Semua contoh di atas belum dapat dieksekusi. Kondisi dan perulangan ditargetkan
 untuk v0.2; fungsi untuk v0.3. Semantik operator, scope, dan tipe akan dirinci pada task berikutnya.
+
+TASK 04: deklarasi, assignment, `gitaq`, number, string, unary `+`/`-`, dan
+operator `+ - * / %` sudah tersedia. `+` menggabungkan dua string atau menjumlahkan
+dua angka; tidak ada konversi tipe otomatis. Pembagian nol menghasilkan error.
+Jalankan `sasak examples/persegi.lu` untuk mencetak luas 25.
