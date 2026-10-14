@@ -2,19 +2,89 @@
 
 **Bahasa Lokal, Logika Global.**
 
-Sasak Script adalah bahasa pemrograman edukatif berbasis bahasa Sasak sehari-hari
-masyarakat Lombok Utara (**Lotura**). Proyek ini mengajak generasi muda dan pemula
-belajar logika pemrograman sambil mengenal serta menggunakan bahasa daerahnya.
+*Sebuah langkah kecil dari pemuda Lombok Utara untuk menjaga bahasa daerah melalui dunia pemrograman.*
 
-Implementasi menggunakan **JavaScript dan Node.js**, file program berekstensi
-**`.lu`**, dan perintah CLI bernama **`sasak`**.
+## Tentang Sasak Script
 
-## Mengapa Sasak Script?
+**Sasak Script** adalah proyek pengembangan bahasa pemrograman yang menggunakan kosakata bahasa Sasak sehari-hari masyarakat Lombok Utara. Proyek ini dibangun menggunakan JavaScript dan Node.js, dengan tujuan memperkenalkan logika dasar pemrograman melalui bahasa yang dekat dengan kehidupan masyarakat setempat.
 
-Penggunaan bahasa daerah di kalangan anak-anak menghadapi tantangan seiring
-perkembangan teknologi. Sasak Script hadir sebagai sarana pelestarian bahasa
-Sasak Lombok Utara sekaligus pembelajaran variabel, kondisi, perulangan, fungsi,
-dan konsep pemrograman lainnya melalui kosakata yang dekat dengan kehidupan sehari-hari.
+Sasak Script bukan hanya tentang membuat bahasa pemrograman baru, tetapi juga tentang bagaimana bahasa daerah dapat memiliki tempat dalam perkembangan teknologi modern.
+
+Proyek ini masih dalam tahap pengembangan dan akan terus diperbaiki serta dikembangkan secara bertahap.
+
+## Latar Belakang
+
+Bahasa daerah merupakan bagian dari identitas, budaya, dan warisan yang diwariskan dari satu generasi ke generasi berikutnya. Di Lombok Utara, bahasa Sasak telah menjadi bagian dari kehidupan masyarakat, digunakan dalam percakapan sehari-hari, lingkungan keluarga, dan berbagai kegiatan sosial.
+
+Namun, seiring perkembangan zaman, muncul kekhawatiran bahwa penggunaan bahasa daerah mulai berkurang, khususnya di kalangan generasi muda. Saat ini, semakin jarang terdengar anak-anak menggunakan bahasa Sasak dalam percakapan sehari-hari. Bahasa Indonesia dan bahasa lainnya semakin banyak digunakan, sementara bahasa daerah perlahan mulai kurang mendapatkan ruang.
+
+Perubahan tersebut bukan berarti perkembangan zaman harus ditolak. Justru muncul sebuah pertanyaan: **bagaimana jika kemajuan teknologi juga dapat menjadi sarana untuk menjaga bahasa daerah agar tetap dikenal oleh generasi berikutnya?**
+
+Dari pertanyaan sederhana inilah gagasan Sasak Script mulai muncul.
+
+## Mengapa Proyek Ini Dibuat?
+
+Proyek ini berawal dari keresahan seorang pemuda Lombok Utara yang melihat perubahan penggunaan bahasa dalam kehidupan sehari-hari, terutama di kalangan anak-anak dan generasi muda.
+
+Sebagai seseorang yang sedang mempelajari ilmu komputer dan dunia pemrograman, muncul keinginan untuk menghubungkan dua hal yang mungkin terlihat berbeda, yaitu **bahasa daerah dan teknologi**.
+
+Selama ini, bahasa pemrograman umumnya menggunakan kosakata bahasa Inggris. Kata-kata seperti `if`, `else`, `while`, `function`, dan `return` menjadi bagian dari proses belajar coding.
+
+Dari situ muncul sebuah pemikiran sederhana:
+
+**Mengapa kita tidak mencoba memperkenalkan konsep pemrograman menggunakan bahasa yang kita gunakan sehari-hari?**
+
+Pemikiran tersebut menjadi awal pengembangan Sasak Script. Bahasa Sasak tidak hanya digunakan untuk berkomunikasi, tetapi juga dicoba untuk diperkenalkan sebagai bagian dari pembelajaran teknologi.
+
+Proyek ini bukan dibuat karena ingin menggantikan bahasa pemrograman yang sudah ada, melainkan sebagai bentuk pembelajaran, eksperimen, dan upaya kecil untuk memperkenalkan kembali bahasa daerah dengan cara yang berbeda.
+
+## Tujuan Pengembangan
+
+Sasak Script dikembangkan dengan beberapa tujuan:
+
+1. **Melestarikan bahasa daerah.** Memperkenalkan kembali kosakata bahasa Sasak Lombok Utara melalui pendekatan teknologi.
+2. **Membantu pemula belajar coding.** Menyediakan sarana untuk memahami variabel, kondisi, perulangan, fungsi, dan logika dasar pemrograman.
+3. **Mendekatkan teknologi dengan budaya lokal.** Menunjukkan bahwa bahasa daerah juga dapat menjadi inspirasi dalam pengembangan teknologi.
+4. **Mendorong kreativitas generasi muda.** Mengajak anak-anak dan pemuda untuk tidak hanya menggunakan teknologi, tetapi juga belajar menciptakannya.
+5. **Membuka ruang pengembangan bersama.** Menjadikan Sasak Script sebagai proyek terbuka yang dapat dipelajari, diperbaiki, dan dikembangkan oleh siapa saja.
+
+## Mengapa Menggunakan Bahasa Sasak Lombok Utara?
+
+Bahasa Sasak memiliki beragam dialek dan variasi kosakata yang digunakan oleh masyarakat di berbagai wilayah Pulau Lombok.
+
+Pada tahap awal, Sasak Script berfokus pada kosakata yang digunakan dalam percakapan sehari-hari masyarakat Lombok Utara, yang dalam proyek ini disebut **Lotura**.
+
+Pemilihan ini didasarkan pada kedekatan pengembang dengan bahasa dan lingkungan tempat tinggalnya. Dengan menggunakan kosakata yang dikenal dalam kehidupan sehari-hari, proses pengembangan diharapkan dapat dilakukan secara lebih alami.
+
+Ke depannya, Sasak Script terbuka untuk pengembangan dan masukan dari penutur bahasa Sasak di wilayah lainnya.
+
+## Sebuah Harapan untuk Generasi Mendatang
+
+Sasak Script mungkin dimulai dari sebuah proyek kecil dan sederhana. Namun, di balik proyek ini terdapat harapan agar generasi muda tidak melupakan bahasa yang menjadi bagian dari identitas daerahnya.
+
+Kemajuan teknologi seharusnya tidak selalu membuat kita meninggalkan budaya dan bahasa sendiri. Sebaliknya, teknologi dapat menjadi salah satu jalan untuk memperkenalkan, menjaga, dan mengembangkan warisan tersebut.
+
+Harapannya, suatu hari nanti anak-anak Lombok Utara dapat mengenal logika pemrograman melalui kata-kata yang pernah mereka dengar dari orang tua, keluarga, dan lingkungan tempat mereka tumbuh.
+
+Tidak harus langsung menjadi programmer. Setidaknya, mereka dapat mengenal bahwa bahasa daerah mereka juga bisa hadir dalam dunia teknologi.
+
+## Pesan dari Pengembang
+
+Saya menyadari bahwa membangun sebuah bahasa pemrograman bukanlah pekerjaan yang mudah. Masih banyak hal yang harus dipelajari, diperbaiki, dan dikembangkan.
+
+Saya juga tidak menganggap proyek ini sebagai solusi tunggal untuk menjaga keberlangsungan bahasa daerah. Sasak Script hanyalah salah satu bentuk usaha kecil yang bisa saya lakukan melalui bidang yang sedang saya pelajari.
+
+Saya percaya bahwa menjaga bahasa daerah bukan berarti menolak perkembangan zaman. Kita bisa terus belajar teknologi, mengikuti perubahan, dan mengenal dunia yang lebih luas tanpa harus melupakan bahasa serta budaya tempat kita berasal.
+
+**Jika suatu hari bahasa Sasak semakin jarang terdengar dalam percakapan sehari-hari, setidaknya kita pernah berusaha menghadirkannya melalui cara yang kita mampu.**
+
+Semoga proyek sederhana ini dapat menjadi awal dari sesuatu yang bermanfaat, baik untuk pembelajaran pemrograman maupun untuk memperkenalkan bahasa Sasak kepada generasi berikutnya.
+
+---
+
+**Sasak Script — Bahasa Lokal, Logika Global.**
+
+*Dibuat dari Lombok Utara, untuk siapa saja yang ingin belajar, berkarya, dan menjaga bahasa daerah.*
 
 ## Instalasi dan penggunaan
 
