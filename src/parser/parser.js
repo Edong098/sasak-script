@@ -59,7 +59,6 @@ export class Parser {
   }
   statement() {
     const start = this.peek();
-    let result;
     if (this.match("temang")) {
       if (this.blockDepth)
         this.error("temang hanya boleh di tingkat modul.", start);
@@ -105,20 +104,40 @@ export class Parser {
       this.end();
       return node("Return", start, { value });
     }
+    if (this.match("untuk")) {
+      this.expect("(");
+      const initializer = this.simpleStatement();
+      if (initializer.type !== "Declaration")
+        this.error(
+          "Header untuk harus dimulai dengan deklarasi pengaq.",
+          start,
+        );
+      this.expect(";");
+      const condition = this.expression();
+      this.expect(";");
+      const update = this.simpleStatement();
+      if (update.type !== "Assignment")
+        this.error("Pembaruan untuk harus berupa assignment.", start);
+      this.expect(")");
+      return node("For", start, {
+        initializer,
+        condition,
+        update,
+        body: this.loopBlock(),
+      });
+    }
     if (this.match("semasih")) {
       this.expect("(");
       const condition = this.expression();
       this.expect(")");
-      this.loopDepth++;
-      const body = this.block();
-      this.loopDepth--;
-      return node("While", start, { condition, body });
+      return node("While", start, { condition, body: this.loopBlock() });
     }
-    if (this.match("mengenteng")) {
+    if (this.at("mengenteng") || this.at("lanjutkan")) {
+      const keyword = this.take().type;
       if (!this.loopDepth)
-        this.error("mengenteng hanya boleh digunakan di dalam loop.", start);
+        this.error(`${keyword} hanya boleh digunakan di dalam loop.`, start);
       this.end();
-      return node("Break", start);
+      return node(keyword === "mengenteng" ? "Break" : "Continue", start);
     }
     if (this.match("lamun")) {
       this.expect("(");
@@ -128,6 +147,13 @@ export class Parser {
       const alternate = this.match("deq") ? this.block() : [];
       return node("If", start, { condition, consequent, alternate });
     }
+    const result = this.simpleStatement();
+    this.end();
+    return result;
+  }
+  simpleStatement() {
+    const start = this.peek();
+    let result;
     if (this.match("pengaq")) {
       const name = this.expect("IDENTIFIER").value;
       this.expect("=");
@@ -146,8 +172,15 @@ export class Parser {
         });
       } else result = node("ExpressionStatement", start, { expression });
     }
-    this.end();
     return result;
+  }
+  loopBlock() {
+    this.loopDepth++;
+    try {
+      return this.block();
+    } finally {
+      this.loopDepth--;
+    }
   }
   classDefinition(start) {
     const name = this.expect("IDENTIFIER").value;

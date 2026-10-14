@@ -52,6 +52,19 @@ Output 1 sampai 5. Jangan lupa memperbarui variabel kondisi agar loop berhenti.
 `mengenteng` dapat menghentikan loop, misalnya di dalam kondisi. Lihat pengujian
 loop dan `examples/perulangan.lu` untuk contoh yang dapat dijalankan.
 
+## Perulangan penghitung dan melewati iterasi
+
+```text
+untuk (pengaq i = 0; i < 5; i = i + 1):
+    lamun (i == 2):
+        lanjutkan
+    gitaq(i)
+```
+
+Output: 0, 1, 3, 4 pada baris terpisah. Header `untuk` berisi nilai awal, kondisi,
+dan pembaruan yang dipisahkan titik koma. `lanjutkan` tetap menjalankan pembaruan,
+sedangkan `mengenteng` menghentikan loop. Jalankan `sasak examples/untuk.lu`.
+
 ## Membuat fungsi
 
 ```text
@@ -87,4 +100,5 @@ menunjukkan nama file, baris 3, dan kolom 7. Periksa deklarasi variabel, jumlah
 argumen, tanda kurung, dan indentasi. String dan angka tidak dikonversi otomatis;
 `"umur " + 18` ditolak. Cetak teks dan angka dalam dua panggilan gitaq terpisah.
 
-Nama keyword resmi jangan diubah. Padanan for/continue belum ditentukan.
+Nama keyword resmi jangan diubah. Gunakan `untuk` untuk perulangan penghitung
+dan `lanjutkan` untuk melewati sisa iterasi.

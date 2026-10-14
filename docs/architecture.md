@@ -20,12 +20,12 @@ Node AST berupa data dengan lokasi source. Runtime menangani nilai bahasa sendir
 | `src/runtime/objects.js` | Class, instance, dan pencarian method diwariskan |
 | `src/runtime/modules.js` | Loader path relatif, cache realpath, scope dan siklus |
 | `src/runtime/async.js` | Promise runtime dan penuntasan tugas async |
-| `src/runtime/signals.js` | Sinyal internal break, return, dan throw |
+| `src/runtime/signals.js` | Sinyal internal break, continue, return, dan throw |
 | `src/errors/SasakError.js` | Error bahasa dengan file/baris/kolom |
 | `tests/` | Unit, regresi, dan integrasi CLI dengan node:test |
 
 Parser memeriksa break/return/await berdasarkan konteks lexical. Batas loop
-menangkap BreakSignal; batas fungsi menangkap ReturnSignal. Catch menangkap
+menangkap BreakSignal/ContinueSignal; batas fungsi menangkap ReturnSignal. Catch menangkap
 ThrowSignal dan SasakError. Batas CLI mengubah throw tidak tertangkap menjadi
 UncaughtError dan exit code 1.
 

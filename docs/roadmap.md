@@ -19,5 +19,5 @@ mencegah publikasi tidak sengaja; publikasi memerlukan persetujuan pemilik.
 
 Prioritas berikutnya: umpan balik penutur Lotura dan pemula, stabilisasi semantik,
 standard library dasar, kualitas diagnostik, dan batas resource untuk embedding.
-For/continue menunggu keyword resmi. Framework web, playground, VS Code Extension,
+`untuk` (for) dan `lanjutkan` (continue) sudah diimplementasikan dan diuji. Framework web, playground, VS Code Extension,
 dan aksara Sasak menunggu fondasi serta spesifikasi stabil.

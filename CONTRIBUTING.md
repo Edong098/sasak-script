@@ -8,8 +8,8 @@ Kontribusi penutur Lotura, pendidik, pemula, dan pengembang diterima.
 4. Tambahkan pengujian node:test, contoh `.lu`, dan dokumentasi bahasa Indonesia.
 5. Ajukan pull request yang menjelaskan masalah, perubahan, dan hasil test.
 
-Jangan mengubah keyword resmi atau menciptakan padanan for/continue tanpa persetujuan
-pemilik. Implementasi harus tetap Lexer → Parser → AST → Interpreter, tanpa eval,
+Jangan mengubah keyword resmi tanpa persetujuan pemilik. Padanan for/continue
+adalah `untuk`/`lanjutkan`. Implementasi harus tetap Lexer → Parser → AST → Interpreter, tanpa eval,
 Function constructor, atau penggantian teks menjadi JavaScript. Pisahkan parsing,
 runtime, dan CLI. Pertahankan lokasi source untuk diagnostik.
 

@@ -1,7 +1,7 @@
 # Kamus kata kunci
 
 Kata kunci berikut ditetapkan oleh pemilik proyek dan tidak diubah otomatis.
-Seluruh keyword pada tabel sudah diimplementasikan dan dicakup oleh pengujian lexer serta runtime.
+Seluruh keyword pada tabel sudah diimplementasikan dan diuji.
 
 | Konsep | Kata kunci |
 | --- | --- |
@@ -13,6 +13,8 @@ Seluruh keyword pada tabel sudah diimplementasikan dan dicakup oleh pengujian le
 | Return | `sempuleq` |
 | While | `semasih` |
 | Break | `mengenteng` |
+| For | `untuk` |
+| Continue | `lanjutkan` |
 | True | `tetu` |
 | False | `salaq` |
 | Null | `deq_araq` |
@@ -34,4 +36,7 @@ Seluruh keyword pada tabel sudah diimplementasikan dan dicakup oleh pengujian le
 | Async | `liwatin` |
 | Await | `anti` |
 
-Padanan `for` dan `continue` belum ditentukan dan memerlukan persetujuan pemilik proyek.
+`untuk` adalah padanan resmi `for`; `lanjutkan` adalah padanan resmi `continue`.
+Sintaks: `untuk (pengaq i = 0; i < 5; i = i + 1):`.
+`lanjutkan` akan melewati sisa iterasi saat ini dan melanjutkan iterasi berikutnya;
+berbeda dengan `mengenteng` yang keluar dari loop.

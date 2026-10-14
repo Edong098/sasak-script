@@ -6,6 +6,8 @@ export const KEYWORDS = new Set([
   "gaweq",
   "sempuleq",
   "semasih",
+  "untuk",
+  "lanjutkan",
   "mengenteng",
   "tetu",
   "salaq",

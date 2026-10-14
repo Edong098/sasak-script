@@ -9,6 +9,7 @@ import { run, parse, tokenize, SasakError } from "../src/index.js";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const cli = join(root, "src", "cli", "cli.js");
 const expected = {
+  "untuk.lu": "0\n1\n3\n4\n",
   "hello.lu": "Halo, Sasak Script!\n",
   "persegi.lu": "Luas persegi:\n25\n",
   "kondisi.lu": "Dewasa\n",

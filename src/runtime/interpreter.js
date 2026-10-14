@@ -2,7 +2,12 @@ import { AsyncScheduler, SasakPromise } from "./async.js";
 import { ModuleLoader } from "./modules.js";
 import { SasakClass, SasakInstance } from "./objects.js";
 import { Environment } from "./environment.js";
-import { BreakSignal, ReturnSignal, ThrowSignal } from "./signals.js";
+import {
+  BreakSignal,
+  ContinueSignal,
+  ReturnSignal,
+  ThrowSignal,
+} from "./signals.js";
 import { SasakError } from "../errors/SasakError.js";
 
 export class Interpreter {
@@ -136,14 +141,22 @@ export class Interpreter {
         throw new ReturnSignal(await this.evaluate(n.value, env));
       case "Break":
         throw new BreakSignal();
+      case "Continue":
+        throw new ContinueSignal();
+      case "For": {
+        const loopEnv = new Environment(env);
+        await this.execute(n.initializer, loopEnv);
+        while (this.boolean(await this.evaluate(n.condition, loopEnv), n)) {
+          if (!(await this.executeIteration(n.body, new Environment(loopEnv))))
+            break;
+          await this.execute(n.update, loopEnv);
+        }
+        return null;
+      }
       case "While": {
         while (this.boolean(await this.evaluate(n.condition, env), n)) {
-          try {
-            await this.executeBody(n.body, new Environment(env));
-          } catch (error) {
-            if (error instanceof BreakSignal) break;
-            throw error;
-          }
+          if (!(await this.executeIteration(n.body, new Environment(env))))
+            break;
         }
         return null;
       }
@@ -180,6 +193,15 @@ export class Interpreter {
       default:
         this.fail(`Statement ${n.type} belum didukung.`, n);
     }
+  }
+  async executeIteration(body, env) {
+    try {
+      await this.executeBody(body, env);
+    } catch (error) {
+      if (error instanceof BreakSignal) return false;
+      if (!(error instanceof ContinueSignal)) throw error;
+    }
+    return true;
   }
   async evaluate(n, env) {
     switch (n.type) {

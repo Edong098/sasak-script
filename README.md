@@ -61,7 +61,7 @@ Sudah dewasa
 - Lexer dengan token NEWLINE/INDENT/DEDENT dan lokasi baris/kolom.
 - Parser dengan prioritas operator dan AST; interpreter mengevaluasi AST langsung.
 - Variabel, assignment, string, number, boolean, null, matematika, dan `gitaq()`.
-- Kondisi, logika dengan short circuit, while, dan break.
+- Kondisi, logika dengan short circuit, while, for, break, dan continue.
 - Fungsi, return, lexical closure, local scope, dan recursion.
 - Array/object, indexing, property access, serta assignment.
 - Class, constructor, instance, bound method, inheritance, super, dan static method.
@@ -82,7 +82,7 @@ Implementasi menggunakan JavaScript ESM dan Node.js, tanpa `eval()` maupun
 - [Changelog](CHANGELOG.md)
 
 Contoh pada `examples/` mencakup matematika, kondisi, loop, fungsi, data, OOP,
-modul, dan async; semuanya diuji melalui CLI. Library contoh berada di
+modul, async, serta `untuk`/`lanjutkan`; semuanya diuji melalui CLI. Library contoh berada di
 `examples/modules/` dan diimpor oleh `examples/modul.lu`.
 
 ## Status dan batasan
@@ -92,7 +92,7 @@ package `0.1.0-dev.0`, bukan rilis stabil atau package npm yang sudah dipublikas
 
 Indentasi empat spasi, tanpa tab. Ekspresi harus berada pada satu baris. Angka
 menggunakan number IEEE-754; bilangan bulat di atas batas safe integer dapat
-kehilangan presisi. Belum ada keyword resmi for/continue, standard library I/O,
+kehilangan presisi. Belum ada standard library I/O,
 array push, top-level await, atau cancellation. Modul melingkar ditolak.
 Interpreter tidak membatasi waktu/jumlah iterasi program; loop tak berujung perlu
 dihentikan dari terminal. API ini bukan sandbox untuk source yang tidak dipercaya.

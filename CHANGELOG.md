@@ -1,5 +1,11 @@
 # Changelog
 
+## Perubahan berikutnya
+
+- Menetapkan keyword resmi `untuk` (for) dan `lanjutkan` (continue).
+- Mendukung `untuk (pengaq i = 0; i < 5; i = i + 1):` dan `lanjutkan` pada kedua jenis loop.
+- Menguji scope loop, nested loop, update setelah continue, dan break sebelum update.
+
 ## 0.1.0-dev.0 — pengembangan, 14 Oktober 2026
 
 Belum dipublikasikan sebagai release atau package npm.

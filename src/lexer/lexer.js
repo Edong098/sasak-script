@@ -101,7 +101,7 @@ export class Lexer {
           i += 2;
           continue;
         }
-        if ("+-*/%=><():,.[ ]{}".replaceAll(" ", "").includes(ch)) {
+        if ("+-*/%=><():,;.[ ]{}".replaceAll(" ", "").includes(ch)) {
           emit(ch, ch, line, column);
           i++;
           continue;

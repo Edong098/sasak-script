@@ -8,7 +8,7 @@ Dokumen ini menjelaskan prototipe yang diuji melalui `npm test`.
 - Empat spasi per tingkat indentasi; tab dan lompatan indentasi ditolak.
 - Blok dimulai dengan `:` dan wajib memiliki statement.
 - LF/CRLF diterima. Baris kosong dan komentar saja tidak mengubah indentasi.
-- Satu statement per baris; titik koma, ekspresi lintas baris, dan trailing comma tidak didukung.
+- Satu statement per baris; titik koma hanya memisahkan header `untuk`. Ekspresi lintas baris dan trailing comma tidak didukung.
 - Komentar dimulai `#` di luar string. Posisi error dihitung dari 1.
 - String petik tunggal/ganda satu baris dengan escape backslash, petik, n, r, t.
 - Number desimal seperti `12` dan `12.5`; minus adalah unary operator. Tidak ada exponent, hex, atau separator underscore.
@@ -54,7 +54,23 @@ semasih (angka <= 5):
 
 Kondisi hanya menerima boolean. Scope blok lokal; assignment mencari binding
 lexical terdekat. Setiap iterasi memperoleh scope baru. `mengenteng` keluar dari
-loop terdekat, dan ditolak di luar loop atau melintasi batas fungsi. Belum ada for/continue.
+loop terdekat, dan ditolak di luar loop atau melintasi batas fungsi. 
+
+```text
+untuk (pengaq i = 0; i < 5; i = i + 1):
+    lamun (i == 2):
+        lanjutkan
+    gitaq(i)
+```
+
+Header `untuk` terdiri dari deklarasi `pengaq`, kondisi boolean, dan assignment
+pembaruan; ketiganya wajib ditulis. Initializer dijalankan sekali. Kondisi diperiksa
+sebelum setiap iterasi. Variabel penghitung hanya berlaku di scope loop, sedangkan
+body mendapat scope baru pada setiap iterasi. `lanjutkan` melewati sisa body dan
+menjalankan pembaruan sebelum kondisi diperiksa lagi. `mengenteng` keluar tanpa
+menjalankan pembaruan. Pada `semasih`, `lanjutkan` langsung memeriksa ulang kondisi.
+Keduanya berlaku pada loop terdekat dan tidak bisa melintasi batas fungsi.
+
 
 ## Fungsi
 
