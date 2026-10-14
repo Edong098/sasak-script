@@ -51,3 +51,8 @@ penjumlahan, perkalian, unary. Literal: `tetu`, `salaq`, `deq_araq`.
 TASK 06: `semasih (kondisi):` mengevaluasi ulang kondisi pada setiap iterasi.
 `mengenteng` hanya legal di dalam loop dan keluar dari loop terdekat.
 Setiap iterasi memiliki scope blok baru. Belum ada keyword for atau continue.
+
+TASK 07: `gaweq nama(parameter):` membuat fungsi dengan lexical closure;
+jumlah argumen harus tepat. `sempuleq nilai` mengakhiri fungsi; return kosong
+atau mencapai akhir fungsi menghasilkan `deq_araq`. Return di luar fungsi
+serta break yang melintasi batas fungsi ditolak parser. Recursion didukung.

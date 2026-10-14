@@ -1,0 +1,3 @@
+gaweq tambah(a, b):
+    sempuleq a + b
+gitaq(tambah(5, 3))

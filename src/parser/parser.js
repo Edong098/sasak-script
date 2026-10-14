@@ -4,7 +4,7 @@ import { SasakError } from '../errors/SasakError.js';
 
 const PRECEDENCE = { atau: 1, dan: 2, '==': 3, '!=': 3, '>': 4, '<': 4, '>=': 4, '<=': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6 };
 export class Parser {
-  constructor(tokens) { this.tokens = tokens; this.current = 0; this.loopDepth = 0; }
+  constructor(tokens) { this.tokens = tokens; this.current = 0; this.loopDepth = 0; this.functionDepth = 0; }
   peek() { return this.tokens[this.current]; }
   at(type) { return this.peek().type === type; }
   take() { return this.tokens[this.current++]; }
@@ -23,6 +23,12 @@ export class Parser {
   statement() {
     const start = this.peek();
     let result;
+    if (this.match('gaweq')) return this.functionDefinition(start);
+    if (this.match('sempuleq')) {
+      if (!this.functionDepth) this.error('sempuleq hanya boleh digunakan di dalam fungsi.', start);
+      const value = this.at('NEWLINE') ? node('Literal', start, { value: null }) : this.expression();
+      this.end(); return node('Return', start, { value });
+    }
     if (this.match('semasih')) {
       this.expect('('); const condition = this.expression(); this.expect(')');
       this.loopDepth++;
@@ -53,6 +59,24 @@ export class Parser {
     }
     this.end();
     return result;
+  }
+  functionDefinition(start, name = null) {
+    name ??= this.expect('IDENTIFIER').value;
+    this.expect('(');
+    const params = [];
+    if (!this.at(')')) {
+      do {
+        const token = this.expect('IDENTIFIER');
+        if (params.includes(token.value)) this.error('Parameter tidak boleh duplikat.', token);
+        params.push(token.value);
+      } while (this.match(','));
+    }
+    this.expect(')');
+    const previousLoop = this.loopDepth;
+    this.loopDepth = 0; this.functionDepth++;
+    const body = this.block();
+    this.functionDepth--; this.loopDepth = previousLoop;
+    return node('Function', start, { name, params, body });
   }
   block() {
     this.expect(':'); this.expect('NEWLINE'); this.expect('INDENT');

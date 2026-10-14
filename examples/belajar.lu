@@ -1,0 +1,12 @@
+pengaq aran = "Ahmad"
+pengaq umur = 22
+
+gaweq salam(nama):
+    gitaq("Halo " + nama)
+
+salam(aran)
+
+lamun (umur >= 17):
+    gitaq("Sudah dewasa")
+deq:
+    gitaq("Belum dewasa")

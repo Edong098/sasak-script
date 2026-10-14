@@ -1,5 +1,5 @@
 import { Environment } from './environment.js';
-import { BreakSignal } from './signals.js';
+import { BreakSignal, ReturnSignal } from './signals.js';
 import { SasakError } from '../errors/SasakError.js';
 
 export class Interpreter {
@@ -15,6 +15,8 @@ export class Interpreter {
   async executeBody(body, env) { for (const statement of body) await this.execute(statement, env); }
   async execute(n, env) {
     switch (n.type) {
+      case 'Function': return env.define(n.name, { kind: 'function', params: n.params, body: n.body, closure: env }, n.location);
+      case 'Return': throw new ReturnSignal(await this.evaluate(n.value, env));
       case 'Break': throw new BreakSignal();
       case 'While': {
         while (this.boolean(await this.evaluate(n.condition, env), n)) {
@@ -75,8 +77,14 @@ export class Interpreter {
     }
   }
   async call(callee, args, n) {
-    if (callee?.kind !== 'builtin') this.fail('Nilai ini bukan fungsi.', n);
-    if (args.length !== callee.arity) this.fail(`Fungsi membutuhkan ${callee.arity} argumen.`, n);
-    return callee.invoke(args);
+    if (!['builtin', 'function'].includes(callee?.kind)) this.fail('Nilai ini bukan fungsi.', n);
+    const arity = callee.kind === 'builtin' ? callee.arity : callee.params.length;
+    if (args.length !== arity) this.fail(`Fungsi membutuhkan ${arity} argumen.`, n);
+    if (callee.kind === 'builtin') return callee.invoke(args);
+    const local = new Environment(callee.closure);
+    callee.params.forEach((param, i) => local.define(param, args[i], n.location));
+    try { await this.executeBody(callee.body, local); }
+    catch (error) { if (error instanceof ReturnSignal) return error.value; throw error; }
+    return null;
   }
 }
