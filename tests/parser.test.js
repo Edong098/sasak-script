@@ -20,7 +20,7 @@ test('prioritas, asosiasi kiri, grouping, unary, call bersarang', () => {
   const call = parse('gitaq(tambah((1 + 2) * 3, 4))').body[0].expression;
   assert.equal(call.args[0].args[0].operator, '*');
 });
-for (const source of ['pengaq = 2', 'pengaq a =', '1 = 2', 'gitaq(1', 'gitaq(1) gitaq(2)', '    gitaq(1)', 'lamun (tetu):\n    gitaq(1)']) {
+for (const source of ['pengaq = 2', 'pengaq a =', '1 = 2', 'gitaq(1', 'gitaq(1) gitaq(2)', '    gitaq(1)', 'deq:\n    gitaq(1)']) {
   test(`parser melaporkan error: ${JSON.stringify(source)}`, () => {
     assert.throws(() => parse(source), e => e.name === 'SyntaxError' && e.line >= 1 && e.column >= 1);
   });

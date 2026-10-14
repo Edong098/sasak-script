@@ -1,0 +1,5 @@
+pengaq umur = 18
+lamun (umur >= 17):
+    gitaq("Dewasa")
+deq:
+    gitaq("Belum dewasa")

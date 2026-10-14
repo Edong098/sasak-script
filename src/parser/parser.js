@@ -2,7 +2,7 @@ import { node } from '../ast/nodes.js';
 import { tokenize } from '../lexer/lexer.js';
 import { SasakError } from '../errors/SasakError.js';
 
-const PRECEDENCE = { '+': 1, '-': 1, '*': 2, '/': 2, '%': 2 };
+const PRECEDENCE = { atau: 1, dan: 2, '==': 3, '!=': 3, '>': 4, '<': 4, '>=': 4, '<=': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6 };
 export class Parser {
   constructor(tokens) { this.tokens = tokens; this.current = 0; }
   peek() { return this.tokens[this.current]; }
@@ -23,6 +23,12 @@ export class Parser {
   statement() {
     const start = this.peek();
     let result;
+    if (this.match('lamun')) {
+      this.expect('('); const condition = this.expression(); this.expect(')');
+      const consequent = this.block();
+      const alternate = this.match('deq') ? this.block() : [];
+      return node('If', start, { condition, consequent, alternate });
+    }
     if (this.match('pengaq')) {
       const name = this.expect('IDENTIFIER').value;
       this.expect('=');
@@ -54,7 +60,7 @@ export class Parser {
     return left;
   }
   unary() {
-    if (['-', '+'].includes(this.peek().type)) {
+    if (['-', '+', 'bukan'].includes(this.peek().type)) {
       const op = this.take();
       return node('Unary', op, { operator: op.type, argument: this.unary() });
     }
@@ -74,6 +80,7 @@ export class Parser {
   }
   primary() {
     const token = this.take();
+    if (['tetu', 'salaq', 'deq_araq'].includes(token.type)) return node('Literal', token, { value: { tetu: true, salaq: false, deq_araq: null }[token.type] });
     if (['NUMBER', 'STRING'].includes(token.type)) return node('Literal', token, { value: token.value });
     if (['IDENTIFIER', 'gitaq'].includes(token.type)) return node('Identifier', token, { name: token.value });
     if (token.type === '(') { const expr = this.expression(); this.expect(')'); return expr; }

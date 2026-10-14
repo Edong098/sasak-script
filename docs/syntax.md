@@ -41,3 +41,9 @@ TASK 04: deklarasi, assignment, `gitaq`, number, string, unary `+`/`-`, dan
 operator `+ - * / %` sudah tersedia. `+` menggabungkan dua string atau menjumlahkan
 dua angka; tidak ada konversi tipe otomatis. Pembagian nol menghasilkan error.
 Jalankan `sasak examples/persegi.lu` untuk mencetak luas 25.
+
+TASK 05: `lamun (kondisi):` / `deq:` tersedia dengan blok empat spasi.
+Blok memiliki scope lokal. Kondisi hanya menerima boolean. `dan` dan `atau`
+melakukan short circuit; prioritas dari rendah: atau, dan, equality, comparison,
+penjumlahan, perkalian, unary. Literal: `tetu`, `salaq`, `deq_araq`.
+`==` dan `!=` tidak melakukan konversi tipe.
