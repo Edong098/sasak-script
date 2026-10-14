@@ -27,3 +27,8 @@ dan tanpa mengganti kata kunci menjadi JavaScript.
 
 Modul interpreter saat ini hanya penanda struktur, tanpa implementasi.
 Tidak ada dependensi eksternal, tahap build, atau layanan tambahan pada TASK 01.
+
+TASK 02–03: lexer dan parser dapat dipakai melalui `tokenize(source)` dan
+`parse(source)`. AST berisi node Literal, Identifier, Unary, Binary, Declaration,
+Assignment, Call, ExpressionStatement, dan Program dengan lokasi source.
+Parser menyediakan pembacaan blok indentasi untuk fitur control flow berikutnya.
