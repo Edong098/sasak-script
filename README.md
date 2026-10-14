@@ -88,30 +88,46 @@ Semoga proyek sederhana ini dapat menjadi awal dari sesuatu yang bermanfaat, bai
 
 ## Instalasi dan penggunaan
 
-Siapkan **Node.js 24 LTS** beserta npm. Buka terminal di VS Code, PowerShell,
-Command Prompt, atau terminal Linux/macOS, lalu jalankan:
+**Yang perlu dipasang:** Node.js **24 LTS** (sudah termasuk npm) dan Git untuk
+mengunduh repository. VS Code opsional sebagai editor. Proyek tidak memerlukan
+database, API key, Python, atau dependensi eksternal.
+
+Unduh dari [Node.js](https://nodejs.org/en/download), [Git](https://git-scm.com/downloads),
+dan opsional [VS Code](https://code.visualstudio.com/download). Setelah instalasi,
+buka terminal baru dan periksa `node --version`, `npm --version`, serta `git --version`.
+
+Dari terminal:
 
 ```sh
 git clone https://github.com/Edong098/sasak-script.git
 cd sasak-script
 npm ci
+npm test
+node src/cli/cli.js examples/belajar.lu
+```
+
+Jika repository sudah tersedia, cukup masuk ke foldernya. Semua perintah npm
+dijalankan dari folder yang berisi `package.json`. Paket belum dipublikasikan ke
+npm; instalasi dilakukan dari repository ini.
+
+Untuk mengaktifkan nama CLI `sasak`, jalankan dari folder proyek:
+
+```sh
 npm link
+sasak --help
+sasak --version
 sasak examples/belajar.lu
 ```
 
-`npm link` menghubungkan CLI ke checkout lokal. Pastikan direktori executable npm
-berada di `PATH`. Proyek tidak memerlukan dependensi eksternal maupun tahap build.
-Paket belum dipublikasikan ke npm; gunakan repository ini untuk instalasi.
+Tanpa `npm link`, gunakan `node src/cli/cli.js <file.lu>` atau
+`npm start -- <file.lu>`. Cara langsung melalui Node tidak memerlukan perubahan
+PATH atau hak administrator.
 
-Jika tidak menggunakan `npm link`:
+Pada Windows/PowerShell, gunakan `npm.cmd` atau `sasak.cmd` bila script `.ps1`
+diblokir; tidak perlu menonaktifkan kebijakan keamanan PowerShell.
 
-```sh
-node src/cli/cli.js examples/belajar.lu
-# Atau melalui npm:
-npm start -- examples/belajar.lu
-```
-
-Bantuan dan versi tersedia melalui `sasak --help` serta `sasak --version`.
+Lihat **[panduan instalasi lengkap](docs/installation.md)** untuk Windows/VS Code,
+Linux/macOS, pengaturan PATH, pembuatan file pertama, troubleshooting, dan pembaruan.
 
 ## Program pertama
 
@@ -193,6 +209,8 @@ Pengujian menggunakan `node:test` dan mencakup unit test, regresi, serta integra
 CLI. GitHub Actions dikonfigurasi untuk Node.js 24 pada Linux dan Windows.
 
 ## Dokumentasi
+
+- [Instalasi dan troubleshooting](docs/installation.md)
 
 - [Tutorial untuk pemula](docs/tutorial.md)
 - [Sintaks dan semantik](docs/syntax.md)
