@@ -80,6 +80,8 @@ Saya percaya bahwa menjaga bahasa daerah bukan berarti menolak perkembangan zama
 
 Semoga proyek sederhana ini dapat menjadi awal dari sesuatu yang bermanfaat, baik untuk pembelajaran pemrograman maupun untuk memperkenalkan bahasa Sasak kepada generasi berikutnya.
 
+**Hampure**, mohon maaf apabila masih ada kosakata yang kurang tepat dalam penggunaannya. Sasak Script masih dalam tahap pengembangan, dan masukan dari para penutur bahasa Sasak sangat diharapkan agar kosakata yang digunakan dapat diperbaiki dan semakin sesuai dengan penggunaan sehari-hari.
+
 ---
 
 **Sasak Script — Bahasa Lokal, Logika Global.**
