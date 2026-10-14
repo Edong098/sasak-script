@@ -1,20 +1,23 @@
 # Roadmap
 
-| Versi | Sasaran |
-| --- | --- |
-| v0.1 | Core: lexer, parser, AST, interpreter, variabel, output, tipe dasar, matematika, CLI |
-| v0.2 | Kondisi, operator logika, while, break |
-| v0.3 | Fungsi, parameter, return, scope, recursion |
-| v0.4 | Array, object, indexing, property access |
-| v0.5 | Class, constructor, instance, method, inheritance, static |
-| v0.6 | Import, export, try, catch, throw |
-| v0.7 | Async dan await dengan semantik terdokumentasi |
-| v1.0 | Dokumentasi, testing, CLI, standard library dasar, contoh edukasi, persiapan npm |
+TASK 01–12 selesai sebagai prototipe pengembangan, bukan release publik.
 
-TASK 00: persiapan repository selesai.
-TASK 01: fondasi Node.js, struktur modul, dokumentasi, contoh, dan kerangka CLI.
-Interpreter v0.1 belum diimplementasikan. Versi package `0.1.0-dev.0` menandai
-fondasi pengembangan, bukan rilis core interpreter yang selesai.
+| Tahap | Cakupan implementasi | Status |
+| --- | --- | --- |
+| v0.1 | Lexer, parser, AST, core runtime, variabel, output, matematika, CLI | Diuji |
+| v0.2 | Kondisi, logika, while, break | Diuji |
+| v0.3 | Fungsi, parameter, return, lexical scope, recursion | Diuji |
+| v0.4 | Array/object, index/property, assignment | Diuji |
+| v0.5 | Class, constructor, method, inheritance, static | Diuji |
+| v0.6 | Import/export, module scope, try/catch/throw | Diuji |
+| v0.7 | Async/await dan error propagation | Diuji |
+| v1.0 | Stabilitas spesifikasi/API, standard library, release | Belum dirilis |
 
-Framework web, playground, VS Code Extension, dan dukungan aksara Sasak menunggu
-fondasi interpreter stabil. Publikasi npm memerlukan persetujuan pemilik proyek.
+TASK 12 menambahkan tutorial, CONTRIBUTING, CHANGELOG, regresi/integrasi,
+GitHub Actions Linux/Windows, dan konfigurasi paket. Package tetap private untuk
+mencegah publikasi tidak sengaja; publikasi memerlukan persetujuan pemilik.
+
+Prioritas berikutnya: umpan balik penutur Lotura dan pemula, stabilisasi semantik,
+standard library dasar, kualitas diagnostik, dan batas resource untuk embedding.
+For/continue menunggu keyword resmi. Framework web, playground, VS Code Extension,
+dan aksara Sasak menunggu fondasi serta spesifikasi stabil.

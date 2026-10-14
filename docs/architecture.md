@@ -1,34 +1,55 @@
 # Arsitektur
 
-Alur yang direncanakan:
-
 ```text
 Source Code (.lu) → Lexer → Tokens → Parser → AST → Interpreter → Output
 ```
 
-Interpreter akan memproses AST secara langsung, tanpa `eval()` atau `new Function()`
-dan tanpa mengganti kata kunci menjadi JavaScript.
-
-## Tanggung jawab file
+Tidak menggunakan eval, Function constructor, atau substitusi keyword menjadi JS.
+Node AST berupa data dengan lokasi source. Runtime menangani nilai bahasa sendiri.
 
 | File | Tanggung jawab |
 | --- | --- |
-| `src/index.js` | Metadata proyek; kelak titik masuk API |
-| `src/cli/cli.js` | CLI bantuan dan versi; kelak menjalankan file `.lu` |
-| `src/lexer/lexer.js` | Kelak membaca source menjadi token |
-| `src/lexer/tokens.js` | Kelak mendefinisikan jenis token dan kata kunci |
-| `src/parser/parser.js` | Kelak mengubah token menjadi AST |
-| `src/ast/nodes.js` | Kelak mendefinisikan node AST |
-| `src/runtime/interpreter.js` | Kelak mengevaluasi AST |
-| `src/runtime/environment.js` | Kelak menyimpan variabel dan scope |
-| `src/errors/SasakError.js` | Kelak menyediakan error bahasa dengan lokasi source |
-| `tests/cli.test.js` | Menguji perilaku CLI melalui proses Node.js |
-| `examples/hello.lu` | Ilustrasi program pertama; belum executable |
+| `src/index.js` | API publik tokenize, parse, run, metadata; batas eksekusi utama |
+| `src/cli/cli.js` | Help/version, membaca file, menjalankan API dan diagnostik |
+| `src/lexer/lexer.js` | Tokenisasi baris, indentasi, escape, lokasi token |
+| `src/lexer/tokens.js` | Kamus keyword dan jenis token struktural |
+| `src/parser/parser.js` | Recursive descent dan precedence climbing; validasi konteks |
+| `src/ast/nodes.js` | Pembuatan node AST dengan lokasi source |
+| `src/runtime/interpreter.js` | Eksekusi statement dan evaluasi ekspresi AST |
+| `src/runtime/environment.js` | Binding Map, parent scope, deklarasi dan assignment |
+| `src/runtime/objects.js` | Class, instance, dan pencarian method diwariskan |
+| `src/runtime/modules.js` | Loader path relatif, cache realpath, scope dan siklus |
+| `src/runtime/async.js` | Promise runtime dan penuntasan tugas async |
+| `src/runtime/signals.js` | Sinyal internal break, return, dan throw |
+| `src/errors/SasakError.js` | Error bahasa dengan file/baris/kolom |
+| `tests/` | Unit, regresi, dan integrasi CLI dengan node:test |
 
-Modul interpreter saat ini hanya penanda struktur, tanpa implementasi.
-Tidak ada dependensi eksternal, tahap build, atau layanan tambahan pada TASK 01.
+Parser memeriksa break/return/await berdasarkan konteks lexical. Batas loop
+menangkap BreakSignal; batas fungsi menangkap ReturnSignal. Catch menangkap
+ThrowSignal dan SasakError. Batas CLI mengubah throw tidak tertangkap menjadi
+UncaughtError dan exit code 1.
 
-TASK 02–03: lexer dan parser dapat dipakai melalui `tokenize(source)` dan
-`parse(source)`. AST berisi node Literal, Identifier, Unary, Binary, Declaration,
-Assignment, Call, ExpressionStatement, dan Program dengan lokasi source.
-Parser menyediakan pembacaan blok indentasi untuk fitur control flow berikutnya.
+Object literal menggunakan Map agar nama seperti `__proto__` tidak mengakses
+prototype host. User function menyimpan closure; bound method juga menyimpan
+receiver dan class pemilik untuk resolusi super.
+
+Evaluator menggunakan async JavaScript secara internal agar fungsi bahasa async
+bisa ditunggu. SasakPromise merupakan pembungkus; fungsi sync tidak membuka
+promise bahasa secara implisit. Scheduler menunggu semua tugas dan melaporkan
+rejection tanpa await. Ini bukan transpilation: setiap operasi membaca node AST.
+
+## API
+
+```js
+import { tokenize, parse, run } from 'sasak-script';
+const tokens = tokenize('gitaq(1)', { file: 'contoh.lu' });
+const ast = parse('gitaq(1)', { file: 'contoh.lu' });
+await run('gitaq(1)', { file: 'contoh.lu', output: console.log });
+```
+
+`run` menghasilkan Promise yang selesai setelah tugas bahasa selesai, dan
+mengembalikan Environment global untuk embedding/debugging. `file` menentukan
+basis path import. Jika dihilangkan, basisnya working directory. `Interpreter`
+adalah API tingkat rendah untuk AST; `run(source, options)` disarankan untuk
+penanganan scheduler dan error di batas program. Tidak ada jaminan sandbox,
+resource limit, atau kompatibilitas API stabil pada prototipe ini.

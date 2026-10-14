@@ -1,98 +1,176 @@
-# Sintaks awal
+# Sintaks dan semantik Sasak Script
 
-Dokumen ini menjelaskan rancangan bahasa, bukan fitur interpreter yang sudah berjalan.
+Dokumen ini menjelaskan prototipe yang diuji melalui `npm test`.
 
-- File menggunakan ekstensi `.lu`.
-- Pemanggilan fungsi menggunakan tanda kurung: `gitaq("Halo")`.
-- Blok menggunakan titik dua dan indentasi; detail validasi indentasi akan ditentukan saat lexer dibangun.
-- Titik koma tidak diwajibkan.
-- Komentar satu baris diawali `#`.
-- Deklarasi: `pengaq angka = 1`; perubahan nilai: `angka = angka + 1`.
-- Ekspresi matematika dan logika akan didukung secara bertahap.
-- Error bahasa nantinya menyertakan baris dan kolom.
+## Source dan blok
 
-## Contoh rancangan
+- Ekstensi `.lu`; identifier ASCII, case-sensitive; keyword resmi dicadangkan.
+- Empat spasi per tingkat indentasi; tab dan lompatan indentasi ditolak.
+- Blok dimulai dengan `:` dan wajib memiliki statement.
+- LF/CRLF diterima. Baris kosong dan komentar saja tidak mengubah indentasi.
+- Satu statement per baris; titik koma, ekspresi lintas baris, dan trailing comma tidak didukung.
+- Komentar dimulai `#` di luar string. Posisi error dihitung dari 1.
+- String petik tunggal/ganda satu baris dengan escape backslash, petik, n, r, t.
+- Number desimal seperti `12` dan `12.5`; minus adalah unary operator. Tidak ada exponent, hex, atau separator underscore.
+
+## Nilai dan operator
+
+Literal boolean: `tetu` / `salaq`; null: `deq_araq`.
+Deklarasi membutuhkan initializer: `pengaq angka = 1`. Assignment hanya ke nama
+yang sudah dideklarasikan, index, atau property. Deklarasi nama yang sama dalam
+scope yang sama ditolak; scope turunan dapat melakukan shadowing.
+
+Prioritas operator dari rendah ke tinggi:
+
+| Operator | Perilaku |
+| --- | --- |
+| `atau` | OR boolean, short circuit |
+| `dan` | AND boolean, short circuit |
+| `== !=` | Equality tanpa konversi; struktur data berdasarkan identitas |
+| `< > <= >=` | Membandingkan dua number atau dua string |
+| `+ -` | Number; `+` juga menggabungkan dua string |
+| `* / %` | Number; pembagian/modulo nol ditolak |
+| unary `+ - bukan anti` | Unary number, NOT boolean, atau await |
+| call / indexing / property | Evaluasi berantai dari kiri ke kanan |
+
+Binary operator bersifat left-associative; gunakan tanda kurung untuk grouping.
+Tidak ada konversi implisit string/number. Number adalah JavaScript IEEE-754;
+hasil tidak berhingga ditolak, tetapi presisi integer besar tetap terbatas.
+`gitaq(nilai)` menerima tepat satu argumen dan mencetak satu baris. Boolean/null
+ dicetak dengan kata kunci Sasak; fungsi tanpa return menghasilkan `deq_araq`.
+
+## Kondisi dan loop
 
 ```text
-pengaq aran = "Ahmad"
-pengaq umur = 22
-gitaq("Halo " + aran)
-
 lamun (umur >= 17):
     gitaq("Dewasa")
 deq:
     gitaq("Belum dewasa")
 
-pengaq angka = 1
 semasih (angka <= 5):
     gitaq(angka)
     angka = angka + 1
+```
 
+Kondisi hanya menerima boolean. Scope blok lokal; assignment mencari binding
+lexical terdekat. Setiap iterasi memperoleh scope baru. `mengenteng` keluar dari
+loop terdekat, dan ditolak di luar loop atau melintasi batas fungsi. Belum ada for/continue.
+
+## Fungsi
+
+```text
 gaweq tambah(a, b):
     sempuleq a + b
 
 gitaq(tambah(5, 3))
 ```
 
-Semua contoh di atas belum dapat dieksekusi. Kondisi dan perulangan ditargetkan
-untuk v0.2; fungsi untuk v0.3. Semantik operator, scope, dan tipe akan dirinci pada task berikutnya.
+Jumlah argumen harus tepat; parameter duplikat ditolak. Fungsi menangkap scope
+lexical berdasarkan referensi, mendukung recursion, dan dapat disimpan/dikembalikan
+sebagai nilai. Evaluasi argumen dari kiri ke kanan. `sempuleq` kosong atau akhir
+fungsi menghasilkan null. Return di luar fungsi ditolak, termasuk dalam kode yang
+belum tentu dieksekusi. Return dan break tidak ditangkap oleh try/catch.
 
-TASK 04: deklarasi, assignment, `gitaq`, number, string, unary `+`/`-`, dan
-operator `+ - * / %` sudah tersedia. `+` menggabungkan dua string atau menjumlahkan
-dua angka; tidak ada konversi tipe otomatis. Pembagian nol menghasilkan error.
-Jalankan `sasak examples/persegi.lu` untuk mencetak luas 25.
+## Struktur data
 
-TASK 05: `lamun (kondisi):` / `deq:` tersedia dengan blok empat spasi.
-Blok memiliki scope lokal. Kondisi hanya menerima boolean. `dan` dan `atau`
-melakukan short circuit; prioritas dari rendah: atau, dan, equality, comparison,
-penjumlahan, perkalian, unary. Literal: `tetu`, `salaq`, `deq_araq`.
-`==` dan `!=` tidak melakukan konversi tipe.
+```text
+pengaq angka = [10, 20, 30]
+angka[1] = 99
+pengaq orang = {"aran": "Ahmad"}
+orang.aran = "Ali"
+gitaq(orang["aran"])
+```
 
-TASK 06: `semasih (kondisi):` mengevaluasi ulang kondisi pada setiap iterasi.
-`mengenteng` hanya legal di dalam loop dan keluar dari loop terdekat.
-Setiap iterasi memiliki scope blok baru. Belum ada keyword for atau continue.
+Array adalah referensi dengan index integer 0 sampai panjang-1. Tidak ada append
+atau sparse array. Object memakai key string, mendukung nested data dan property
+baru lewat assignment. Key literal wajib string dan tidak boleh duplikat. Property
+hilang menimbulkan error. Object tidak mengekspos prototype host JavaScript.
 
-TASK 07: `gaweq nama(parameter):` membuat fungsi dengan lexical closure;
-jumlah argumen harus tepat. `sempuleq nilai` mengakhiri fungsi; return kosong
-atau mencapai akhir fungsi menghasilkan `deq_araq`. Return di luar fungsi
-serta break yang melintasi batas fungsi ditolak parser. Recursion didukung.
+## Class
 
-TASK 08: array `[10, 20]` dan object `{"aran": "Ahmad"}` dapat dibaca dan
- dimodifikasi lewat index/property. Key object adalah string; index array harus
-integer 0 sampai panjang-1. Assignment object dapat membuat property baru;
-assignment array hanya mengganti elemen yang sudah ada. Akses property hilang
-menimbulkan error. Struktur data memiliki semantik referensi; equality membandingkan
-identitas, bukan isi. Tidak mengekspos prototype atau API object JavaScript.
+```text
+bale Manusia:
+    sandiang(aran):
+        niki.aran = aran
+    gaweq salam():
+        gitaq("Halo " + niki.aran)
+    melengo gaweq jenis():
+        sempuleq "Manusia"
 
-TASK 09: `bale Anak tunang Induk:` mendefinisikan inheritance. Constructor:
-`sandiang(parameter):`; instance: `jariang Nama(argumen)`. Method:
-`gaweq nama():`; static: `melengo gaweq nama():`. `niki` adalah receiver bound,
-termasuk ketika method disimpan dalam variabel. `lokaq(argumen)` memanggil
-constructor induk, dan `lokaq.nama()` memanggil method induk. Class tanpa
-constructor memakai constructor terdekat dari induknya, atau constructor nol
-argumen. Nilai return constructor diabaikan. Field instance terpisah dari method;
-field dengan nama sama menutupi method pada instance itu. Static method diwariskan.
+bale Pelajar tunang Manusia:
+    sandiang(aran):
+        lokaq(aran)
+    gaweq salam():
+        lokaq.salam()
 
-TASK 10: `temang "./modul.lu"` memasukkan semua nama ekspor ke scope modul
-pemanggil. `sugulang pengaq`, `sugulang gaweq`, dan `sugulang bale` mengekspor
-deklarasi. Import/export hanya di tingkat modul; konflik nama ditolak. Path
-relatif terhadap file pengimpor, bukan working directory; hanya `.lu`, tanpa
-package atau JavaScript host. Cache per eksekusi memakai path canonical; siklus
-ditolak. Ekspor merupakan snapshot nilai saat deklarasi (referensi object tetap
-sama), bukan live binding. Scope internal modul tidak bocor ke pengimpor.
+pengaq orang = jariang Pelajar("Ahmad")
+orang.salam()
+gitaq(Pelajar.jenis())
+```
 
-`cobaq:` / `bauang error:` menangkap `pelewas nilai` dan runtime error. Nilai
-throw diterima apa adanya; runtime error menjadi string yang memuat lokasi.
-Return/break tidak ditangkap. Syntax error di file utama terjadi sebelum eksekusi,
-sehingga tidak bisa ditangkap oleh program yang sama.
+`niki` terikat ke receiver, termasuk method yang disimpan sebagai variabel.
+`lokaq(argumen)` hanya di constructor instance dan memanggil constructor induk;
+`lokaq.nama()` memilih method induk. Static method diwariskan dan dipanggil lewat
+class. Constructor tidak dapat async. Class tanpa constructor mewarisi constructor
+terdekat, atau menerima nol argumen. Nilai return constructor diabaikan. Field
+instance terpisah dan bisa menutupi method. Tidak ada multiple inheritance.
 
-TASK 11: `liwatin gaweq nama():` menghasilkan promise runtime. `anti ekspresi`
-hanya legal di fungsi async dan membuka promise runtime (nilai biasa ditolak).
-Async method juga tersedia. Pemanggilan memulai tugas langsung; evaluator berjalan
-berurutan dan memberi kesempatan tugas lain saat menunggu operasi evaluator.
-Return promise dari fungsi async mengadopsi hasilnya. Error yang tertunda muncul
-ketika `anti`, sehingga dapat ditangkap melalui `cobaq`. Program menunggu semua
-tugas async sebelum selesai; rejection tanpa await menyebabkan program gagal.
-Belum ada builtin timer, jaringan, filesystem, atau Promise host yang dapat
-diakses oleh program Sasak. Tidak ada top-level await, cancellation, atau parallel
-CPU execution. Gunakan fungsi async `utama()` sebagai entry point.
+## Modul
+
+Isi `matematika.lu`:
+
+```text
+sugulang gaweq tambah(a, b):
+    sempuleq a + b
+```
+
+File pengimpor:
+
+```text
+temang "./matematika.lu"
+gitaq(tambah(5, 3))
+```
+
+Import/export hanya di tingkat modul. Ekspor dapat berupa deklarasi `pengaq`,
+`gaweq`, `liwatin gaweq`, atau `bale`. Semua nama ekspor diikat pada scope pengimpor;
+konflik nama ditolak. Hanya path relatif `./` atau `../` dengan ekstensi `.lu`,
+relatif ke file pengimpor. Cache per eksekusi memakai realpath; siklus ditolak.
+Ekspor adalah snapshot nilai saat deklarasi, bukan live binding; object tetap
+berbagi referensi. Nama internal modul tidak bocor. Tidak ada import package npm.
+
+## Error
+
+```text
+cobaq:
+    pelewas "Terjadi kesalahan"
+bauang error:
+    gitaq(error)
+```
+
+Throw menerima nilai bahasa. Catch menerima nilai throw apa adanya; runtime
+error menjadi string lokasi dan pesan. Catch memiliki scope lokal. Error tidak
+tertangkap membuat CLI keluar dengan status 1. Syntax error di file utama terjadi
+sebelum eksekusi dan tidak dapat ditangkap oleh file yang sama. Syntax error modul
+impor bisa ditangkap saat import. Error CLI menyertakan file, baris, dan kolom,
+tanpa stack trace internal.
+
+## Async
+
+```text
+liwatin gaweq tambah(a, b):
+    sempuleq a + b
+liwatin gaweq utama():
+    pengaq tugas = tambah(5, 3)
+    gitaq(anti tugas)
+utama()
+```
+
+Pemanggilan async memulai tugas dan menghasilkan promise runtime. `anti` hanya di
+fungsi async dan hanya menerima promise runtime. Async method ditulis
+`liwatin gaweq nama():` atau `melengo liwatin gaweq nama():`.
+Return promise dari fungsi async mengadopsi hasilnya. Error tertunda muncul ketika
+await dan dapat ditangkap. CLI menunggu seluruh tugas sebelum selesai; rejection
+tanpa await menyebabkan program gagal. Evaluasi setiap fungsi berurutan, dengan
+penjadwalan kooperatif melalui promise host, tanpa menerjemahkan source ke JS.
+Tidak ada top-level await, cancellation, timer, jaringan, filesystem builtin, atau
+parallel CPU execution. `gitaq` tidak mencetak promise yang belum dibuka.

@@ -1,7 +1,7 @@
 # Kamus kata kunci
 
 Kata kunci berikut ditetapkan oleh pemilik proyek dan tidak diubah otomatis.
-Belum ada kata kunci yang dieksekusi pada TASK 01.
+Seluruh keyword pada tabel sudah diimplementasikan dan dicakup oleh pengujian lexer serta runtime.
 
 | Konsep | Kata kunci |
 | --- | --- |

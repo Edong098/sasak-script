@@ -25,5 +25,14 @@
     "lotura",
     "education",
     "interpreter"
+  ],
+  "files": [
+    "src/",
+    "examples/",
+    "docs/",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md"
   ]
 }
