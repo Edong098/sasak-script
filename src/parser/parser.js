@@ -23,6 +23,7 @@ export class Parser {
   statement() {
     const start = this.peek();
     let result;
+    if (this.match('bale')) return this.classDefinition(start);
     if (this.match('gaweq')) return this.functionDefinition(start);
     if (this.match('sempuleq')) {
       if (!this.functionDepth) this.error('sempuleq hanya boleh digunakan di dalam fungsi.', start);
@@ -59,6 +60,23 @@ export class Parser {
     }
     this.end();
     return result;
+  }
+  classDefinition(start) {
+    const name = this.expect('IDENTIFIER').value;
+    const parent = this.match('tunang') ? this.expect('IDENTIFIER').value : null;
+    this.expect(':'); this.expect('NEWLINE'); this.expect('INDENT');
+    const methods = [];
+    while (!this.at('DEDENT') && !this.at('EOF')) {
+      const token = this.peek();
+      const isStatic = Boolean(this.match('melengo'));
+      let method;
+      if (!isStatic && this.match('sandiang')) method = this.functionDefinition(token, 'sandiang');
+      else { this.expect('gaweq'); method = this.functionDefinition(token); }
+      if (methods.some(m => m.name === method.name && m.isStatic === isStatic)) this.error('Method tidak boleh duplikat.', token);
+      methods.push({ ...method, isStatic });
+    }
+    this.expect('DEDENT');
+    return node('Class', start, { name, parent, methods });
   }
   functionDefinition(start, name = null) {
     name ??= this.expect('IDENTIFIER').value;
@@ -125,7 +143,14 @@ export class Parser {
     const token = this.take();
     if (['tetu', 'salaq', 'deq_araq'].includes(token.type)) return node('Literal', token, { value: { tetu: true, salaq: false, deq_araq: null }[token.type] });
     if (['NUMBER', 'STRING'].includes(token.type)) return node('Literal', token, { value: token.value });
-    if (['IDENTIFIER', 'gitaq'].includes(token.type)) return node('Identifier', token, { name: token.value });
+    if (['IDENTIFIER', 'gitaq', 'niki', 'lokaq'].includes(token.type)) return node('Identifier', token, { name: token.value });
+    if (token.type === 'jariang') {
+      const klass = node('Identifier', this.peek(), { name: this.expect('IDENTIFIER').value });
+      this.expect('(');
+      const args = [];
+      if (!this.at(')')) { do { args.push(this.expression()); } while (this.match(',')); }
+      this.expect(')'); return node('New', token, { klass, args });
+    }
     if (token.type === '[') {
       const elements = [];
       if (!this.at(']')) { do { elements.push(this.expression()); } while (this.match(',')); }

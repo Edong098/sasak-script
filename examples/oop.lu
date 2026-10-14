@@ -1,0 +1,15 @@
+bale Manusia:
+    sandiang(aran):
+        niki.aran = aran
+    gaweq salam():
+        gitaq("Halo " + niki.aran)
+    melengo gaweq jenis():
+        sempuleq "Manusia"
+bale Pelajar tunang Manusia:
+    sandiang(aran):
+        lokaq(aran)
+    gaweq salam():
+        lokaq.salam()
+pengaq orang = jariang Pelajar("Ahmad")
+orang.salam()
+gitaq(Pelajar.jenis())

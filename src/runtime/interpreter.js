@@ -1,3 +1,4 @@
+import { SasakClass, SasakInstance } from './objects.js';
 import { Environment } from './environment.js';
 import { BreakSignal, ReturnSignal } from './signals.js';
 import { SasakError } from '../errors/SasakError.js';
@@ -15,6 +16,17 @@ export class Interpreter {
   async executeBody(body, env) { for (const statement of body) await this.execute(statement, env); }
   async execute(n, env) {
     switch (n.type) {
+      case 'Class': {
+        const parent = n.parent ? env.get(n.parent, n.location) : null;
+        if (parent !== null && !(parent instanceof SasakClass)) this.fail('Induk bale harus class.', n);
+        const klass = new SasakClass(n.name, parent);
+        for (const method of n.methods) {
+          const value = { kind: 'function', params: method.params, body: method.body, closure: env, owner: klass, isStatic: method.isStatic };
+          if (method.name === 'sandiang') klass.constructorMethod = value;
+          else (method.isStatic ? klass.staticMethods : klass.methods).set(method.name, value);
+        }
+        return env.define(n.name, klass, n.location);
+      }
       case 'Function': return env.define(n.name, { kind: 'function', params: n.params, body: n.body, closure: env }, n.location);
       case 'Return': throw new ReturnSignal(await this.evaluate(n.value, env));
       case 'Break': throw new BreakSignal();
@@ -43,6 +55,17 @@ export class Interpreter {
   }
   async evaluate(n, env) {
     switch (n.type) {
+      case 'New': {
+        const klass = await this.evaluate(n.klass, env);
+        if (!(klass instanceof SasakClass)) this.fail('jariang membutuhkan class.', n);
+        const args = [];
+        for (const arg of n.args) args.push(await this.evaluate(arg, env));
+        const instance = new SasakInstance(klass);
+        const init = klass.initializer();
+        if (init) await this.call({ ...init, receiver: instance }, args, n);
+        else if (args.length) this.fail('Constructor default tidak menerima argumen.', n);
+        return instance;
+      }
       case 'Array': {
         const values = [];
         for (const element of n.elements) values.push(await this.evaluate(element, env));
@@ -101,23 +124,48 @@ export class Interpreter {
     } else this.fail('Nilai ini tidak memiliki index atau property.', n);
   }
   getMember(object, key, n) {
+    if (object instanceof SasakInstance || object instanceof SasakClass || object?.kind === 'super') {
+      if (typeof key !== 'string') this.fail('Nama property harus string.', n);
+      const isSuper = object.kind === 'super';
+      const receiver = isSuper ? object.receiver : object;
+      const klass = isSuper ? object.parent : receiver instanceof SasakClass ? receiver : receiver.klass;
+      if (!isSuper && receiver.fields.has(key)) return receiver.fields.get(key);
+      const method = klass?.lookup(key, receiver instanceof SasakClass);
+      if (!method) this.fail(`Property atau method ${key} tidak ditemukan.`, n);
+      return { ...method, receiver };
+    }
     this.validateKey(object, key, n);
     if (Array.isArray(object)) return object[key];
     if (!object.has(key)) this.fail(`Property ${key} tidak ditemukan.`, n);
     return object.get(key);
   }
   setMember(object, key, value, n) {
+    if (object instanceof SasakInstance || object instanceof SasakClass) {
+      if (typeof key !== 'string') this.fail('Nama property harus string.', n);
+      object.fields.set(key, value); return value;
+    }
     this.validateKey(object, key, n);
     if (Array.isArray(object)) object[key] = value;
     else object.set(key, value);
     return value;
   }
   async call(callee, args, n) {
+    if (callee?.kind === 'super') {
+      if (!(callee.receiver instanceof SasakInstance)) this.fail('lokaq() hanya untuk constructor instance.', n);
+      const init = callee.parent?.initializer();
+      if (!callee.parent) this.fail('Class ini tidak memiliki induk.', n);
+      if (!init) { if (args.length) this.fail('Constructor induk tidak menerima argumen.', n); return null; }
+      return this.call({ ...init, receiver: callee.receiver }, args, n);
+    }
     if (!['builtin', 'function'].includes(callee?.kind)) this.fail('Nilai ini bukan fungsi.', n);
     const arity = callee.kind === 'builtin' ? callee.arity : callee.params.length;
     if (args.length !== arity) this.fail(`Fungsi membutuhkan ${arity} argumen.`, n);
     if (callee.kind === 'builtin') return callee.invoke(args);
     const local = new Environment(callee.closure);
+    if (callee.receiver) {
+      local.define('niki', callee.receiver, n.location);
+      local.define('lokaq', { kind: 'super', parent: callee.owner.parent, receiver: callee.receiver }, n.location);
+    }
     callee.params.forEach((param, i) => local.define(param, args[i], n.location));
     try { await this.executeBody(callee.body, local); }
     catch (error) { if (error instanceof ReturnSignal) return error.value; throw error; }

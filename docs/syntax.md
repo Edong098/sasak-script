@@ -63,3 +63,12 @@ integer 0 sampai panjang-1. Assignment object dapat membuat property baru;
 assignment array hanya mengganti elemen yang sudah ada. Akses property hilang
 menimbulkan error. Struktur data memiliki semantik referensi; equality membandingkan
 identitas, bukan isi. Tidak mengekspos prototype atau API object JavaScript.
+
+TASK 09: `bale Anak tunang Induk:` mendefinisikan inheritance. Constructor:
+`sandiang(parameter):`; instance: `jariang Nama(argumen)`. Method:
+`gaweq nama():`; static: `melengo gaweq nama():`. `niki` adalah receiver bound,
+termasuk ketika method disimpan dalam variabel. `lokaq(argumen)` memanggil
+constructor induk, dan `lokaq.nama()` memanggil method induk. Class tanpa
+constructor memakai constructor terdekat dari induknya, atau constructor nol
+argumen. Nilai return constructor diabaikan. Field instance terpisah dari method;
+field dengan nama sama menutupi method pada instance itu. Static method diwariskan.
