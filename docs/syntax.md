@@ -72,3 +72,16 @@ constructor induk, dan `lokaq.nama()` memanggil method induk. Class tanpa
 constructor memakai constructor terdekat dari induknya, atau constructor nol
 argumen. Nilai return constructor diabaikan. Field instance terpisah dari method;
 field dengan nama sama menutupi method pada instance itu. Static method diwariskan.
+
+TASK 10: `temang "./modul.lu"` memasukkan semua nama ekspor ke scope modul
+pemanggil. `sugulang pengaq`, `sugulang gaweq`, dan `sugulang bale` mengekspor
+deklarasi. Import/export hanya di tingkat modul; konflik nama ditolak. Path
+relatif terhadap file pengimpor, bukan working directory; hanya `.lu`, tanpa
+package atau JavaScript host. Cache per eksekusi memakai path canonical; siklus
+ditolak. Ekspor merupakan snapshot nilai saat deklarasi (referensi object tetap
+sama), bukan live binding. Scope internal modul tidak bocor ke pengimpor.
+
+`cobaq:` / `bauang error:` menangkap `pelewas nilai` dan runtime error. Nilai
+throw diterima apa adanya; runtime error menjadi string yang memuat lokasi.
+Return/break tidak ditangkap. Syntax error di file utama terjadi sebelum eksekusi,
+sehingga tidak bisa ditangkap oleh program yang sama.

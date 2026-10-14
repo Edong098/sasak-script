@@ -1,10 +1,13 @@
+import { ModuleLoader } from './modules.js';
 import { SasakClass, SasakInstance } from './objects.js';
 import { Environment } from './environment.js';
-import { BreakSignal, ReturnSignal } from './signals.js';
+import { BreakSignal, ReturnSignal, ThrowSignal } from './signals.js';
 import { SasakError } from '../errors/SasakError.js';
 
 export class Interpreter {
-  constructor({ output = console.log } = {}) {
+  constructor({ output = console.log, loader, file = '<source>' } = {}) {
+    this.loader = loader ?? new ModuleLoader({ output });
+    this.file = file; this.exports = new Map();
     this.global = new Environment();
     this.global.define('gitaq', { kind: 'builtin', arity: 1, invoke: args => { output(this.display(args[0])); return null; } });
   }
@@ -16,6 +19,28 @@ export class Interpreter {
   async executeBody(body, env) { for (const statement of body) await this.execute(statement, env); }
   async execute(n, env) {
     switch (n.type) {
+      case 'Import': {
+        const exports = await this.loader.load(n.path, this.file, n.location);
+        for (const name of exports.keys()) if (env.values.has(name)) this.fail(`Nama impor ${name} sudah dideklarasikan.`, n);
+        for (const [name, value] of exports) env.define(name, value, n.location);
+        return null;
+      }
+      case 'Export': {
+        await this.execute(n.declaration, env);
+        this.exports.set(n.declaration.name, env.get(n.declaration.name, n.location));
+        return null;
+      }
+      case 'Throw': throw new ThrowSignal(await this.evaluate(n.value, env), n.location);
+      case 'Try': {
+        try { await this.executeBody(n.body, new Environment(env)); }
+        catch (error) {
+          if (!(error instanceof ThrowSignal) && !(error instanceof SasakError)) throw error;
+          const handlerEnv = new Environment(env);
+          handlerEnv.define(n.name, error instanceof ThrowSignal ? error.value : error.toString(), n.location);
+          await this.executeBody(n.handler, handlerEnv);
+        }
+        return null;
+      }
       case 'Class': {
         const parent = n.parent ? env.get(n.parent, n.location) : null;
         if (parent !== null && !(parent instanceof SasakClass)) this.fail('Induk bale harus class.', n);

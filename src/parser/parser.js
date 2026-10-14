@@ -4,7 +4,7 @@ import { SasakError } from '../errors/SasakError.js';
 
 const PRECEDENCE = { atau: 1, dan: 2, '==': 3, '!=': 3, '>': 4, '<': 4, '>=': 4, '<=': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6 };
 export class Parser {
-  constructor(tokens) { this.tokens = tokens; this.current = 0; this.loopDepth = 0; this.functionDepth = 0; }
+  constructor(tokens) { this.tokens = tokens; this.current = 0; this.loopDepth = 0; this.functionDepth = 0; this.blockDepth = 0; }
   peek() { return this.tokens[this.current]; }
   at(type) { return this.peek().type === type; }
   take() { return this.tokens[this.current++]; }
@@ -23,6 +23,27 @@ export class Parser {
   statement() {
     const start = this.peek();
     let result;
+    if (this.match('temang')) {
+      if (this.blockDepth) this.error('temang hanya boleh di tingkat modul.', start);
+      const path = this.expect('STRING').value;
+      this.end(); return node('Import', start, { path });
+    }
+    if (this.match('sugulang')) {
+      if (this.blockDepth) this.error('sugulang hanya boleh di tingkat modul.', start);
+      const declaration = this.statement();
+      if (!['Declaration', 'Function', 'Class'].includes(declaration.type)) this.error('Ekspor harus deklarasi variabel, fungsi, atau class.', start);
+      return node('Export', start, { declaration });
+    }
+    if (this.match('cobaq')) {
+      const body = this.block();
+      this.expect('bauang'); const name = this.expect('IDENTIFIER').value;
+      const handler = this.block();
+      return node('Try', start, { body, name, handler });
+    }
+    if (this.match('pelewas')) {
+      const value = this.expression(); this.end();
+      return node('Throw', start, { value });
+    }
     if (this.match('bale')) return this.classDefinition(start);
     if (this.match('gaweq')) return this.functionDefinition(start);
     if (this.match('sempuleq')) {
@@ -99,8 +120,10 @@ export class Parser {
   block() {
     this.expect(':'); this.expect('NEWLINE'); this.expect('INDENT');
     const body = [];
+    this.blockDepth++;
     while (!this.at('DEDENT') && !this.at('EOF')) body.push(this.statement());
     this.expect('DEDENT');
+    this.blockDepth--;
     return body;
   }
   expression(min = 0) {

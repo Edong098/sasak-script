@@ -1,0 +1,6 @@
+temang "./modules/matematika.lu"
+gitaq(tambah(5, 3))
+cobaq:
+    pelewas "Contoh error"
+bauang error:
+    gitaq(error)
