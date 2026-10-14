@@ -1,0 +1,29 @@
+{
+  "name": "sasak-script",
+  "version": "0.1.0-dev.0",
+  "description": "Bahasa pemrograman edukatif berbasis bahasa Sasak Lombok Utara (Lotura).",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "sasak": "./src/cli/cli.js"
+  },
+  "exports": "./src/index.js",
+  "scripts": {
+    "start": "node src/cli/cli.js",
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Edong098/sasak-script.git"
+  },
+  "keywords": [
+    "sasak",
+    "lotura",
+    "education",
+    "interpreter"
+  ]
+}

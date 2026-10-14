@@ -36,30 +36,48 @@ menggunakan bahasa daerahnya.
 - **Ekstensi file:** `.lu`.
 - **CLI:** `sasak`.
 
-Repositori saat ini berada pada tahap persiapan. Fondasi Node.js, lexer, parser,
-interpreter, dan CLI belum diimplementasikan. Belum ada package npm yang tersedia
-dari proyek ini.
+Fondasi proyek Node.js dan kerangka CLI tersedia. Lexer, parser, dan interpreter
+belum diimplementasikan. Proyek belum dipublikasikan ke npm.
+
+## Menjalankan proyek
+
+Gunakan **Node.js 24 LTS** dan npm bawaannya, termasuk pada Windows melalui
+terminal VS Code. Tidak ada dependensi eksternal.
+
+```sh
+npm ci
+npm start -- --help
+npm start -- --version
+npm test
+```
+
+Alternatif langsung: `node src/cli/cli.js --help`.
+Untuk mengaktifkan perintah `sasak` secara lokal, jalankan `npm link` dari
+direktori repository, lalu `sasak --help` atau `sasak --version`. Pastikan
+direktori executable npm berada dalam `PATH` terminal Anda (termasuk di Windows).
+Perintah `npm start -- examples/hello.lu` saat ini keluar dengan status 1 karena
+interpreter belum tersedia, bukan mengeksekusi contoh tersebut.
 
 ## Ilustrasi sintaks
 
-Contoh berikut hanya menggambarkan gagasan awal penulisan program. Kata kunci
-`tulis` merupakan placeholder untuk ilustrasi, bukan kosakata Lotura yang sudah
-disepakati. Kosakata dan tata bahasa perlu dibahas bersama penutur Lotura.
-**Interpreter masih dalam pengembangan; contoh ini belum dapat dieksekusi dan
-bukan spesifikasi final.**
+Kata kunci mengikuti [kamus yang ditetapkan](docs/keywords.md).
+**Interpreter masih dalam pengembangan; contoh ini belum dapat dieksekusi.**
 
 ```text
-# Contoh isi file salam.lu (ilustrasi)
-tulis "Bahasa Lokal, Logika Global."
+# examples/hello.lu
+gitaq("Halo, Sasak Script!")
 ```
+
+Lihat [sintaks](docs/syntax.md), [arsitektur](docs/architecture.md), dan
+[roadmap versi](docs/roadmap.md) untuk rencana pengembangan.
 
 ## Roadmap
 
 - [x] Menyiapkan repositori, README, lisensi MIT, dan `.gitignore` Node.js.
-- [ ] Membangun fondasi proyek Node.js.
-- [ ] Mendiskusikan kosakata Lotura dan menyusun spesifikasi sintaks awal.
+- [x] Membangun fondasi proyek Node.js dan kerangka CLI.
+- [x] Mendokumentasikan kamus kata kunci dan rancangan sintaks awal.
 - [ ] Mengembangkan lexer, parser, dan interpreter secara bertahap.
-- [ ] Menambahkan CLI `sasak`, contoh `.lu`, dan pengujian.
+- [ ] Menghubungkan CLI `sasak` dengan interpreter dan menguji eksekusi `.lu`.
 - [ ] Menyusun panduan belajar dan dokumentasi kontribusi.
 
 ## Cara berkontribusi
