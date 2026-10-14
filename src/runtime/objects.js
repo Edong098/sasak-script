@@ -10,13 +10,17 @@ export class SasakClass {
     this.constructorMethod = null;
   }
   lookup(name, isStatic = false) {
-    return (
-      (isStatic ? this.staticMethods : this.methods).get(name) ??
-      this.parent?.lookup(name, isStatic)
-    );
+    for (let klass = this; klass; klass = klass.parent) {
+      const method = (isStatic ? klass.staticMethods : klass.methods).get(name);
+      if (method) return method;
+    }
+    return undefined;
   }
   initializer() {
-    return this.constructorMethod ?? this.parent?.initializer() ?? null;
+    for (let klass = this; klass; klass = klass.parent) {
+      if (klass.constructorMethod) return klass.constructorMethod;
+    }
+    return null;
   }
 }
 export class SasakInstance {

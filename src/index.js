@@ -19,15 +19,19 @@ import { realpath } from "node:fs/promises";
 import { resolve } from "node:path";
 
 export async function run(source, options = {}) {
-  const interpreter = new Interpreter(options);
   let entry;
   if (options.file) {
     entry = await realpath(options.file).catch(() => resolve(options.file));
-    interpreter.file = entry;
-    interpreter.loader.cache.set(entry, { state: "loading" });
   }
+  const interpreter = new Interpreter({
+    ...options,
+    file: entry ?? "<source>",
+  });
+  if (entry) interpreter.loader.cache.set(entry, { state: "loading" });
   try {
-    const env = await interpreter.run(parse(source, options));
+    const env = await interpreter.run(
+      parse(source, { ...options, budget: interpreter.budget }),
+    );
     await interpreter.scheduler.finish();
     if (entry)
       interpreter.loader.cache.set(entry, {

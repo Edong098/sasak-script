@@ -150,7 +150,9 @@ gitaq(tambah(5, 3))
 Import/export hanya di tingkat modul. Ekspor dapat berupa deklarasi `pengaq`,
 `gaweq`, `liwatin gaweq`, atau `bale`. Semua nama ekspor diikat pada scope pengimpor;
 konflik nama ditolak. Hanya path relatif `./` atau `../` dengan ekstensi `.lu`,
-relatif ke file pengimpor. Cache per eksekusi memakai realpath; siklus ditolak.
+relatif ke file pengimpor. Import dibatasi ke folder file utama setelah resolusi realpath, termasuk symlink.
+Path `../` hanya legal jika masih di dalam folder tersebut. Cache per eksekusi
+memakai realpath; siklus ditolak.
 Ekspor adalah snapshot nilai saat deklarasi, bukan live binding; object tetap
 berbagi referensi. Nama internal modul tidak bocor. Tidak ada import package npm.
 
@@ -164,7 +166,7 @@ bauang error:
 ```
 
 Throw menerima nilai bahasa. Catch menerima nilai throw apa adanya; runtime
-error menjadi string lokasi dan pesan. Catch memiliki scope lokal. Error tidak
+error menjadi string lokasi dan pesan. Catch memiliki scope lokal. `LimitError` bersifat fatal dan tidak bisa ditangkap. Error tidak
 tertangkap membuat CLI keluar dengan status 1. Syntax error di file utama terjadi
 sebelum eksekusi dan tidak dapat ditangkap oleh file yang sama. Syntax error modul
 impor bisa ditangkap saat import. Error CLI menyertakan file, baris, dan kolom,
@@ -190,3 +192,41 @@ tanpa await menyebabkan program gagal. Evaluasi setiap fungsi berurutan, dengan
 penjadwalan kooperatif melalui promise host, tanpa menerjemahkan source ke JS.
 Tidak ada top-level await, cancellation, timer, jaringan, filesystem builtin, atau
 parallel CPU execution. `gitaq` tidak mencetak promise yang belum dibuka.
+
+## Batas eksekusi
+
+Batas default CLI/API berlaku bersama untuk seluruh modul dan fungsi async:
+
+| Resource | Batas |
+| --- | --- |
+| Ukuran setiap source | 256 KiB; hanya file biasa |
+| Total token | 50.000 |
+| Kedalaman parser | 128 |
+| Langkah eksekusi | 100.000 |
+| Waktu | 2 detik, termasuk penantian promise |
+| Pemanggilan fungsi aktif | 128 |
+| Evaluasi AST aktif/kedalaman cetak | 256 |
+| Impor modul baru | 64 |
+| Tugas async | 1.024 |
+| Panjang string | 1.048.576 unit UTF-16 |
+| Output runtime | 1 MiB UTF-8 |
+
+LimitError menghentikan program; try/catch tidak dapat memulihkan budget.
+Format array dicetak melalui traversal terbatas, termasuk penanganan siklus.
+CLI mengubah karakter kontrol terminal menjadi teks escape pada output/diagnostik.
+Batas ini mengurangi risiko denial of service, tetapi tidak menggantikan isolasi OS.
+
+Embedding tepercaya dapat mengatur `limits` dan `moduleRoot` melalui API `run`:
+
+```js
+await run(source, {
+  file: '/project/main.lu',
+  moduleRoot: '/project',
+  limits: { steps: 200000, durationMs: 5000 },
+});
+```
+
+`moduleRoot` default adalah folder canonical file utama, atau working directory
+bila tidak ada file. Hanya host tepercaya yang boleh memperluas root/batas.
+Program `.lu` tidak bisa mengubahnya. Tetap gunakan proses terpisah untuk input
+berbahaya; callback output dan kode JavaScript host berada di luar batas bahasa.

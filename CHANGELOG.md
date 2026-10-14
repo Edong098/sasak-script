@@ -2,6 +2,13 @@
 
 ## Perubahan berikutnya
 
+- Menghapus CONTRIBUTING.md dan tautannya sesuai permintaan pemilik.
+- Membatasi impor canonical ke folder program; menolak traversal dan symlink keluar.
+- Menambah batas source/token/kedalaman/langkah/waktu/async/string/output yang tidak bisa direset program.
+- Membatasi pembacaan file dan sanitasi karakter kontrol terminal.
+- Menonaktifkan lifecycle script npm; mempin Actions ke SHA dengan kredensial checkout tidak disimpan.
+
+
 - Menetapkan keyword resmi `untuk` (for) dan `lanjutkan` (continue).
 - Mendukung `untuk (pengaq i = 0; i < 5; i = i + 1):` dan `lanjutkan` pada kedua jenis loop.
 - Menguji scope loop, nested loop, update setelah continue, dan break sebelum update.

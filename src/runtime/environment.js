@@ -17,8 +17,9 @@ export class Environment {
     return value;
   }
   owner(name, location) {
-    if (this.values.has(name)) return this;
-    if (this.parent) return this.parent.owner(name, location);
+    for (let scope = this; scope; scope = scope.parent) {
+      if (scope.values.has(name)) return scope;
+    }
     throw new SasakError(
       `Variabel ${name} belum dideklarasikan.`,
       location,

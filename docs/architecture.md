@@ -20,6 +20,8 @@ Node AST berupa data dengan lokasi source. Runtime menangani nilai bahasa sendir
 | `src/runtime/objects.js` | Class, instance, dan pencarian method diwariskan |
 | `src/runtime/modules.js` | Loader path relatif, cache realpath, scope dan siklus |
 | `src/runtime/async.js` | Promise runtime dan penuntasan tugas async |
+| `src/runtime/budget.js` | Budget bersama dan deadline fatal |
+| `src/runtime/source.js` | Pembacaan source biasa dengan ukuran terbatas |
 | `src/runtime/signals.js` | Sinyal internal break, continue, return, dan throw |
 | `src/errors/SasakError.js` | Error bahasa dengan file/baris/kolom |
 | `tests/` | Unit, regresi, dan integrasi CLI dengan node:test |
@@ -51,5 +53,6 @@ await run('gitaq(1)', { file: 'contoh.lu', output: console.log });
 mengembalikan Environment global untuk embedding/debugging. `file` menentukan
 basis path import. Jika dihilangkan, basisnya working directory. `Interpreter`
 adalah API tingkat rendah untuk AST; `run(source, options)` disarankan untuk
-penanganan scheduler dan error di batas program. Tidak ada jaminan sandbox,
-resource limit, atau kompatibilitas API stabil pada prototipe ini.
+penanganan scheduler dan error di batas program. Batas resource dan root modul berlaku bersama untuk lexer, parser, runtime, dan
+scheduler. Ini bukan sandbox OS atau API stabil; gunakan proses/container terpisah
+untuk input tak dipercaya.

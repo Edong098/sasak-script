@@ -1,18 +1,24 @@
 import { KEYWORDS, TOKEN } from "./tokens.js";
+import { ExecutionBudget } from "../runtime/budget.js";
 import { SasakError } from "../errors/SasakError.js";
 
 /** Lexer berbasis baris: indentasi empat spasi, lokasi satu-based. */
 export class Lexer {
-  constructor(source, { file = "<source>" } = {}) {
+  constructor(source, { file = "<source>", budget, limits } = {}) {
+    this.budget = budget ?? new ExecutionBudget(limits);
     this.source = source;
     this.file = file;
   }
   tokenize() {
+    this.budget.source(this.source, { file: this.file });
     const lines = this.source.replace(/\r\n/g, "\n").split("\n");
     const tokens = [];
     let depth = 0;
-    const emit = (type, value, line, column) =>
-      tokens.push({ type, value, line, column, file: this.file });
+    const emit = (type, value, line, column) => {
+      const location = { line, column, file: this.file };
+      this.budget.count("tokens", location);
+      tokens.push({ type, value, ...location });
+    };
     const fail = (message, line, column) => {
       throw new SasakError(message, { line, column, file: this.file });
     };

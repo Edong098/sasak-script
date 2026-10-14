@@ -1,5 +1,6 @@
 import { node } from "../ast/nodes.js";
 import { tokenize } from "../lexer/lexer.js";
+import { ExecutionBudget } from "../runtime/budget.js";
 import { SasakError } from "../errors/SasakError.js";
 
 const PRECEDENCE = {
@@ -18,7 +19,11 @@ const PRECEDENCE = {
   "%": 6,
 };
 export class Parser {
-  constructor(tokens) {
+  constructor(tokens, { budget, limits } = {}) {
+    this.budget = budget ?? new ExecutionBudget(limits);
+    this.depth = 0;
+    if (tokens.length > this.budget.limits.tokens)
+      this.budget.abort("Batas token terlampaui.", tokens[0]);
     this.tokens = tokens;
     this.current = 0;
     this.loopDepth = 0;
@@ -235,7 +240,20 @@ export class Parser {
     this.asyncContext = previousAsync;
     return node("Function", start, { name, params, body, isAsync });
   }
+  nested(parse) {
+    this.budget.check(this.peek());
+    if (++this.depth > this.budget.limits.parseDepth)
+      this.budget.abort("Batas kedalaman sintaks terlampaui.", this.peek());
+    try {
+      return parse();
+    } finally {
+      this.depth--;
+    }
+  }
   block() {
+    return this.nested(() => this.readBlock());
+  }
+  readBlock() {
     this.expect(":");
     this.expect("NEWLINE");
     this.expect("INDENT");
@@ -247,6 +265,9 @@ export class Parser {
     return body;
   }
   expression(min = 0) {
+    return this.nested(() => this.binary(min));
+  }
+  binary(min) {
     let left = this.unary();
     while (
       Object.hasOwn(PRECEDENCE, this.peek().type) &&
@@ -259,6 +280,9 @@ export class Parser {
     return left;
   }
   unary() {
+    return this.nested(() => this.readUnary());
+  }
+  readUnary() {
     if (this.at("anti")) {
       const token = this.take();
       if (!this.asyncContext)
@@ -346,4 +370,4 @@ export class Parser {
   }
 }
 export const parse = (source, options) =>
-  new Parser(tokenize(source, options)).parse();
+  new Parser(tokenize(source, options), options).parse();

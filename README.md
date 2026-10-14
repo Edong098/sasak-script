@@ -129,7 +129,6 @@ CLI. GitHub Actions dikonfigurasi untuk Node.js 24 pada Linux dan Windows.
 - [Kamus keyword resmi](docs/keywords.md)
 - [Arsitektur interpreter](docs/architecture.md)
 - [Roadmap](docs/roadmap.md)
-- [Panduan kontribusi](CONTRIBUTING.md)
 - [Changelog](CHANGELOG.md)
 
 ## Status pengembangan
@@ -144,10 +143,27 @@ Batasan saat ini:
 - Tidak ada konversi tipe otomatis antara string dan angka.
 - Index array harus berada dalam batas; belum tersedia operasi append.
 - Impor modul melingkar ditolak; await hanya tersedia dalam fungsi async.
-- Belum tersedia standard library I/O, cancellation, atau batas resource eksekusi.
+- Belum tersedia standard library I/O atau cancellation.
 - Angka memakai IEEE-754 sehingga integer besar dapat kehilangan presisi.
 
 Rincian perilaku dan batasan dijelaskan dalam [dokumentasi sintaks](docs/syntax.md).
+
+## Keamanan
+
+Source `.lu` tidak mendapat API shell, jaringan, JavaScript host, atau akses file
+selain impor modul. Impor dibatasi ke folder file utama, termasuk pemeriksaan
+symlink. Ada batas ukuran source, token, kedalaman, langkah, waktu, tugas async,
+string, dan output; pelanggaran menghentikan program dengan `LimitError`.
+Karakter kontrol berbahaya ditampilkan sebagai teks oleh CLI.
+
+Instalasi menonaktifkan lifecycle script npm melalui `.npmrc`. Proyek tidak memiliki
+dependensi eksternal; GitHub Actions dipin ke commit dan memakai izin baca.
+
+Perlindungan ini bukan antivirus atau isolasi sistem operasi. Jangan menjalankan
+JavaScript repository, instalasi, atau program tak dipercaya dengan hak admin.
+Untuk source yang benar-benar tak dipercaya, gunakan proses/container terpisah
+dengan batas CPU/memori dan akses filesystem minimal. Rincian batas ada di
+[dokumentasi sintaks](docs/syntax.md#batas-eksekusi).
 
 ## Kontribusi
 
@@ -156,7 +172,7 @@ kosakata, materi belajar, dokumentasi, atau kode. Ajukan ide melalui
 [Issues](https://github.com/Edong098/sasak-script/issues) dan perubahan melalui pull request.
 Jika menemukan masalah, langsung perbaiki dan ajukan pull request beserta hasil
 pengujian; tidak perlu meminta persetujuan terlebih dahulu. Ikuti keyword resmi dan
-panduan pada [CONTRIBUTING.md](CONTRIBUTING.md).
+sintaks yang terdokumentasi.
 
 ## Lisensi
 

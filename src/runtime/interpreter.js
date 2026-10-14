@@ -1,3 +1,4 @@
+import { ExecutionBudget } from "./budget.js";
 import { AsyncScheduler, SasakPromise } from "./async.js";
 import { ModuleLoader } from "./modules.js";
 import { SasakClass, SasakInstance } from "./objects.js";
@@ -30,11 +31,22 @@ export class Interpreter {
     output = console.log,
     loader,
     scheduler,
+    budget,
+    limits,
+    moduleRoot,
     file = "<source>",
   } = {}) {
-    this.scheduler = scheduler ?? new AsyncScheduler();
+    this.budget = budget ?? new ExecutionBudget(limits);
+    this.scheduler = scheduler ?? new AsyncScheduler(this.budget);
     this.loader =
-      loader ?? new ModuleLoader({ output, scheduler: this.scheduler });
+      loader ??
+      new ModuleLoader({
+        output,
+        scheduler: this.scheduler,
+        budget: this.budget,
+        file,
+        moduleRoot,
+      });
     this.file = file;
     this.exports = new Map();
     this.global = new Environment();
@@ -42,7 +54,9 @@ export class Interpreter {
       kind: "builtin",
       arity: 1,
       invoke: (args, n) => {
-        output(this.display(args[0], n));
+        const text = this.display(args[0], n);
+        this.budget.output(text, n.location);
+        output(text);
         return null;
       },
     });
@@ -53,10 +67,38 @@ export class Interpreter {
   display(value, n = { location: {} }) {
     if (value instanceof SasakPromise)
       this.fail("Gunakan anti untuk membaca hasil fungsi liwatin.", n);
+    if (Array.isArray(value)) return this.displayArray(value, n);
     if (value === null) return "deq_araq";
     if (value === true) return "tetu";
     if (value === false) return "salaq";
     return String(value);
+  }
+  displayArray(array, n, seen = new Set(), depth = 0) {
+    if (seen.has(array)) return "";
+    if (depth >= this.budget.limits.evalDepth)
+      this.budget.abort("Batas kedalaman output terlampaui.", n.location);
+    seen.add(array);
+    try {
+      let text = "";
+      for (let i = 0; i < array.length; i++) {
+        this.budget.tick(n.location);
+        const item = array[i];
+        const part = Array.isArray(item)
+          ? this.displayArray(item, n, seen, depth + 1)
+          : item === null
+            ? ""
+            : this.display(item, n);
+        if (
+          text.length + part.length + (i ? 1 : 0) >
+          this.budget.limits.stringLength
+        )
+          this.budget.abort("Batas panjang output terlampaui.", n.location);
+        text += (i ? "," : "") + part;
+      }
+      return text;
+    } finally {
+      seen.delete(array);
+    }
   }
   functionValue(definition, closure, extra = {}) {
     return {
@@ -92,6 +134,7 @@ export class Interpreter {
     for (const statement of body) await this.execute(statement, env);
   }
   async execute(n, env) {
+    this.budget.tick(n.location);
     switch (n.type) {
       case "Import": {
         const exports = await this.loader.load(n.path, this.file, n.location);
@@ -116,6 +159,7 @@ export class Interpreter {
         try {
           await this.executeBody(n.body, new Environment(env));
         } catch (error) {
+          if (error.fatal) throw error;
           if (!(error instanceof ThrowSignal) && !(error instanceof SasakError))
             throw error;
           const handlerEnv = new Environment(env);
@@ -214,12 +258,22 @@ export class Interpreter {
     return true;
   }
   async evaluate(n, env) {
+    this.budget.tick(n.location);
+    if (++this.budget.evaluations > this.budget.limits.evalDepth)
+      this.budget.abort("Batas kedalaman evaluasi terlampaui.", n.location);
+    try {
+      return await this.evaluateNode(n, env);
+    } finally {
+      this.budget.evaluations--;
+    }
+  }
+  async evaluateNode(n, env) {
     switch (n.type) {
       case "Await": {
         const value = await this.evaluate(n.argument, env);
         if (!(value instanceof SasakPromise))
           this.fail("anti membutuhkan hasil fungsi liwatin.", n);
-        return value.unwrap();
+        return value.unwrap(this.budget, n.location);
       }
       case "New": {
         const klass = await this.evaluate(n.klass, env);
@@ -280,8 +334,11 @@ export class Interpreter {
           n.operator === "+" &&
           typeof left === "string" &&
           typeof right === "string"
-        )
+        ) {
+          if (left.length + right.length > this.budget.limits.stringLength)
+            this.budget.abort("Batas panjang string terlampaui.", n.location);
           return left + right;
+        }
         this.number(left, n);
         this.number(right, n);
         if (["/", "%"].includes(n.operator) && right === 0)
@@ -364,10 +421,24 @@ export class Interpreter {
       this.fail(`Fungsi membutuhkan ${arity} argumen.`, n);
     if (callee.kind === "builtin") return callee.invoke(args, n);
     if (callee.isAsync)
-      return this.scheduler.start(this.invokeFunction(callee, args, n));
+      return this.scheduler.start(
+        () => this.invokeFunction(callee, args, n),
+        n.location,
+      );
     return this.invokeFunction(callee, args, n);
   }
   async invokeFunction(callee, args, n) {
+    this.budget.check(n.location);
+    this.budget.calls++;
+    if (this.budget.calls > this.budget.limits.callDepth)
+      this.budget.abort("Batas kedalaman pemanggilan terlampaui.", n.location);
+    try {
+      return await this.executeFunction(callee, args, n);
+    } finally {
+      this.budget.calls--;
+    }
+  }
+  async executeFunction(callee, args, n) {
     const local = new Environment(callee.closure);
     if (callee.receiver) {
       local.define("niki", callee.receiver, n.location);
@@ -390,7 +461,7 @@ export class Interpreter {
     } catch (error) {
       if (error instanceof ReturnSignal) {
         return callee.isAsync && error.value instanceof SasakPromise
-          ? error.value.unwrap()
+          ? error.value.unwrap(this.budget, n.location)
           : error.value;
       }
       throw error;
