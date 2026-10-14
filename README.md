@@ -3,36 +3,49 @@
 **Bahasa Lokal, Logika Global.**
 
 Sasak Script adalah bahasa pemrograman edukatif berbasis bahasa Sasak sehari-hari
-masyarakat Lombok Utara (**Lotura**). Proyek open-source ini bertujuan membantu
-melestarikan bahasa daerah sekaligus mengenalkan logika dasar pemrograman kepada
-generasi muda dan pemula.
+masyarakat Lombok Utara (**Lotura**). Proyek ini mengajak generasi muda dan pemula
+belajar logika pemrograman sambil mengenal serta menggunakan bahasa daerahnya.
 
-## Latar belakang
+Implementasi menggunakan **JavaScript dan Node.js**, file program berekstensi
+**`.lu`**, dan perintah CLI bernama **`sasak`**.
 
-Perkembangan zaman dan teknologi menghadirkan tantangan bagi penggunaan bahasa
-daerah di kalangan anak-anak. Sasak Script membawa kosakata yang dekat dengan
-kehidupan masyarakat Lombok Utara ke dalam pembelajaran coding: variabel,
-kondisi, perulangan, fungsi, hingga pemrograman berorientasi object.
+## Mengapa Sasak Script?
 
-## Mulai menggunakan
+Penggunaan bahasa daerah di kalangan anak-anak menghadapi tantangan seiring
+perkembangan teknologi. Sasak Script hadir sebagai sarana pelestarian bahasa
+Sasak Lombok Utara sekaligus pembelajaran variabel, kondisi, perulangan, fungsi,
+dan konsep pemrograman lainnya melalui kosakata yang dekat dengan kehidupan sehari-hari.
 
-Prasyarat: **Node.js 24 LTS** dan npm. Jalankan dari terminal VS Code, PowerShell,
-Command Prompt, atau terminal Linux/macOS:
+## Instalasi dan penggunaan
+
+Siapkan **Node.js 24 LTS** beserta npm. Buka terminal di VS Code, PowerShell,
+Command Prompt, atau terminal Linux/macOS, lalu jalankan:
 
 ```sh
 git clone https://github.com/Edong098/sasak-script.git
 cd sasak-script
 npm ci
-npm test
 npm link
-sasak --help
-sasak --version
 sasak examples/belajar.lu
 ```
 
-`npm link` membuat CLI lokal; pastikan direktori executable npm berada di PATH.
-Alternatif tanpa link: `node src/cli/cli.js examples/belajar.lu` atau
-`npm start -- examples/belajar.lu`. Tidak ada dependensi eksternal atau tahap build.
+`npm link` menghubungkan CLI ke checkout lokal. Pastikan direktori executable npm
+berada di `PATH`. Proyek tidak memerlukan dependensi eksternal maupun tahap build.
+Paket belum dipublikasikan ke npm; gunakan repository ini untuk instalasi.
+
+Jika tidak menggunakan `npm link`:
+
+```sh
+node src/cli/cli.js examples/belajar.lu
+# Atau melalui npm:
+npm start -- examples/belajar.lu
+```
+
+Bantuan dan versi tersedia melalui `sasak --help` serta `sasak --version`.
+
+## Program pertama
+
+Simpan sebagai `belajar.lu`, lalu jalankan `sasak belajar.lu`:
 
 ```text
 pengaq aran = "Ahmad"
@@ -56,56 +69,94 @@ Halo Ahmad
 Sudah dewasa
 ```
 
+Gunakan **empat spasi** untuk setiap tingkat indentasi. Blok diawali titik dua,
+komentar diawali `#`, dan pemanggilan fungsi menggunakan tanda kurung.
+
+## Perulangan `untuk` dan `lanjutkan`
+
+```text
+untuk (pengaq i = 0; i < 5; i = i + 1):
+    lamun (i == 2):
+        lanjutkan
+    gitaq(i)
+```
+
+Output: `0`, `1`, `3`, `4`, masing-masing pada baris baru.
+
+Header `untuk` terdiri dari deklarasi awal, kondisi, dan pembaruan penghitung.
+Titik koma hanya digunakan sebagai pemisah bagian header ini. `lanjutkan`
+melewati sisa iterasi, sedangkan `mengenteng` menghentikan loop.
+`lanjutkan` juga dapat digunakan dalam perulangan `semasih`.
+
 ## Fitur yang tersedia
 
-- Lexer dengan token NEWLINE/INDENT/DEDENT dan lokasi baris/kolom.
-- Parser dengan prioritas operator dan AST; interpreter mengevaluasi AST langsung.
-- Variabel, assignment, string, number, boolean, null, matematika, dan `gitaq()`.
-- Kondisi, logika dengan short circuit, while, for, break, dan continue.
-- Fungsi, return, lexical closure, local scope, dan recursion.
-- Array/object, indexing, property access, serta assignment.
-- Class, constructor, instance, bound method, inheritance, super, dan static method.
-- Modul `.lu` relatif, export, cache, try/catch, dan throw.
-- Fungsi async serta await melalui promise runtime.
+| Fitur | Keyword atau sintaks |
+| --- | --- |
+| Variabel dan output | `pengaq`, `gitaq()` |
+| Boolean dan null | `tetu`, `salaq`, `deq_araq` |
+| Kondisi dan logika | `lamun`, `deq`, `dan`, `atau`, `bukan` |
+| Perulangan | `semasih`, `untuk`, `mengenteng`, `lanjutkan` |
+| Fungsi dan return | `gaweq`, `sempuleq`; lexical scope, closure, recursion |
+| Struktur data | Array, object, indexing, property access, assignment |
+| Object-oriented programming | `bale`, `sandiang`, `niki`, `jariang`, `tunang`, `lokaq`, `melengo` |
+| Modul relatif | `temang`, `sugulang` |
+| Penanganan error | `cobaq`, `bauang`, `pelewas` |
+| Async dan await | `liwatin`, `anti` |
 
-Implementasi menggunakan JavaScript ESM dan Node.js, tanpa `eval()` maupun
-`new Function()`. File source menggunakan ekstensi **`.lu`** dan CLI **`sasak`**.
+Program dijalankan melalui **Lexer → Tokens → Parser → AST → Interpreter**,
+tanpa `eval()` atau `new Function()`. Error bahasa menyertakan nama file, baris,
+dan kolom. CLI keluar dengan status `1` jika program gagal.
 
-## Dokumentasi dan contoh
+## Contoh dan pengujian
 
-- [Tutorial pemula](docs/tutorial.md)
+Contoh siap dijalankan berada di [`examples/`](examples/), dari matematika hingga OOP,
+modul, dan async. Misalnya:
+
+```sh
+sasak examples/persegi.lu
+sasak examples/untuk.lu
+sasak examples/oop.lu
+npm test
+```
+
+Pengujian menggunakan `node:test` dan mencakup unit test, regresi, serta integrasi
+CLI. GitHub Actions dikonfigurasi untuk Node.js 24 pada Linux dan Windows.
+
+## Dokumentasi
+
+- [Tutorial untuk pemula](docs/tutorial.md)
 - [Sintaks dan semantik](docs/syntax.md)
-- [Keyword resmi](docs/keywords.md)
-- [Arsitektur](docs/architecture.md)
+- [Kamus keyword resmi](docs/keywords.md)
+- [Arsitektur interpreter](docs/architecture.md)
 - [Roadmap](docs/roadmap.md)
 - [Panduan kontribusi](CONTRIBUTING.md)
 - [Changelog](CHANGELOG.md)
 
-Contoh pada `examples/` mencakup matematika, kondisi, loop, fungsi, data, OOP,
-modul, async, serta `untuk`/`lanjutkan`; semuanya diuji melalui CLI. Library contoh berada di
-`examples/modules/` dan diimpor oleh `examples/modul.lu`.
+## Status pengembangan
 
-## Status dan batasan
+Versi **`0.1.0-dev.0`** merupakan prototipe pengembangan. Fitur di atas telah diuji,
+namun spesifikasi dan API belum dinyatakan stabil. Belum ada rilis publik atau
+publikasi npm.
 
-TASK 01–12 diimplementasikan sebagai **prototipe pengembangan** dengan versi
-package `0.1.0-dev.0`, bukan rilis stabil atau package npm yang sudah dipublikasikan.
+Batasan saat ini:
 
-Indentasi empat spasi, tanpa tab. Ekspresi harus berada pada satu baris. Angka
-menggunakan number IEEE-754; bilangan bulat di atas batas safe integer dapat
-kehilangan presisi. Belum ada standard library I/O,
-array push, top-level await, atau cancellation. Modul melingkar ditolak.
-Interpreter tidak membatasi waktu/jumlah iterasi program; loop tak berujung perlu
-dihentikan dari terminal. API ini bukan sandbox untuk source yang tidak dipercaya.
-Gunakan `gitaq` untuk nilai scalar/elemen data; format cetak seluruh struktur data
-belum dijadikan kontrak bahasa stabil.
+- Ekspresi ditulis pada satu baris; indentasi memakai spasi, bukan tab.
+- Tidak ada konversi tipe otomatis antara string dan angka.
+- Index array harus berada dalam batas; belum tersedia operasi append.
+- Impor modul melingkar ditolak; await hanya tersedia dalam fungsi async.
+- Belum tersedia standard library I/O, cancellation, atau batas resource eksekusi.
+- Angka memakai IEEE-754 sehingga integer besar dapat kehilangan presisi.
 
-CI disiapkan untuk Linux dan Windows dengan Node.js 24. Validasi saat pengembangan
-ini dilakukan pada Linux, termasuk CRLF dan path berisi spasi; hasil native Windows
-menunggu eksekusi CI. Publikasi npm dan release publik membutuhkan persetujuan pemilik.
+Rincian perilaku dan batasan dijelaskan dalam [dokumentasi sintaks](docs/syntax.md).
 
-## Kontribusi dan lisensi
+## Kontribusi
 
-Penutur Lotura, pendidik, pemula, dan pengembang dapat berkontribusi melalui
-[Issues](https://github.com/Edong098/sasak-script/issues) dan pull request.
-Keyword resmi tidak diganti tanpa persetujuan pemilik proyek.
-Sasak Script menggunakan [lisensi MIT](LICENSE).
+Penutur Lotura, pendidik, pemula, dan pengembang dapat membantu melalui diskusi
+kosakata, materi belajar, dokumentasi, atau kode. Ajukan ide melalui
+[Issues](https://github.com/Edong098/sasak-script/issues) dan perubahan melalui pull request.
+Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum berkontribusi; perubahan keyword resmi
+memerlukan persetujuan pemilik proyek.
+
+## Lisensi
+
+Sasak Script merupakan proyek open-source dengan [lisensi MIT](LICENSE).
