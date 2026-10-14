@@ -4,7 +4,7 @@ import { SasakError } from '../errors/SasakError.js';
 
 const PRECEDENCE = { atau: 1, dan: 2, '==': 3, '!=': 3, '>': 4, '<': 4, '>=': 4, '<=': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6 };
 export class Parser {
-  constructor(tokens) { this.tokens = tokens; this.current = 0; }
+  constructor(tokens) { this.tokens = tokens; this.current = 0; this.loopDepth = 0; }
   peek() { return this.tokens[this.current]; }
   at(type) { return this.peek().type === type; }
   take() { return this.tokens[this.current++]; }
@@ -23,6 +23,17 @@ export class Parser {
   statement() {
     const start = this.peek();
     let result;
+    if (this.match('semasih')) {
+      this.expect('('); const condition = this.expression(); this.expect(')');
+      this.loopDepth++;
+      const body = this.block();
+      this.loopDepth--;
+      return node('While', start, { condition, body });
+    }
+    if (this.match('mengenteng')) {
+      if (!this.loopDepth) this.error('mengenteng hanya boleh digunakan di dalam loop.', start);
+      this.end(); return node('Break', start);
+    }
     if (this.match('lamun')) {
       this.expect('('); const condition = this.expression(); this.expect(')');
       const consequent = this.block();

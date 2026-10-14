@@ -47,3 +47,7 @@ Blok memiliki scope lokal. Kondisi hanya menerima boolean. `dan` dan `atau`
 melakukan short circuit; prioritas dari rendah: atau, dan, equality, comparison,
 penjumlahan, perkalian, unary. Literal: `tetu`, `salaq`, `deq_araq`.
 `==` dan `!=` tidak melakukan konversi tipe.
+
+TASK 06: `semasih (kondisi):` mengevaluasi ulang kondisi pada setiap iterasi.
+`mengenteng` hanya legal di dalam loop dan keluar dari loop terdekat.
+Setiap iterasi memiliki scope blok baru. Belum ada keyword for atau continue.

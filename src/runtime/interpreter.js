@@ -1,4 +1,5 @@
 import { Environment } from './environment.js';
+import { BreakSignal } from './signals.js';
 import { SasakError } from '../errors/SasakError.js';
 
 export class Interpreter {
@@ -14,6 +15,14 @@ export class Interpreter {
   async executeBody(body, env) { for (const statement of body) await this.execute(statement, env); }
   async execute(n, env) {
     switch (n.type) {
+      case 'Break': throw new BreakSignal();
+      case 'While': {
+        while (this.boolean(await this.evaluate(n.condition, env), n)) {
+          try { await this.executeBody(n.body, new Environment(env)); }
+          catch (error) { if (error instanceof BreakSignal) break; throw error; }
+        }
+        return null;
+      }
       case 'If': {
         const condition = this.boolean(await this.evaluate(n.condition, env), n);
         return this.executeBody(condition ? n.consequent : n.alternate, new Environment(env));

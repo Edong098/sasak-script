@@ -1,0 +1,4 @@
+pengaq angka = 1
+semasih (angka <= 5):
+    gitaq(angka)
+    angka = angka + 1
