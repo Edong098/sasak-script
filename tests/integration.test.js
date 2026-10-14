@@ -1,7 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
+import {
+  mkdtemp,
+  mkdir,
+  writeFile,
+  readFile,
+  realpath,
+  rm,
+  symlink,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -68,10 +76,45 @@ test("CLI error memiliki nama file, baris dan kolom", async (t) => {
     });
     assert.equal(result.status, 1);
     assert.equal(result.stdout, "");
-    assert.ok(result.stderr.includes(file + diagnostic), result.stderr);
+    // CLI menampilkan path canonical, termasuk ekspansi path pendek Windows.
+    const canonicalFile = await realpath(file);
+    assert.ok(
+      result.stderr.includes(canonicalFile + diagnostic),
+      result.stderr,
+    );
     assert.doesNotMatch(result.stderr, /at .*\(/);
   }
 });
+test("diagnostik CLI memakai path canonical saat file melalui alias folder", async (t) => {
+  const dir = await mkdtemp(join(tmpdir(), "sasak-alias-"));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const actual = join(dir, "actual");
+  const alias = join(dir, "alias");
+  await mkdir(actual);
+  await writeFile(join(actual, "runtime.lu"), "pengaq a = 1\ngitaq(hilang)");
+  // Junction Windows tidak memerlukan hak pembuatan symlink file.
+  await symlink(
+    actual,
+    alias,
+    process.platform === "win32" ? "junction" : "dir",
+  );
+  const file = join(alias, "runtime.lu");
+  const canonicalFile = await realpath(file);
+  assert.notEqual(file, canonicalFile);
+  const result = spawnSync(process.execPath, [cli, file], {
+    encoding: "utf8",
+    timeout: 5000,
+  });
+  assert.ifError(result.error);
+  assert.equal(result.status, 1);
+  assert.equal(result.stdout, "");
+  assert.ok(
+    result.stderr.includes(canonicalFile + ":2:7 RuntimeError"),
+    result.stderr,
+  );
+  assert.doesNotMatch(result.stderr, /at .*\(/);
+});
+
 test("API publik, source kosong, unary plus dan immutable posisi", async () => {
   assert.equal(tokenize("")[0].type, "EOF");
   assert.deepEqual(parse("").body, []);
