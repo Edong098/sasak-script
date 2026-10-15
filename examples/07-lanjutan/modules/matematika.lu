@@ -1,0 +1,7 @@
+# Modul pendukung: menyediakan operasi matematika tanpa output.
+sugulang gaweq tambah(a, b):
+    sempuleq a + b
+sugulang gaweq kali(a, b):
+    sempuleq a * b
+sugulang gaweq luasPersegi(sisi):
+    sempuleq sisi * sisi

@@ -1,0 +1,4 @@
+# Mendefinisikan dan memanggil fungsi tanpa parameter.
+gaweq salam():
+    gitaq("Selamat belajar!")
+salam()

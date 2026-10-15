@@ -1,0 +1,21 @@
+# Membuat, memperbarui, dan membaca data mahasiswa di memori.
+# Koleksi tetap: belum ada input, append, penghapusan, atau penyimpanan file.
+bale Mahasiswa:
+    sandiang(nama, nilai):
+        niki.nama = nama
+        niki.nilai = nilai
+    gaweq ubahNilai(nilai):
+        lamun (nilai < 0 atau nilai > 100):
+            pelewas "Nilai harus antara 0 dan 100"
+        niki.nilai = nilai
+    gaweq status():
+        lamun (niki.nilai >= 75):
+            sempuleq "Lulus"
+        sempuleq "Belum lulus"
+pengaq mahasiswa = [jariang Mahasiswa("Ahmad", 85), jariang Mahasiswa("Siti", 70), jariang Mahasiswa("Ali", 65)]
+pengaq jumlah = 3
+mahasiswa[1].ubahNilai(80)
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    gitaq(mahasiswa[i].nama)
+    gitaq(mahasiswa[i].nilai)
+    gitaq(mahasiswa[i].status())

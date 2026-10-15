@@ -1,0 +1,12 @@
+# Mewarisi constructor dan method dari class induk.
+bale Manusia:
+    sandiang(nama):
+        niki.nama = nama
+    gaweq salam():
+        gitaq("Halo " + niki.nama)
+bale Pelajar tunang Manusia:
+    gaweq belajar():
+        gitaq("Sedang belajar Sasak Script")
+pengaq pelajar = jariang Pelajar("Ahmad")
+pelajar.salam()
+pelajar.belajar()

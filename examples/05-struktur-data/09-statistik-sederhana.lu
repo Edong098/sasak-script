@@ -1,0 +1,21 @@
+# Menghitung jumlah, rata-rata, minimum, dan maksimum.
+pengaq data = [70, 80, 90, 60]
+# Jumlah harus sesuai array dan lebih dari nol.
+pengaq jumlah = 4
+pengaq total = 0
+pengaq minimum = data[0]
+pengaq maksimum = data[0]
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    total = total + data[i]
+    lamun (data[i] < minimum):
+        minimum = data[i]
+    lamun (data[i] > maksimum):
+        maksimum = data[i]
+gitaq("Total:")
+gitaq(total)
+gitaq("Rata-rata:")
+gitaq(total / jumlah)
+gitaq("Minimum:")
+gitaq(minimum)
+gitaq("Maksimum:")
+gitaq(maksimum)

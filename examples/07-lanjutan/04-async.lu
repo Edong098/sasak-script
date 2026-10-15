@@ -1,0 +1,5 @@
+# Memulai fungsi async; CLI menunggu tugas selesai.
+# Tidak ada timer/jaringan: ini hanya demonstrasi fungsi async runtime.
+liwatin gaweq salam():
+    gitaq("Halo dari fungsi async")
+salam()

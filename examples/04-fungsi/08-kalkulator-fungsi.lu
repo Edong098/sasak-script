@@ -1,0 +1,13 @@
+# Memisahkan empat operasi kalkulator ke fungsi.
+gaweq tambah(a, b):
+    sempuleq a + b
+gaweq kurang(a, b):
+    sempuleq a - b
+gaweq kali(a, b):
+    sempuleq a * b
+gaweq bagi(a, b):
+    sempuleq a / b
+gitaq(tambah(12, 4))
+gitaq(kurang(12, 4))
+gitaq(kali(12, 4))
+gitaq(bagi(12, 4))

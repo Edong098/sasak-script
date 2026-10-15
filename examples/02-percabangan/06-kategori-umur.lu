@@ -1,0 +1,9 @@
+# Mengelompokkan umur dengan nested if.
+pengaq umur = 15
+lamun (umur < 13):
+    gitaq("Anak-anak")
+deq:
+    lamun (umur < 18):
+        gitaq("Remaja")
+    deq:
+        gitaq("Dewasa")

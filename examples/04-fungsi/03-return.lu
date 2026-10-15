@@ -1,0 +1,6 @@
+# Menggunakan hasil fungsi pada ekspresi berikutnya.
+gaweq tambah(a, b):
+    sempuleq a + b
+pengaq hasil = tambah(5, 3)
+gitaq(hasil)
+gitaq(hasil * 2)

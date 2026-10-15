@@ -1,0 +1,5 @@
+# Memanggil method class tanpa membuat instance.
+bale Matematika:
+    melengo gaweq luasPersegi(sisi):
+        sempuleq sisi * sisi
+gitaq(Matematika.luasPersegi(6))

@@ -1,0 +1,7 @@
+# Membandingkan nilai dengan batas kelulusan.
+pengaq nilai = 72
+pengaq batasLulus = 75
+lamun (nilai >= batasLulus):
+    gitaq("Lulus")
+deq:
+    gitaq("Belum lulus")

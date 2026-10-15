@@ -1,0 +1,4 @@
+# Menjalankan blok hanya ketika kondisi benar.
+pengaq umur = 18
+lamun (umur >= 17):
+    gitaq("Boleh membuat KTP")

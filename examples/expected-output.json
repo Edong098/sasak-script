@@ -1,0 +1,942 @@
+{
+  "hello.lu": {
+    "concept": "Mencetak salam pertama.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "Halo, Sasak Script!"
+    ]
+  },
+  "belajar.lu": {
+    "concept": "Menggabungkan variabel, fungsi, dan percabangan.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "Halo Ahmad",
+      "Sudah dewasa"
+    ]
+  },
+  "persegi.lu": {
+    "concept": "Menghitung luas persegi.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "Luas persegi:",
+      "25"
+    ]
+  },
+  "kondisi.lu": {
+    "concept": "Memilih pesan berdasarkan umur.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "Dewasa"
+    ]
+  },
+  "perulangan.lu": {
+    "concept": "Mencetak angka 1 sampai 5 dengan while.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+  "fungsi.lu": {
+    "concept": "Mengembalikan hasil penjumlahan dua parameter.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "8"
+    ]
+  },
+  "data.lu": {
+    "concept": "Membaca array dan memperbarui property object.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "10",
+      "Ali"
+    ]
+  },
+  "oop.lu": {
+    "concept": "Mendemonstrasikan inheritance, super, dan static.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "Halo Ahmad",
+      "Manusia"
+    ]
+  },
+  "modul.lu": {
+    "concept": "Mengimpor fungsi dan menangkap error.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "8",
+      "Contoh error"
+    ]
+  },
+  "async.lu": {
+    "concept": "Menunggu hasil fungsi async.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "8"
+    ]
+  },
+  "untuk.lu": {
+    "concept": "Melewati satu iterasi dengan lanjutkan.",
+    "level": "Contoh lama",
+    "role": "program",
+    "expected": [
+      "0",
+      "1",
+      "3",
+      "4"
+    ]
+  },
+  "modules/matematika.lu": {
+    "concept": "Modul pendukung contoh lama: mengekspor penjumlahan.",
+    "level": "Contoh lama",
+    "role": "module",
+    "expected": []
+  },
+  "01-dasar/01-hello-world.lu": {
+    "concept": "Mencetak salam ke terminal.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Halo, Sasak Script!"
+    ]
+  },
+  "01-dasar/02-variabel.lu": {
+    "concept": "Mendeklarasikan dan mengubah nilai variabel.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Ahmad",
+      "17",
+      "18"
+    ]
+  },
+  "01-dasar/03-tipe-data.lu": {
+    "concept": "Mengenali number, string, boolean, dan null.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "18",
+      "27.5",
+      "Belajar Lotura",
+      "tetu",
+      "salaq",
+      "deq_araq"
+    ]
+  },
+  "01-dasar/04-operator-aritmatika.lu": {
+    "concept": "Menghitung dengan tambah, kurang, kali, bagi, modulo, dan unary.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "13",
+      "7",
+      "30",
+      "5",
+      "1",
+      "-10"
+    ]
+  },
+  "01-dasar/05-operator-perbandingan.lu": {
+    "concept": "Membandingkan dua angka tanpa konversi tipe.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "tetu",
+      "salaq",
+      "tetu",
+      "tetu",
+      "salaq",
+      "tetu"
+    ]
+  },
+  "01-dasar/06-operator-logika.lu": {
+    "concept": "Menggunakan dan, atau, dan bukan pada boolean.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "tetu",
+      "tetu",
+      "salaq",
+      "salaq"
+    ]
+  },
+  "01-dasar/07-komentar.lu": {
+    "concept": "Menulis komentar tanpa mengubah output program.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "# di dalam string tetap dicetak",
+      "16"
+    ]
+  },
+  "01-dasar/08-luas-persegi.lu": {
+    "concept": "Menghitung luas persegi dari panjang sisi.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Luas persegi:",
+      "25"
+    ]
+  },
+  "01-dasar/09-luas-persegi-panjang.lu": {
+    "concept": "Menghitung luas persegi panjang.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Luas persegi panjang:",
+      "24"
+    ]
+  },
+  "01-dasar/10-konversi-suhu.lu": {
+    "concept": "Mengubah suhu Celsius menjadi Fahrenheit.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Fahrenheit:",
+      "86"
+    ]
+  },
+  "02-percabangan/01-if.lu": {
+    "concept": "Menjalankan blok hanya ketika kondisi benar.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Boleh membuat KTP"
+    ]
+  },
+  "02-percabangan/02-if-else.lu": {
+    "concept": "Memilih salah satu dari dua hasil.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Cuaca cerah"
+    ]
+  },
+  "02-percabangan/03-nested-if.lu": {
+    "concept": "Memeriksa kondisi di dalam kondisi lain.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Hadir dan nilai baik"
+    ]
+  },
+  "02-percabangan/04-ganjil-genap.lu": {
+    "concept": "Menentukan paritas dengan sisa pembagian.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Ganjil"
+    ]
+  },
+  "02-percabangan/05-nilai-kelulusan.lu": {
+    "concept": "Membandingkan nilai dengan batas kelulusan.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Belum lulus"
+    ]
+  },
+  "02-percabangan/06-kategori-umur.lu": {
+    "concept": "Mengelompokkan umur dengan nested if.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Remaja"
+    ]
+  },
+  "02-percabangan/07-bilangan-terbesar.lu": {
+    "concept": "Memilih nilai terbesar dari tiga bilangan.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Terbesar:",
+      "25"
+    ]
+  },
+  "02-percabangan/08-diskon-belanja.lu": {
+    "concept": "Memberikan diskon ketika total melewati batas.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Diskon:",
+      "15000",
+      "Total bayar:",
+      "135000"
+    ]
+  },
+  "03-perulangan/01-while.lu": {
+    "concept": "Mengulang pencetakan angka selama kondisi benar.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+  "03-perulangan/02-break.lu": {
+    "concept": "Menghentikan loop saat target ditemukan.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  "03-perulangan/03-nested-loop.lu": {
+    "concept": "Membuat pasangan angka melalui dua loop.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "11",
+      "12",
+      "13",
+      "21",
+      "22",
+      "23"
+    ]
+  },
+  "03-perulangan/04-bilangan-1-100.lu": {
+    "concept": "Mencetak bilangan 1 sampai 100.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "59",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "65",
+      "66",
+      "67",
+      "68",
+      "69",
+      "70",
+      "71",
+      "72",
+      "73",
+      "74",
+      "75",
+      "76",
+      "77",
+      "78",
+      "79",
+      "80",
+      "81",
+      "82",
+      "83",
+      "84",
+      "85",
+      "86",
+      "87",
+      "88",
+      "89",
+      "90",
+      "91",
+      "92",
+      "93",
+      "94",
+      "95",
+      "96",
+      "97",
+      "98",
+      "99",
+      "100"
+    ]
+  },
+  "03-perulangan/05-bilangan-genap.lu": {
+    "concept": "Mencetak bilangan genap dari 2 sampai 10.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "2",
+      "4",
+      "6",
+      "8",
+      "10"
+    ]
+  },
+  "03-perulangan/06-tabel-perkalian.lu": {
+    "concept": "Mencetak hasil perkalian 3 dengan 1 sampai 5.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Tabel perkalian 3:",
+      "3",
+      "6",
+      "9",
+      "12",
+      "15"
+    ]
+  },
+  "03-perulangan/07-faktorial.lu": {
+    "concept": "Menghitung faktorial dengan akumulator loop.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Faktorial 5:",
+      "120"
+    ]
+  },
+  "03-perulangan/08-deret-fibonacci.lu": {
+    "concept": "Membangun delapan bilangan Fibonacci secara iteratif.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "0",
+      "1",
+      "1",
+      "2",
+      "3",
+      "5",
+      "8",
+      "13"
+    ]
+  },
+  "03-perulangan/09-pola-bintang.lu": {
+    "concept": "Membentuk segitiga bintang dengan nested loop.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "*",
+      "**",
+      "***",
+      "****"
+    ]
+  },
+  "03-perulangan/10-for.lu": {
+    "concept": "Menggunakan header untuk: nilai awal, kondisi, dan pembaruan.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+  "03-perulangan/11-continue.lu": {
+    "concept": "Melewati angka 3 dengan lanjutkan tanpa menghentikan loop.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "1",
+      "2",
+      "4",
+      "5"
+    ]
+  },
+  "04-fungsi/01-fungsi-dasar.lu": {
+    "concept": "Mendefinisikan dan memanggil fungsi tanpa parameter.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Selamat belajar!"
+    ]
+  },
+  "04-fungsi/02-parameter.lu": {
+    "concept": "Mengirim nama sebagai parameter fungsi.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Halo Ahmad",
+      "Halo Siti"
+    ]
+  },
+  "04-fungsi/03-return.lu": {
+    "concept": "Menggunakan hasil fungsi pada ekspresi berikutnya.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "8",
+      "16"
+    ]
+  },
+  "04-fungsi/04-scope.lu": {
+    "concept": "Membedakan variabel global dan variabel lokal.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Lokal",
+      "Global"
+    ]
+  },
+  "04-fungsi/05-rekursi.lu": {
+    "concept": "Memanggil fungsi sendiri dengan kondisi berhenti.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "3",
+      "2",
+      "1"
+    ]
+  },
+  "04-fungsi/06-faktorial-rekursif.lu": {
+    "concept": "Menghitung faktorial secara rekursif.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "120"
+    ]
+  },
+  "04-fungsi/07-fibonacci-rekursif.lu": {
+    "concept": "Menghitung Fibonacci kecil dengan dua panggilan rekursif.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "21"
+    ]
+  },
+  "04-fungsi/08-kalkulator-fungsi.lu": {
+    "concept": "Memisahkan empat operasi kalkulator ke fungsi.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "16",
+      "8",
+      "48",
+      "3"
+    ]
+  },
+  "05-struktur-data/01-array.lu": {
+    "concept": "Menyimpan tiga nama dalam array.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Ahmad",
+      "Siti",
+      "Ali"
+    ]
+  },
+  "05-struktur-data/02-index-array.lu": {
+    "concept": "Membaca elemen array dengan index mulai dari nol.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Index 0:",
+      "70",
+      "Index 2:",
+      "90"
+    ]
+  },
+  "05-struktur-data/03-update-array.lu": {
+    "concept": "Mengganti elemen yang sudah ada pada array.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Sebelum:",
+      "85",
+      "Sesudah:",
+      "95"
+    ]
+  },
+  "05-struktur-data/04-object.lu": {
+    "concept": "Menyimpan dan memperbarui property object.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "Ahmad",
+      "17",
+      "18"
+    ]
+  },
+  "05-struktur-data/05-nested-array.lu": {
+    "concept": "Membaca matriks melalui dua index.",
+    "level": "Pemula",
+    "role": "program",
+    "expected": [
+      "2",
+      "3",
+      "9"
+    ]
+  },
+  "05-struktur-data/06-pencarian-linear.lu": {
+    "concept": "Mencari nilai dengan memeriksa elemen satu per satu.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Ditemukan pada index:",
+      "3"
+    ]
+  },
+  "05-struktur-data/07-bubble-sort.lu": {
+    "concept": "Mengurutkan angka dengan membandingkan pasangan bersebelahan.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "1",
+      "2",
+      "4",
+      "5",
+      "8"
+    ]
+  },
+  "05-struktur-data/08-selection-sort.lu": {
+    "concept": "Mengurutkan dengan memilih nilai minimum tiap putaran.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "11",
+      "12",
+      "22",
+      "25",
+      "64"
+    ]
+  },
+  "05-struktur-data/09-statistik-sederhana.lu": {
+    "concept": "Menghitung jumlah, rata-rata, minimum, dan maksimum.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Total:",
+      "300",
+      "Rata-rata:",
+      "75",
+      "Minimum:",
+      "60",
+      "Maksimum:",
+      "90"
+    ]
+  },
+  "06-oop/01-class.lu": {
+    "concept": "Mendefinisikan class sebagai cetak biru object.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Class Salam didefinisikan"
+    ]
+  },
+  "06-oop/02-object.lu": {
+    "concept": "Membuat dua instance dengan data yang terpisah.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Halo Ahmad",
+      "Halo Siti"
+    ]
+  },
+  "06-oop/03-constructor.lu": {
+    "concept": "Mengisi property saat instance dibuat.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Ahmad",
+      "17"
+    ]
+  },
+  "06-oop/04-method.lu": {
+    "concept": "Mengubah state object melalui method.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "150000"
+    ]
+  },
+  "06-oop/05-inheritance.lu": {
+    "concept": "Mewarisi constructor dan method dari class induk.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Halo Ahmad",
+      "Sedang belajar Sasak Script"
+    ]
+  },
+  "06-oop/06-super.lu": {
+    "concept": "Memanggil constructor dan method induk melalui lokaq.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Halo Ahmad dari SMA Lombok Utara"
+    ]
+  },
+  "06-oop/07-static.lu": {
+    "concept": "Memanggil method class tanpa membuat instance.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "36"
+    ]
+  },
+  "06-oop/08-data-mahasiswa.lu": {
+    "concept": "Menyimpan data dan menentukan status mahasiswa lewat class.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Ahmad",
+      "Ilmu Komputer",
+      "85",
+      "Lulus"
+    ]
+  },
+  "07-lanjutan/01-try-catch.lu": {
+    "concept": "Menangkap runtime error agar program dapat melanjutkan.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Pembagian gagal dan sudah ditangkap",
+      "Program berlanjut"
+    ]
+  },
+  "07-lanjutan/02-throw.lu": {
+    "concept": "Melempar dan menangkap pesan validasi buatan sendiri.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Nilai harus antara 0 dan 100"
+    ]
+  },
+  "07-lanjutan/modules/matematika.lu": {
+    "concept": "Modul pendukung: menyediakan operasi matematika tanpa output.",
+    "level": "Lanjutan",
+    "role": "module",
+    "expected": []
+  },
+  "07-lanjutan/03-import-export.lu": {
+    "concept": "Mengimpor fungsi yang diekspor modul lokal.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "8",
+      "24"
+    ]
+  },
+  "07-lanjutan/04-async.lu": {
+    "concept": "Memulai fungsi async; CLI menunggu tugas selesai.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Halo dari fungsi async"
+    ]
+  },
+  "07-lanjutan/05-await.lu": {
+    "concept": "Membuka hasil fungsi async dengan anti.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "8"
+    ]
+  },
+  "07-lanjutan/06-modul-matematika.lu": {
+    "concept": "Menggabungkan beberapa fungsi modul matematika.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Luas persegi:",
+      "36",
+      "Jumlah dua luas:",
+      "25"
+    ]
+  },
+  "08-mini-project/01-kalkulator.lu": {
+    "concept": "Kalkulator empat operasi dengan validasi pembagian nol.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "12 + 4 =",
+      "16",
+      "12 - 4 =",
+      "8",
+      "12 * 4 =",
+      "48",
+      "12 / 4 =",
+      "3",
+      "Pembagian dengan nol ditolak"
+    ]
+  },
+  "08-mini-project/02-sistem-nilai-siswa.lu": {
+    "concept": "Menghitung nilai berbobot dan kelulusan tiga siswa.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Ahmad",
+      "82",
+      "Lulus",
+      "Siti",
+      "60",
+      "Belum lulus",
+      "Ali",
+      "82",
+      "Lulus"
+    ]
+  },
+  "08-mini-project/03-kasir-sederhana.lu": {
+    "concept": "Menghitung total belanja, diskon, pembayaran, dan kembalian.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Total belanja:",
+      "35000",
+      "Diskon:",
+      "3500",
+      "Harus dibayar:",
+      "31500",
+      "Pembayaran:",
+      "50000",
+      "Kembalian:",
+      "18500"
+    ]
+  },
+  "08-mini-project/04-manajemen-mahasiswa.lu": {
+    "concept": "Membuat, memperbarui, dan membaca data mahasiswa di memori.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Ahmad",
+      "85",
+      "Lulus",
+      "Siti",
+      "80",
+      "Lulus",
+      "Ali",
+      "65",
+      "Belum lulus"
+    ]
+  },
+  "08-mini-project/05-tebak-angka.lu": {
+    "concept": "Simulasi tebak angka dengan target dan tebakan tetap, tanpa input/random.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Simulasi: target dan tebakan sudah ditentukan.",
+      "Tebakan:",
+      "3",
+      "Terlalu kecil",
+      "Tebakan:",
+      "9",
+      "Terlalu besar",
+      "Tebakan:",
+      "7",
+      "Benar!"
+    ]
+  },
+  "08-mini-project/06-konversi-suhu.lu": {
+    "concept": "Mengonversi suhu dengan tiga fungsi dan data tetap.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "30 Celsius ke Fahrenheit:",
+      "86",
+      "86 Fahrenheit ke Celsius:",
+      "30",
+      "30 Celsius ke Kelvin:",
+      "303.15"
+    ]
+  },
+  "08-mini-project/07-statistik-nilai.lu": {
+    "concept": "Merangkum nilai ke object statistik lalu menampilkan hasil.",
+    "level": "Lanjutan",
+    "role": "program",
+    "expected": [
+      "Jumlah data:",
+      "5",
+      "Total:",
+      "400",
+      "Rata-rata:",
+      "80",
+      "Minimum:",
+      "65",
+      "Maksimum:",
+      "90"
+    ]
+  },
+  "08-mini-project/08-permainan-kuis.lu": {
+    "concept": "Simulasi kuis dengan jawaban tersimpan, tanpa input interaktif.",
+    "level": "Menengah",
+    "role": "program",
+    "expected": [
+      "Simulasi kuis: jawaban sudah tersimpan.",
+      "2 + 3 = ?",
+      "Jawaban tersimpan:",
+      "5",
+      "Benar",
+      "3 * 3 = ?",
+      "Jawaban tersimpan:",
+      "9",
+      "Benar",
+      "10 - 4 = ?",
+      "Jawaban tersimpan:",
+      "12",
+      "Salah",
+      "Skor:",
+      "2",
+      "Jumlah soal:",
+      "3"
+    ]
+  }
+}

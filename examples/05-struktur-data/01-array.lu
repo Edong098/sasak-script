@@ -1,0 +1,5 @@
+# Menyimpan tiga nama dalam array.
+pengaq nama = ["Ahmad", "Siti", "Ali"]
+gitaq(nama[0])
+gitaq(nama[1])
+gitaq(nama[2])

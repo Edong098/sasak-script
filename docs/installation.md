@@ -82,8 +82,8 @@ eksternal; instalasi tetap berguna untuk memvalidasi konfigurasi npm/lockfile.
 `.npmrc` menonaktifkan lifecycle script instalasi. Perintah `npm test` tetap berjalan
 karena merupakan perintah pengujian yang Anda panggil secara eksplisit.
 
-Sesi validasi terakhir menjalankan **144 test**, seluruhnya lulus pada Linux.
-Jumlah test dapat berubah ketika proyek dikembangkan. Hasil Windows harus dilihat
+Ringkasan `npm test` menunjukkan jumlah test yang dijalankan, lulus, gagal, dan
+dilewati. Jumlahnya dapat berubah ketika proyek dikembangkan. Hasil Windows harus dilihat
 pada eksekusi CI Windows; hasil Linux tidak membuktikan native Windows.
 
 ## 4. Jalankan tanpa instalasi CLI global
@@ -210,5 +210,5 @@ Perintah tersebut melepas instalasi/link CLI, bukan menghapus source repository.
 Sasak Script membatasi impor, resource eksekusi, dan kontrol terminal. Perlindungan
 ini bukan antivirus atau sandbox OS. Jalankan hanya checkout JavaScript yang Anda
 percaya; untuk program tak dipercaya gunakan proses/container dengan hak minimal.
-Baca [batas eksekusi](syntax.md#batas-eksekusi) dan [tutorial](tutorial.md) sebelum
+Baca [batas eksekusi](syntax.md#batas-eksekusi) dan [panduan dasar](belajar-dasar.md) sebelum
 menulis program yang lebih besar.

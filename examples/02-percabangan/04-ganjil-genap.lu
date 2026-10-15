@@ -1,0 +1,6 @@
+# Menentukan paritas dengan sisa pembagian.
+pengaq angka = 7
+lamun (angka % 2 == 0):
+    gitaq("Genap")
+deq:
+    gitaq("Ganjil")

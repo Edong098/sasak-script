@@ -1,0 +1,10 @@
+# Membentuk segitiga bintang dengan nested loop.
+pengaq baris = 1
+semasih (baris <= 4):
+    pengaq pola = ""
+    pengaq kolom = 1
+    semasih (kolom <= baris):
+        pola = pola + "*"
+        kolom = kolom + 1
+    gitaq(pola)
+    baris = baris + 1

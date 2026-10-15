@@ -1,0 +1,12 @@
+# Mengurutkan angka dengan membandingkan pasangan bersebelahan.
+pengaq data = [5, 1, 4, 2, 8]
+# Sesuaikan jumlah jika elemen data diubah; belum ada builtin panjang array.
+pengaq jumlah = 5
+untuk (pengaq putaran = 0; putaran < jumlah - 1; putaran = putaran + 1):
+    untuk (pengaq i = 0; i < jumlah - 1 - putaran; i = i + 1):
+        lamun (data[i] > data[i + 1]):
+            pengaq sementara = data[i]
+            data[i] = data[i + 1]
+            data[i + 1] = sementara
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    gitaq(data[i])

@@ -1,0 +1,7 @@
+# Menghentikan loop saat target ditemukan.
+pengaq angka = 1
+semasih (angka <= 10):
+    lamun (angka == 4):
+        mengenteng
+    gitaq(angka)
+    angka = angka + 1

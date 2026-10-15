@@ -1,0 +1,7 @@
+# Mencetak hasil perkalian 3 dengan 1 sampai 5.
+pengaq bilangan = 3
+pengaq pengali = 1
+gitaq("Tabel perkalian 3:")
+semasih (pengali <= 5):
+    gitaq(bilangan * pengali)
+    pengali = pengali + 1

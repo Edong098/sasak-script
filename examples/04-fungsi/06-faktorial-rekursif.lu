@@ -1,0 +1,6 @@
+# Menghitung faktorial secara rekursif.
+gaweq faktorial(angka):
+    lamun (angka <= 1):
+        sempuleq 1
+    sempuleq angka * faktorial(angka - 1)
+gitaq(faktorial(5))

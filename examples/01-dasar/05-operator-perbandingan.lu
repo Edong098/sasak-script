@@ -1,0 +1,9 @@
+# Membandingkan dua angka tanpa konversi tipe.
+pengaq a = 5
+pengaq b = 3
+gitaq(a > b)
+gitaq(a < b)
+gitaq(a >= 5)
+gitaq(b <= 3)
+gitaq(a == b)
+gitaq(a != b)

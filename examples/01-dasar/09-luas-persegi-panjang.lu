@@ -1,0 +1,6 @@
+# Menghitung luas persegi panjang.
+pengaq panjang = 8
+pengaq lebar = 3
+pengaq luas = panjang * lebar
+gitaq("Luas persegi panjang:")
+gitaq(luas)

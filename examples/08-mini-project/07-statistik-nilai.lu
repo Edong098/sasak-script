@@ -1,0 +1,27 @@
+# Merangkum nilai ke object statistik lalu menampilkan hasil.
+gaweq ringkas(data, jumlah):
+    lamun (jumlah <= 0):
+        pelewas "Data tidak boleh kosong"
+    pengaq total = 0
+    pengaq minimum = data[0]
+    pengaq maksimum = data[0]
+    untuk (pengaq i = 0; i < jumlah; i = i + 1):
+        total = total + data[i]
+        lamun (data[i] < minimum):
+            minimum = data[i]
+        lamun (data[i] > maksimum):
+            maksimum = data[i]
+    sempuleq {"jumlah": jumlah, "total": total, "rataRata": total / jumlah, "minimum": minimum, "maksimum": maksimum}
+pengaq nilai = [75, 80, 65, 90, 90]
+# Argumen jumlah harus sesuai dengan array karena belum ada builtin panjang.
+pengaq hasil = ringkas(nilai, 5)
+gitaq("Jumlah data:")
+gitaq(hasil.jumlah)
+gitaq("Total:")
+gitaq(hasil.total)
+gitaq("Rata-rata:")
+gitaq(hasil.rataRata)
+gitaq("Minimum:")
+gitaq(hasil.minimum)
+gitaq("Maksimum:")
+gitaq(hasil.maksimum)

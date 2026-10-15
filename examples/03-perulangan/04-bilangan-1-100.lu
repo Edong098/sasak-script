@@ -1,0 +1,5 @@
+# Mencetak bilangan 1 sampai 100.
+pengaq angka = 1
+semasih (angka <= 100):
+    gitaq(angka)
+    angka = angka + 1

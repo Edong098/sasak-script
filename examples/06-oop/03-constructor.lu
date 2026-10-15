@@ -1,0 +1,8 @@
+# Mengisi property saat instance dibuat.
+bale Siswa:
+    sandiang(nama, umur):
+        niki.nama = nama
+        niki.umur = umur
+pengaq siswa = jariang Siswa("Ahmad", 17)
+gitaq(siswa.nama)
+gitaq(siswa.umur)

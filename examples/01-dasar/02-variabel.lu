@@ -1,0 +1,7 @@
+# Mendeklarasikan dan mengubah nilai variabel.
+pengaq aran = "Ahmad"
+pengaq umur = 17
+gitaq(aran)
+gitaq(umur)
+umur = umur + 1
+gitaq(umur)

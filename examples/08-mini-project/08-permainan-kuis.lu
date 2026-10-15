@@ -1,0 +1,19 @@
+# Simulasi kuis dengan jawaban tersimpan, tanpa input interaktif.
+gitaq("Simulasi kuis: jawaban sudah tersimpan.")
+pengaq soal = [{"tanya": "2 + 3 = ?", "benar": "5"}, {"tanya": "3 * 3 = ?", "benar": "9"}, {"tanya": "10 - 4 = ?", "benar": "6"}]
+pengaq jawaban = ["5", "9", "12"]
+pengaq jumlah = 3
+pengaq skor = 0
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    gitaq(soal[i].tanya)
+    gitaq("Jawaban tersimpan:")
+    gitaq(jawaban[i])
+    lamun (jawaban[i] == soal[i].benar):
+        skor = skor + 1
+        gitaq("Benar")
+    deq:
+        gitaq("Salah")
+gitaq("Skor:")
+gitaq(skor)
+gitaq("Jumlah soal:")
+gitaq(jumlah)

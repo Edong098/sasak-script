@@ -1,3 +1,4 @@
+# Memilih pesan berdasarkan umur.
 pengaq umur = 18
 lamun (umur >= 17):
     gitaq("Dewasa")

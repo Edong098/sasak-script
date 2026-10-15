@@ -1,0 +1,14 @@
+# Memanggil constructor dan method induk melalui lokaq.
+bale Manusia:
+    sandiang(nama):
+        niki.nama = nama
+    gaweq salam():
+        sempuleq "Halo " + niki.nama
+bale Pelajar tunang Manusia:
+    sandiang(nama, sekolah):
+        lokaq(nama)
+        niki.sekolah = sekolah
+    gaweq salam():
+        sempuleq lokaq.salam() + " dari " + niki.sekolah
+pengaq pelajar = jariang Pelajar("Ahmad", "SMA Lombok Utara")
+gitaq(pelajar.salam())

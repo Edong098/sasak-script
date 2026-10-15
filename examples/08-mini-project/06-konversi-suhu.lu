@@ -1,0 +1,13 @@
+# Mengonversi suhu dengan tiga fungsi dan data tetap.
+gaweq keFahrenheit(celsius):
+    sempuleq celsius * 9 / 5 + 32
+gaweq keCelsius(fahrenheit):
+    sempuleq (fahrenheit - 32) * 5 / 9
+gaweq keKelvin(celsius):
+    sempuleq celsius + 273.15
+gitaq("30 Celsius ke Fahrenheit:")
+gitaq(keFahrenheit(30))
+gitaq("86 Fahrenheit ke Celsius:")
+gitaq(keCelsius(86))
+gitaq("30 Celsius ke Kelvin:")
+gitaq(keKelvin(30))

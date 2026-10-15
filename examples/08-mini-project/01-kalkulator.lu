@@ -1,0 +1,26 @@
+# Kalkulator empat operasi dengan validasi pembagian nol.
+# Data operasi ditulis di source; belum ada input interaktif.
+gaweq hitung(a, b, operasi):
+    lamun (operasi == "+"):
+        sempuleq a + b
+    lamun (operasi == "-"):
+        sempuleq a - b
+    lamun (operasi == "*"):
+        sempuleq a * b
+    lamun (operasi == "/"):
+        lamun (b == 0):
+            pelewas "Pembagian dengan nol ditolak"
+        sempuleq a / b
+    pelewas "Operasi tidak dikenal"
+gitaq("12 + 4 =")
+gitaq(hitung(12, 4, "+"))
+gitaq("12 - 4 =")
+gitaq(hitung(12, 4, "-"))
+gitaq("12 * 4 =")
+gitaq(hitung(12, 4, "*"))
+gitaq("12 / 4 =")
+gitaq(hitung(12, 4, "/"))
+cobaq:
+    gitaq(hitung(12, 0, "/"))
+bauang error:
+    gitaq(error)

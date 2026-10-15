@@ -1,0 +1,19 @@
+# Simulasi tebak angka dengan target dan tebakan tetap, tanpa input/random.
+gitaq("Simulasi: target dan tebakan sudah ditentukan.")
+pengaq target = 7
+pengaq tebakan = [3, 9, 7]
+pengaq jumlah = 3
+pengaq menang = salaq
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    gitaq("Tebakan:")
+    gitaq(tebakan[i])
+    lamun (tebakan[i] == target):
+        gitaq("Benar!")
+        menang = tetu
+        mengenteng
+    lamun (tebakan[i] < target):
+        gitaq("Terlalu kecil")
+    deq:
+        gitaq("Terlalu besar")
+lamun (bukan menang):
+    gitaq("Belum berhasil")

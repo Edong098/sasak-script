@@ -1,0 +1,5 @@
+# Mengimpor fungsi yang diekspor modul lokal.
+# Modul berada di subfolder ini agar tetap di dalam root impor program.
+temang "./modules/matematika.lu"
+gitaq(tambah(5, 3))
+gitaq(kali(4, 6))

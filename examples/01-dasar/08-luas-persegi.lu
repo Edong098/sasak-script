@@ -1,0 +1,5 @@
+# Menghitung luas persegi dari panjang sisi.
+pengaq sisi = 5
+pengaq luas = sisi * sisi
+gitaq("Luas persegi:")
+gitaq(luas)

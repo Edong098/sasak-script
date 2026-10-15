@@ -1,3 +1,4 @@
+# Mendemonstrasikan inheritance, super, dan static.
 bale Manusia:
     sandiang(aran):
         niki.aran = aran

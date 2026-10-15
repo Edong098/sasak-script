@@ -1,0 +1,15 @@
+# Mencari nilai dengan memeriksa elemen satu per satu.
+pengaq data = [12, 7, 20, 9, 15]
+# Jumlah data ditulis eksplisit karena builtin panjang array belum tersedia.
+pengaq jumlah = 5
+pengaq target = 9
+pengaq ditemukan = -1
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    lamun (data[i] == target):
+        ditemukan = i
+        mengenteng
+lamun (ditemukan == -1):
+    gitaq("Tidak ditemukan")
+deq:
+    gitaq("Ditemukan pada index:")
+    gitaq(ditemukan)

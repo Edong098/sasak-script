@@ -1,0 +1,6 @@
+# Memilih salah satu dari dua hasil.
+pengaq hujan = salaq
+lamun (hujan):
+    gitaq("Bawa payung")
+deq:
+    gitaq("Cuaca cerah")

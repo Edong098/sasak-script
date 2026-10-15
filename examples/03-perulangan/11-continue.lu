@@ -1,0 +1,5 @@
+# Melewati angka 3 dengan lanjutkan tanpa menghentikan loop.
+untuk (pengaq angka = 1; angka <= 5; angka = angka + 1):
+    lamun (angka == 3):
+        lanjutkan
+    gitaq(angka)

@@ -1,3 +1,4 @@
+# Membaca array dan memperbarui property object.
 pengaq angka = [10, 20, 30]
 gitaq(angka[0])
 pengaq orang = {"aran": "Ahmad"}

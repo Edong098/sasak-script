@@ -1,0 +1,9 @@
+# Melempar dan menangkap pesan validasi buatan sendiri.
+gaweq validasiNilai(nilai):
+    lamun (nilai < 0 atau nilai > 100):
+        pelewas "Nilai harus antara 0 dan 100"
+    sempuleq nilai
+cobaq:
+    gitaq(validasiNilai(120))
+bauang error:
+    gitaq(error)

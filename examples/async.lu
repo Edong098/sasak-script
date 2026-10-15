@@ -1,3 +1,4 @@
+# Menunggu hasil fungsi async.
 liwatin gaweq tambah(a, b):
     sempuleq a + b
 liwatin gaweq utama():

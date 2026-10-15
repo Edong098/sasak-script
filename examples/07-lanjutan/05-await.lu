@@ -1,0 +1,8 @@
+# Membuka hasil fungsi async dengan anti.
+liwatin gaweq tambah(a, b):
+    sempuleq a + b
+liwatin gaweq utama():
+    pengaq tugas = tambah(5, 3)
+    pengaq hasil = anti tugas
+    gitaq(hasil)
+utama()

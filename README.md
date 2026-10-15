@@ -201,6 +201,15 @@ dan kolom. CLI keluar dengan status `1` jika program gagal.
 
 ## Contoh dan pengujian
 
+Koleksi belajar terstruktur tersedia di **[katalog examples](examples/README.md)**:
+68 program baru dalam delapan kategori, dari dasar hingga mini project, dengan
+contoh lama tetap dipertahankan. Mulai dari [panduan dasar](docs/belajar-dasar.md),
+lalu ikuti urutan kategori. Tebak angka dan kuis merupakan simulasi data tetap.
+
+```sh
+npm run examples:test
+```
+
 Contoh siap dijalankan berada di [`examples/`](examples/), dari matematika hingga OOP,
 modul, dan async. Misalnya:
 
@@ -216,9 +225,9 @@ CLI. GitHub Actions dikonfigurasi untuk Node.js 24 pada Linux dan Windows.
 
 ## Dokumentasi
 
+- [Katalog contoh dan delapan panduan belajar](examples/README.md)
 - [Instalasi dan troubleshooting](docs/installation.md)
-
-- [Tutorial untuk pemula](docs/tutorial.md)
+- [Panduan dasar untuk pemula](docs/belajar-dasar.md)
 - [Sintaks dan semantik](docs/syntax.md)
 - [Kamus keyword resmi](docs/keywords.md)
 - [Arsitektur interpreter](docs/architecture.md)

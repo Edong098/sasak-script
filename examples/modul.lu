@@ -1,3 +1,4 @@
+# Mengimpor fungsi dan menangkap error.
 temang "./modules/matematika.lu"
 gitaq(tambah(5, 3))
 cobaq:

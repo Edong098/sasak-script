@@ -1,0 +1,7 @@
+# Memanggil fungsi sendiri dengan kondisi berhenti.
+gaweq hitungMundur(angka):
+    lamun (angka <= 0):
+        sempuleq
+    gitaq(angka)
+    hitungMundur(angka - 1)
+hitungMundur(3)

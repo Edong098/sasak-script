@@ -1,0 +1,7 @@
+# Menggunakan dan, atau, dan bukan pada boolean.
+pengaq hadir = tetu
+pengaq terlambat = salaq
+gitaq(hadir dan bukan terlambat)
+gitaq(hadir atau terlambat)
+gitaq(bukan hadir)
+gitaq(hadir dan terlambat)

@@ -1,0 +1,6 @@
+# Menyimpan dan memperbarui property object.
+pengaq siswa = {"nama": "Ahmad", "umur": 17}
+gitaq(siswa.nama)
+gitaq(siswa["umur"])
+siswa.umur = 18
+gitaq(siswa.umur)

@@ -1,0 +1,10 @@
+# Membuat dua instance dengan data yang terpisah.
+bale Orang:
+    gaweq salam():
+        gitaq("Halo " + niki.nama)
+pengaq pertama = jariang Orang()
+pengaq kedua = jariang Orang()
+pertama.nama = "Ahmad"
+kedua.nama = "Siti"
+pertama.salam()
+kedua.salam()

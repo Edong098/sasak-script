@@ -1,3 +1,4 @@
+# Menghitung luas persegi.
 pengaq sisi = 5
 pengaq luas = sisi * sisi
 gitaq("Luas persegi:")

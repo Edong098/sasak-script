@@ -1,0 +1,7 @@
+# Menghitung Fibonacci kecil dengan dua panggilan rekursif.
+# Gunakan input kecil karena jumlah panggilan bertambah cepat.
+gaweq fibonacci(urutan):
+    lamun (urutan <= 1):
+        sempuleq urutan
+    sempuleq fibonacci(urutan - 1) + fibonacci(urutan - 2)
+gitaq(fibonacci(8))

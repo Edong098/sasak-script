@@ -1,0 +1,5 @@
+# Mengubah suhu Celsius menjadi Fahrenheit.
+pengaq celsius = 30
+pengaq fahrenheit = celsius * 9 / 5 + 32
+gitaq("Fahrenheit:")
+gitaq(fahrenheit)

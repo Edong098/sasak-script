@@ -1,0 +1,9 @@
+# Menghitung faktorial dengan akumulator loop.
+pengaq angka = 5
+pengaq hasil = 1
+pengaq faktor = 1
+semasih (faktor <= angka):
+    hasil = hasil * faktor
+    faktor = faktor + 1
+gitaq("Faktorial 5:")
+gitaq(hasil)

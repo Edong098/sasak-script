@@ -1,0 +1,9 @@
+# Memberikan diskon ketika total melewati batas.
+pengaq total = 150000
+pengaq diskon = 0
+lamun (total >= 100000):
+    diskon = total * 10 / 100
+gitaq("Diskon:")
+gitaq(diskon)
+gitaq("Total bayar:")
+gitaq(total - diskon)

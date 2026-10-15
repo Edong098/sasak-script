@@ -1,0 +1,5 @@
+# Mengirim nama sebagai parameter fungsi.
+gaweq salam(nama):
+    gitaq("Halo " + nama)
+salam("Ahmad")
+salam("Siti")

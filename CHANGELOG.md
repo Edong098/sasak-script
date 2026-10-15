@@ -2,6 +2,10 @@
 
 ## Perubahan berikutnya
 
+- Menambahkan 68 program belajar dan satu modul pendukung dalam delapan kategori.
+- Menambahkan delapan panduan, katalog examples, dan perintah `npm run examples:test`.
+- Menyatukan pemeriksaan contoh lama ke suite examples; menghapus tutorial lama yang sudah tercakup panduan baru.
+
 - Menghapus CONTRIBUTING.md dan tautannya sesuai permintaan pemilik.
 - Membatasi impor canonical ke folder program; menolak traversal dan symlink keluar.
 - Menambah batas source/token/kedalaman/langkah/waktu/async/string/output yang tidak bisa direset program.

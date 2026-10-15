@@ -1,0 +1,8 @@
+# Membuat pasangan angka melalui dua loop.
+pengaq baris = 1
+semasih (baris <= 2):
+    pengaq kolom = 1
+    semasih (kolom <= 3):
+        gitaq(baris * 10 + kolom)
+        kolom = kolom + 1
+    baris = baris + 1

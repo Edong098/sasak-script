@@ -1,0 +1,3 @@
+# Menggunakan header untuk: nilai awal, kondisi, dan pembaruan.
+untuk (pengaq angka = 1; angka <= 5; angka = angka + 1):
+    gitaq(angka)

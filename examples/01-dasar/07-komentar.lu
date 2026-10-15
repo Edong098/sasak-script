@@ -1,0 +1,5 @@
+# Menulis komentar tanpa mengubah output program.
+# Komentar satu baris tidak dieksekusi.
+pengaq sisi = 4 # Komentar juga dapat ditulis setelah statement.
+gitaq("# di dalam string tetap dicetak")
+gitaq(sisi * sisi)

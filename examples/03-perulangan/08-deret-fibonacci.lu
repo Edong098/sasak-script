@@ -1,0 +1,10 @@
+# Membangun delapan bilangan Fibonacci secara iteratif.
+pengaq pertama = 0
+pengaq kedua = 1
+pengaq urutan = 0
+semasih (urutan < 8):
+    gitaq(pertama)
+    pengaq berikutnya = pertama + kedua
+    pertama = kedua
+    kedua = berikutnya
+    urutan = urutan + 1

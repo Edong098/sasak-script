@@ -1,0 +1,7 @@
+# Membedakan variabel global dan variabel lokal.
+pengaq nama = "Global"
+gaweq tampilkan():
+    pengaq nama = "Lokal"
+    gitaq(nama)
+tampilkan()
+gitaq(nama)

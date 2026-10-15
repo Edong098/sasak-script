@@ -1,0 +1,7 @@
+# Menggabungkan beberapa fungsi modul matematika.
+temang "./modules/matematika.lu"
+pengaq sisi = 6
+gitaq("Luas persegi:")
+gitaq(luasPersegi(sisi))
+gitaq("Jumlah dua luas:")
+gitaq(tambah(luasPersegi(3), luasPersegi(4)))

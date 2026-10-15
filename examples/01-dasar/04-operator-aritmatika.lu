@@ -1,0 +1,9 @@
+# Menghitung dengan tambah, kurang, kali, bagi, modulo, dan unary.
+pengaq a = 10
+pengaq b = 3
+gitaq(a + b)
+gitaq(a - b)
+gitaq(a * b)
+gitaq(a / 2)
+gitaq(a % b)
+gitaq(-a)

@@ -1,0 +1,10 @@
+# Memeriksa kondisi di dalam kondisi lain.
+pengaq hadir = tetu
+pengaq nilai = 85
+lamun (hadir):
+    lamun (nilai >= 80):
+        gitaq("Hadir dan nilai baik")
+    deq:
+        gitaq("Hadir, perlu latihan")
+deq:
+    gitaq("Tidak hadir")

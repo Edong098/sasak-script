@@ -1,0 +1,14 @@
+# Mengurutkan dengan memilih nilai minimum tiap putaran.
+pengaq data = [64, 25, 12, 22, 11]
+# Jumlah mengikuti banyak elemen data; belum ada builtin panjang array.
+pengaq jumlah = 5
+untuk (pengaq i = 0; i < jumlah - 1; i = i + 1):
+    pengaq indexMinimum = i
+    untuk (pengaq j = i + 1; j < jumlah; j = j + 1):
+        lamun (data[j] < data[indexMinimum]):
+            indexMinimum = j
+    pengaq sementara = data[i]
+    data[i] = data[indexMinimum]
+    data[indexMinimum] = sementara
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    gitaq(data[i])

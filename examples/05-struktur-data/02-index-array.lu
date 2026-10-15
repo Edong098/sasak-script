@@ -1,0 +1,6 @@
+# Membaca elemen array dengan index mulai dari nol.
+pengaq nilai = [70, 85, 90]
+gitaq("Index 0:")
+gitaq(nilai[0])
+gitaq("Index 2:")
+gitaq(nilai[2])

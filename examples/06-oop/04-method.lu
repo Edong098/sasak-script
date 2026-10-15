@@ -1,0 +1,11 @@
+# Mengubah state object melalui method.
+bale Tabungan:
+    sandiang(saldoAwal):
+        niki.saldo = saldoAwal
+    gaweq setor(jumlah):
+        niki.saldo = niki.saldo + jumlah
+    gaweq bacaSaldo():
+        sempuleq niki.saldo
+pengaq tabungan = jariang Tabungan(100000)
+tabungan.setor(50000)
+gitaq(tabungan.bacaSaldo())

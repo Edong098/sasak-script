@@ -1,3 +1,4 @@
+# Mencetak angka 1 sampai 5 dengan while.
 pengaq angka = 1
 semasih (angka <= 5):
     gitaq(angka)

@@ -1,0 +1,7 @@
+# Mengganti elemen yang sudah ada pada array.
+pengaq nilai = [70, 85, 90]
+gitaq("Sebelum:")
+gitaq(nilai[1])
+nilai[1] = 95
+gitaq("Sesudah:")
+gitaq(nilai[1])

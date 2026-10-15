@@ -1,0 +1,17 @@
+# Menyimpan data dan menentukan status mahasiswa lewat class.
+bale Mahasiswa:
+    sandiang(nama, jurusan, nilai):
+        niki.nama = nama
+        niki.jurusan = jurusan
+        niki.nilai = nilai
+    gaweq status():
+        lamun (niki.nilai >= 75):
+            sempuleq "Lulus"
+        sempuleq "Belum lulus"
+    gaweq tampilkan():
+        gitaq(niki.nama)
+        gitaq(niki.jurusan)
+        gitaq(niki.nilai)
+        gitaq(niki.status())
+pengaq mahasiswa = jariang Mahasiswa("Ahmad", "Ilmu Komputer", 85)
+mahasiswa.tampilkan()

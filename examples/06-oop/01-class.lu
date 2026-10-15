@@ -1,0 +1,5 @@
+# Mendefinisikan class sebagai cetak biru object.
+bale Salam:
+    gaweq pesan():
+        sempuleq "Halo"
+gitaq("Class Salam didefinisikan")

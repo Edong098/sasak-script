@@ -13,7 +13,8 @@
   "exports": "./src/index.js",
   "scripts": {
     "start": "node src/cli/cli.js",
-    "test": "node --test"
+    "test": "node --test",
+    "examples:test": "node --test tests/examples.test.js"
   },
   "license": "MIT",
   "repository": {

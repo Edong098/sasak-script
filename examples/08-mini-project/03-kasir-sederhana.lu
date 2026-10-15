@@ -1,0 +1,24 @@
+# Menghitung total belanja, diskon, pembayaran, dan kembalian.
+pengaq barang = [{"nama": "Buku", "harga": 10000, "jumlah": 2}, {"nama": "Pensil", "harga": 5000, "jumlah": 3}]
+# Jumlah jenis barang ditulis eksplisit; transaksi hanya di memori.
+pengaq jumlahJenis = 2
+pengaq total = 0
+untuk (pengaq i = 0; i < jumlahJenis; i = i + 1):
+    total = total + barang[i].harga * barang[i].jumlah
+pengaq diskon = 0
+lamun (total >= 30000):
+    diskon = total * 10 / 100
+pengaq harusBayar = total - diskon
+pengaq pembayaran = 50000
+lamun (pembayaran < harusBayar):
+    pelewas "Pembayaran belum cukup"
+gitaq("Total belanja:")
+gitaq(total)
+gitaq("Diskon:")
+gitaq(diskon)
+gitaq("Harus dibayar:")
+gitaq(harusBayar)
+gitaq("Pembayaran:")
+gitaq(pembayaran)
+gitaq("Kembalian:")
+gitaq(pembayaran - harusBayar)

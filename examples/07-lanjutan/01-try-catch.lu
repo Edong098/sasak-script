@@ -1,0 +1,6 @@
+# Menangkap runtime error agar program dapat melanjutkan.
+cobaq:
+    gitaq(10 / 0)
+bauang error:
+    gitaq("Pembagian gagal dan sudah ditangkap")
+gitaq("Program berlanjut")

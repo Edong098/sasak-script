@@ -1,0 +1,13 @@
+# Mengenali number, string, boolean, dan null.
+pengaq umur = 18
+pengaq suhu = 27.5
+pengaq pesan = "Belajar Lotura"
+pengaq aktif = tetu
+pengaq selesai = salaq
+pengaq kosong = deq_araq
+gitaq(umur)
+gitaq(suhu)
+gitaq(pesan)
+gitaq(aktif)
+gitaq(selesai)
+gitaq(kosong)

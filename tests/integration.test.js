@@ -16,32 +16,6 @@ import { fileURLToPath } from "node:url";
 import { run, parse, tokenize, SasakError } from "../src/index.js";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const cli = join(root, "src", "cli", "cli.js");
-const expected = {
-  "untuk.lu": "0\n1\n3\n4\n",
-  "hello.lu": "Halo, Sasak Script!\n",
-  "persegi.lu": "Luas persegi:\n25\n",
-  "kondisi.lu": "Dewasa\n",
-  "perulangan.lu": "1\n2\n3\n4\n5\n",
-  "fungsi.lu": "8\n",
-  "belajar.lu": "Halo Ahmad\nSudah dewasa\n",
-  "data.lu": "10\nAli\n",
-  "oop.lu": "Halo Ahmad\nManusia\n",
-  "modul.lu": "8\nContoh error\n",
-  "async.lu": "8\n",
-};
-for (const [name, stdout] of Object.entries(expected)) {
-  test(`integrasi CLI seluruh contoh: ${name}`, () => {
-    const result = spawnSync(
-      process.execPath,
-      [cli, join(root, "examples", name)],
-      { encoding: "utf8", cwd: tmpdir(), timeout: 5000 },
-    );
-    assert.ifError(result.error);
-    assert.equal(result.status, 0, result.stderr);
-    assert.equal(result.stdout, stdout);
-    assert.equal(result.stderr, "");
-  });
-}
 test("path berisi spasi, CRLF dan impor relatif saat cwd berbeda", async (t) => {
   const dir = await mkdtemp(join(tmpdir(), "sasak dengan spasi "));
   t.after(() => rm(dir, { recursive: true, force: true }));

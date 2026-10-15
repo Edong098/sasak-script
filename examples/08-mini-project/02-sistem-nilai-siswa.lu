@@ -1,0 +1,14 @@
+# Menghitung nilai berbobot dan kelulusan tiga siswa.
+pengaq siswa = [{"nama": "Ahmad", "tugas": 80, "uts": 70, "uas": 90}, {"nama": "Siti", "tugas": 60, "uts": 60, "uas": 60}, {"nama": "Ali", "tugas": 90, "uts": 80, "uas": 80}]
+# Jumlah mengikuti data tetap; bobot tugas 20%, UTS 30%, UAS 50%.
+pengaq jumlah = 3
+gaweq nilaiAkhir(data):
+    sempuleq data.tugas * 20 / 100 + data.uts * 30 / 100 + data.uas * 50 / 100
+untuk (pengaq i = 0; i < jumlah; i = i + 1):
+    pengaq nilai = nilaiAkhir(siswa[i])
+    gitaq(siswa[i].nama)
+    gitaq(nilai)
+    lamun (nilai >= 75):
+        gitaq("Lulus")
+    deq:
+        gitaq("Belum lulus")

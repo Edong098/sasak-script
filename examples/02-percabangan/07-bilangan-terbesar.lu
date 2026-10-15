@@ -1,0 +1,11 @@
+# Memilih nilai terbesar dari tiga bilangan.
+pengaq a = 12
+pengaq b = 25
+pengaq c = 19
+pengaq terbesar = a
+lamun (b > terbesar):
+    terbesar = b
+lamun (c > terbesar):
+    terbesar = c
+gitaq("Terbesar:")
+gitaq(terbesar)
