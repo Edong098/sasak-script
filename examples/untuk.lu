@@ -1,5 +1,0 @@
-# Cetak 0 sampai 4, lewati angka 2.
-untuk (pengaq i = 0; i < 5; i = i + 1):
-    lamun (i == 2):
-        lanjutkan
-    gitaq(i)
